@@ -10,8 +10,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //
-        //母湯哲 禎
+        //ii忠諺在害羞
 
     }
 }
