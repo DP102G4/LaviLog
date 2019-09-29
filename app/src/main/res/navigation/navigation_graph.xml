@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/friendHomeFragment">
+
+    <fragment
+        android:id="@+id/friendHomeFragment"
+        android:name="com.example.lavilog.FriendHomeFragment"
+        android:label="fragment_friend_home"
+        tools:layout="@layout/fragment_friend_home" >
+        <action
+            android:id="@+id/action_friendHomeFragment_to_friendSearchFragment"
+            app:destination="@id/friendSearchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/friendSearchFragment"
+        android:name="com.example.lavilog.FriendSearchFragment"
+        android:label="fragment_friend_search"
+        tools:layout="@layout/fragment_friend_search" />
+</navigation>
