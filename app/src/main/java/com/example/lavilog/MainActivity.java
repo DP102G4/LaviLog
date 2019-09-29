@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //ii忠諺在害羞
         //testjhe
+        //test
 
     }
 }
