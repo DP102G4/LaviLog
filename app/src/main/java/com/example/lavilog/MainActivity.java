@@ -11,9 +11,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //
-        //母湯哲 禎
-        //09/29
-        //
+   //123
 
     }
 }
