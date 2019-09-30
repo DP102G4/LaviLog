@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/friendHomeFragment">
+    app:startDestination="@id/signInFragment">
 
     <fragment
         android:id="@+id/friendHomeFragment"
@@ -25,20 +25,20 @@
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_sign_in" >
         <action
-            android:id="@+id/action_signInFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
+            android:id="@+id/action_signInFragment_to_signUp_1_Fragment"
+            app:destination="@id/signUp_1_Fragment" />
         <action
-            android:id="@+id/action_signInFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            android:id="@+id/action_signInFragment_to_forgetPW_1_Fragment"
+            app:destination="@id/forgetPW_1_Fragment" />
     </fragment>
     <fragment
-        android:id="@+id/signUpFragment"
-        android:name="com.example.lavilog.signUpFragment"
-        android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" />
+        android:id="@+id/signUp_1_Fragment"
+        android:name="com.example.lavilog.signUp_1_Fragment"
+        android:label="fragment_sign_up_1_"
+        tools:layout="@layout/fragment_sign_up_1_" />
     <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.example.lavilog.mainFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        android:id="@+id/forgetPW_1_Fragment"
+        android:name="com.example.lavilog.forgetPW_1_Fragment"
+        android:label="fragment_forget_pw_1_"
+        tools:layout="@layout/fragment_forget_pw_1_" />
 </navigation>

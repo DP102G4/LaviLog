@@ -33,11 +33,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
         android:layout_marginTop="44dp"
         android:ems="10"
+        android:hint="user@gmail.com"
         android:inputType="textPersonName"
-        android:text="user@gmail.com"
         android:textColor="#A3A2A2"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/textView"
@@ -103,5 +102,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPassword"
         tools:text="顯示狀態" />
+
+    <TextView
+        android:id="@+id/tvForgetPW"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="178dp"
+        android:layout_marginTop="112dp"
+        android:layout_marginEnd="174dp"
+        android:alpha="0.4"
+        android:text="忘記密碼?"
+        android:textColor="@color/colorDarkGrey"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvStatus" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
