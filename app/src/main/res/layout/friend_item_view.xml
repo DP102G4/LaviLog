@@ -2,6 +2,7 @@
 <!--設定foreground="?selectableItemBackground"當選項被點擊時會改變背景色-->
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
@@ -19,7 +20,8 @@
             android:id="@+id/ivFriend"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/mothersoup1" />
+            android:src="@drawable/mothersoup1"
+            tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/tvFriendName"
@@ -28,7 +30,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="6dp"
             android:layout_marginLeft="6dp"
-            android:text="MontherSoupZhe1"
+            android:text="TextView"
             android:textColor="#0000FF"
             android:textSize="22sp" />
 
