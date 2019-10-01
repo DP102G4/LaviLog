@@ -44,11 +44,13 @@ public class FriendSearchResultFragment extends Fragment {
         tvName = view.findViewById(R.id.tvName);
         btFriendDiary = view.findViewById(R.id.btFriendDiary);
 
+        // 改成目的地頁面 進入好友日誌主題內
+
 //        btFriendDiary.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
 //                Navigation.findNavController(view)
-//                        .navigate(R.id.改成目的地頁面);
+//                        .navigate(R.id.改成目的地頁面 進入好友日誌主題內);
 //            }
 //        });
     }
