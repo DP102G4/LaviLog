@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -56,7 +57,12 @@ public class FriendSearchFragment extends Fragment {
         searchView = view.findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextChange(String newText) {
+            public boolean onQueryTextSubmit(String query) { // 打完才搜尋
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) { // 打字就搜尋
                 FriendSearchFragment.FriendAdapter adapter = (FriendSearchFragment.FriendAdapter) recyclerView.getAdapter();
                 if (adapter != null) {
                     // 如果搜尋條件為空字串，就顯示原始資料；否則就顯示搜尋後結果
@@ -74,10 +80,6 @@ public class FriendSearchFragment extends Fragment {
                     }
                     adapter.notifyDataSetChanged();
                 }
-                return false;
-            }
-            @Override
-            public boolean onQueryTextSubmit(String query) {
                 return false;
             }
         });
@@ -106,7 +108,7 @@ public class FriendSearchFragment extends Fragment {
             public MyViewHolder(View itemView) {
                 super(itemView);
                 ivFriend = itemView.findViewById(R.id.ivFriend);
-                tvFriendName = itemView.findViewById(R.id.tvFriendName);
+                tvFriendName = itemView.findViewById(R.id.tvName);
             }
         }
 
@@ -125,7 +127,8 @@ public class FriendSearchFragment extends Fragment {
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, friend.getName(), Toast.LENGTH_SHORT).show();
+                    Navigation.findNavController(searchView)
+                            .navigate(R.id.friendSearchResultFragment);
                 }
             });
         }
@@ -136,6 +139,7 @@ public class FriendSearchFragment extends Fragment {
         friends.add(new Friend(R.drawable.mothersoup1, "MontherSoupZhe1"));
         friends.add(new Friend(R.drawable.mothersoup1, "MontherSoupZhe2"));
         friends.add(new Friend(R.drawable.mothersoup1, "MontherSoupZhe3"));
+        friends.add(new Friend(R.drawable.mothersoup1, "MontherSoupZhe33"));
         return friends;
     }
 }
