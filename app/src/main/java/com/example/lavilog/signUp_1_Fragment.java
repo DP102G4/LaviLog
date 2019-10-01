@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class signUpFragment extends Fragment {
+public class signUp_1_Fragment extends Fragment {
     private Activity activity;
     private FirebaseAuth auth;
 
@@ -30,7 +30,7 @@ public class signUpFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_up, container, false);
+        return inflater.inflate(R.layout.fragment_sign_up_1_, container, false);
     }
 
     @Override

@@ -24,7 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class signInFragment extends Fragment {
     Activity activity;
     EditText etAccount, etPassword;
-    TextView tvStatus;
+    TextView tvStatus,tvForgetPW;
     Button btSignIn, btSignUp;
     private FirebaseAuth auth;
 
@@ -50,6 +50,7 @@ public class signInFragment extends Fragment {
         tvStatus = view.findViewById(R.id.tvStatus);
         btSignIn = view.findViewById(R.id.btSignIn);
         btSignUp = view.findViewById(R.id.btSignUp);
+        tvForgetPW=view.findViewById(R.id.tvForgetPW);
 
         btSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +63,13 @@ public class signInFragment extends Fragment {
         btSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(btSignUp).navigate(R.id.action_signInFragment_to_signUpFragment);
+                Navigation.findNavController(btSignUp).navigate(R.id.action_signInFragment_to_signUp_1_Fragment);
+            }
+        });
+        tvForgetPW.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(tvForgetPW).navigate(R.id.action_signInFragment_to_forgetPW_1_Fragment);
             }
         });
     }
@@ -75,8 +82,8 @@ public class signInFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         // 登入成功轉至下頁；失敗則顯示錯誤訊息
                         if (task.isSuccessful()) {
-                            Navigation.findNavController(etAccount)
-                                    .navigate(R.id.action_signInFragment_to_mainFragment);
+   //                         Navigation.findNavController(etAccount)
+   //                                 .navigate(R.id.);id
                         } else {
                             Exception exception = task.getException();
                             String message = (exception == null ? "登入失敗" : exception.getMessage());
