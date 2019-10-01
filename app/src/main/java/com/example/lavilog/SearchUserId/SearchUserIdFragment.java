@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -45,7 +46,6 @@ public class SearchUserIdFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = getActivity();
-        users = getUsers();
     }
 
     @Override
@@ -55,22 +55,24 @@ public class SearchUserIdFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.setAdapter(new UserAdapter(activity, users));
 
+
         searchView = view.findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
+            public boolean onQueryTextSubmit(String newText) {
+//                recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+//                recyclerView.setAdapter(new UserAdapter(activity, users));
                 SearchUserIdFragment.UserAdapter adapter = (SearchUserIdFragment.UserAdapter) recyclerView.getAdapter();
+                List<User> searchUserId = new ArrayList<>();
                 if (adapter != null) {
                     // 如果搜尋條件為空字串，就顯示原始資料；否則就顯示搜尋後結果
                     if (newText.isEmpty()) {
-                        adapter.setUsers(users);
+                        if(users!=null) {
+                            users.removeAll(users); // 全部刪掉
+                            adapter.setUsers(users);
+                        }
                     } else {
-                        List<User> searchUserId = new ArrayList<>();
+                        users=getUsers();
                         // 搜尋原始資料 equals
                         for (User user : users) {
                             if (user.getName().toUpperCase().equals(newText.toUpperCase())) {
@@ -79,7 +81,26 @@ public class SearchUserIdFragment extends Fragment {
                         }
                         adapter.setUsers(searchUserId);
                     }
-                    adapter.notifyDataSetChanged();
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+//                recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+//                recyclerView.setAdapter(new UserAdapter(activity, users));
+                SearchUserIdFragment.UserAdapter adapter = (SearchUserIdFragment.UserAdapter) recyclerView.getAdapter();
+                List<User> searchUserId = new ArrayList<>();
+                if (adapter != null) {                  // 如果適配器 不等於 空值
+                    if (newText.isEmpty()) {            // 如果搜尋條件為空字串
+                        if (users != null) {            //
+                            users.removeAll(users);     // 清空資料
+                            adapter.setUsers(users);
+                        }
+                    } else {
+                        adapter.setUsers(searchUserId);
+
+                    }
                 }
                 return false;
             }
@@ -139,6 +160,7 @@ public class SearchUserIdFragment extends Fragment {
         users.add(new User(R.drawable.mothersoup1, "MontherSoupZhe1"));
         users.add(new User(R.drawable.mothersoup1, "MontherSoupZhe2"));
         users.add(new User(R.drawable.mothersoup1, "MontherSoupZhe3"));
+        users.add(new User(R.drawable.mothersoup1, "MontherSoupZhe33"));
         return users;
     }
 }
