@@ -52,16 +52,13 @@ public class SearchUserIdFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
-        recyclerView.setAdapter(new UserAdapter(activity, users));
-
 
         searchView = view.findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String newText) {
-//                recyclerView.setLayoutManager(new LinearLayoutManager(activity));
-//                recyclerView.setAdapter(new UserAdapter(activity, users));
+                recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+                recyclerView.setAdapter(new UserAdapter(activity, users));
                 SearchUserIdFragment.UserAdapter adapter = (SearchUserIdFragment.UserAdapter) recyclerView.getAdapter();
                 List<User> searchUserId = new ArrayList<>();
                 if (adapter != null) {
@@ -87,8 +84,8 @@ public class SearchUserIdFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-//                recyclerView.setLayoutManager(new LinearLayoutManager(activity));
-//                recyclerView.setAdapter(new UserAdapter(activity, users));
+                recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+                recyclerView.setAdapter(new UserAdapter(activity, users));
                 SearchUserIdFragment.UserAdapter adapter = (SearchUserIdFragment.UserAdapter) recyclerView.getAdapter();
                 List<User> searchUserId = new ArrayList<>();
                 if (adapter != null) {                  // 如果適配器 不等於 空值
