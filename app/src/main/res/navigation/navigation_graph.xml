@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/friendHomeFragment">
+    app:startDestination="@id/signInFragment">
 
     <fragment
         android:id="@+id/friendHomeFragment"
@@ -33,10 +33,10 @@
         tools:layout="@layout/fragment_sign_in" >
         <action
             android:id="@+id/action_signInFragment_to_forgetPW_1_Fragment"
-            app:destination="@id/forgetPW_1_Fragment2" />
+            app:destination="@id/forgetPW_1_Fragment" />
         <action
             android:id="@+id/action_signInFragment_to_signUp_1_Fragment"
-            app:destination="@id/signUp_1_Fragment2" />
+            app:destination="@id/signUp_1_Fragment" />
     </fragment>
     <fragment
         android:id="@+id/searchUserIdFragment"
@@ -44,12 +44,12 @@
         android:label="fragment_search_user_id"
         tools:layout="@layout/fragment_search_user_id" />
     <fragment
-        android:id="@+id/forgetPW_1_Fragment2"
+        android:id="@+id/forgetPW_1_Fragment"
         android:name="com.example.lavilog.forgetPW_1_Fragment"
         android:label="fragment_forget_pw_1_"
         tools:layout="@layout/fragment_forget_pw_1_" />
     <fragment
-        android:id="@+id/signUp_1_Fragment2"
+        android:id="@+id/signUp_1_Fragment"
         android:name="com.example.lavilog.signUp_1_Fragment"
         android:label="signUp_1_Fragment" />
     <fragment
@@ -57,4 +57,15 @@
         android:name="com.example.lavilog.SearchFriend.FriendSearchResultFragment"
         android:label="fragment_friend_search_result"
         tools:layout="@layout/fragment_friend_search_result" />
+        android:label="signUp_1_Fragment"
+        tools:layout="@layout/fragment_sign_up_1_" >
+        <action
+            android:id="@+id/action_signUp_1_Fragment_to_signUp_2_Fragment"
+            app:destination="@id/signUp_2_Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUp_2_Fragment"
+        android:name="com.example.lavilog.signUp_2_Fragment"
+        android:label="fragment_sign_up_2_"
+        tools:layout="@layout/fragment_sign_up_2_" />
 </navigation>

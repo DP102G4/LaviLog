@@ -16,13 +16,11 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class signUp_1_Fragment extends Fragment {
     private Activity activity;
-    private FirebaseAuth auth;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity=getActivity();
-        auth = FirebaseAuth.getInstance();
         activity.setTitle("會員註冊");
     }
 
