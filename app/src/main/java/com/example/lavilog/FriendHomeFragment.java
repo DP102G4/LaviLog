@@ -15,10 +15,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 // 載入套件
 public class FriendHomeFragment extends Fragment {
     private Activity activity;
-    private ImageView ivUserPhoto;
+    private ImageView ivUser;
     private TextView tvUserName;
     private Button btSearchFriend, btSearchID, btQRcode;
     // 宣告全域變數
@@ -40,11 +41,13 @@ public class FriendHomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // 取得介面元件
-        ivUserPhoto = view.findViewById(R.id.ivUserPhoto);
-        tvUserName = view.findViewById(R.id.tvFriendName);
-        btSearchFriend = view.findViewById(R.id.btSearchFriend);
+        ivUser = view.findViewById(R.id.ivUser);
+        tvUserName = view.findViewById(R.id.tvName);
+        btSearchFriend = view.findViewById(R.id.btFriendDiary);
         btSearchID = view.findViewById(R.id.btSearchID);
         btQRcode = view.findViewById(R.id.btQRcode);
+
+
 
         // 為 Button 元件加入 Click 事件的監聽器，觸發時執行自訂方法 new View.OnClickListener
         btSearchFriend.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +55,7 @@ public class FriendHomeFragment extends Fragment {
             public void onClick(View view) {
                 Navigation.findNavController(view)
                         .navigate(R.id.action_friendHomeFragment_to_friendSearchFragment);
-            }
+            } // 搜尋好友日誌按鈕
         });
 
         btSearchID.setOnClickListener(new View.OnClickListener() {
@@ -60,17 +63,15 @@ public class FriendHomeFragment extends Fragment {
             public void onClick(View view) {
                 Navigation.findNavController(view)
                         .navigate(R.id.action_friendHomeFragment_to_searchUserIdFragment);
-            }
+            } // 加入帳號按鈕
         });
 
-//        btQRcode.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Navigation.findNavController(view)
-//                        .navigate(R.id.action_friendHomeFragment_to_QRcodeFragment);
-//            }
-//        });
-
-
+        btQRcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view)
+                        .navigate(R.id.action_friendHomeFragment_to_QRcodeFragment);
+            } // 行動條碼掃描按鈕
+        });
     }
 }

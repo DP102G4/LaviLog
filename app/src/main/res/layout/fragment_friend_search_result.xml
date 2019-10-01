@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
-    tools:context=".FriendHomeFragment" >
+    tools:context=".SearchFriend.FriendSearchResultFragment" >
 
     <ImageView
         android:id="@+id/ivUser"
@@ -36,34 +35,13 @@
         android:id="@+id/btFriendDiary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="50dp"
-        android:background="#FFFFFF"
+        android:layout_marginEnd="32dp"
+        android:background="#C2FCE3"
         android:text="搜尋好友日誌"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvName" />
-
-    <Button
-        android:id="@+id/btSearchID"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:text="加入帳號"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btFriendDiary" />
-
-    <Button
-        android:id="@+id/btQRcode"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:text="行動條碼掃描"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btSearchID" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
