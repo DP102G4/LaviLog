@@ -60,18 +60,21 @@ public class signInFragment extends Fragment {
                 signIn(account, password);
             }
         });
-        btSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(btSignUp).navigate(R.id.action_signInFragment_to_signUp_1_Fragment);
-            }
-        });
-        tvForgetPW.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(tvForgetPW).navigate(R.id.action_signInFragment_to_forgetPW_1_Fragment);
-            }
-        });
+
+        // navigation沒抓到要再改
+
+//        btSignUp.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Navigation.findNavController(btSignUp).navigate(R.id.action_signInFragment_to_signUp_1_Fragment);
+//            }
+//        });
+//        tvForgetPW.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Navigation.findNavController(tvForgetPW).navigate(R.id.action_signInFragment_to_forgetPW_1_Fragment);
+//            }
+//        });
     }
 
     private void signIn(String account, String password) {
