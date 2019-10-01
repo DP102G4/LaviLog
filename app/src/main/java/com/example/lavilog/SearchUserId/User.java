@@ -1,20 +1,23 @@
-package com.example.lavilog;
+package com.example.lavilog.SearchUserId;
 
-public class Friend {
-    private int imageId;
+import android.icu.text.PluralRules;
+import android.media.Image;
+
+public class User {
+    private int ImageId;
     private String name;
 
-    public Friend(int imageId, String name) {
-        this.imageId = imageId;
+    public User(int imageId, String name) {
+        ImageId = imageId;
         this.name = name;
     }
 
     public int getImageId() {
-        return imageId;
+        return ImageId;
     }
 
     public void setImageId(int imageId) {
-        this.imageId = imageId;
+        ImageId = imageId;
     }
 
     public String getName() {
