@@ -66,12 +66,12 @@ public class FriendHomeFragment extends Fragment {
             } // 加入帳號按鈕
         });
 
-//        btQRcode.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Navigation.findNavController(view)
-//                        .navigate(R.id.action_friendHomeFragment_to_QRcodeFragment);
-//            } // 行動條碼掃描按鈕
-//        });
+        btQRcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view)
+                        .navigate(R.id.action_friendHomeFragment_to_QRcodeFragment);
+            } // 行動條碼掃描按鈕
+        });
     }
 }

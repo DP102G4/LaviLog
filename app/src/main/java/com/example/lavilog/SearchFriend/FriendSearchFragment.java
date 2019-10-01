@@ -128,7 +128,7 @@ public class FriendSearchFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Navigation.findNavController(searchView)
-                            .navigate(R.id.friendSearchResultFragment);
+                            .navigate(R.id.action_friendSearchFragment_to_friendSearchResultFragment);
                 }
             });
         }
