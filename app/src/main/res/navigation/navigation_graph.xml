@@ -13,10 +13,13 @@
         <action
             android:id="@+id/action_friendHomeFragment_to_friendSearchFragment"
             app:destination="@id/friendSearchFragment" />
+        <action
+            android:id="@+id/action_friendHomeFragment_to_searchUserIdFragment"
+            app:destination="@id/searchUserIdFragment" />
     </fragment>
     <fragment
         android:id="@+id/friendSearchFragment"
-        android:name="com.example.lavilog.FriendSearchFragment"
+        android:name="com.example.lavilog.SearchFriend.FriendSearchFragment"
         android:label="fragment_friend_search"
         tools:layout="@layout/fragment_friend_search" />
     <fragment
@@ -41,4 +44,9 @@
         android:name="com.example.lavilog.mainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" />
+    <fragment
+        android:id="@+id/searchUserIdFragment"
+        android:name="com.example.lavilog.SearchUserId.SearchUserIdFragment"
+        android:label="fragment_search_user_id"
+        tools:layout="@layout/fragment_search_user_id" />
 </navigation>

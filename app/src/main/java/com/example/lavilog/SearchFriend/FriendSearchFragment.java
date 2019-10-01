@@ -1,4 +1,4 @@
-package com.example.lavilog;
+package com.example.lavilog.SearchFriend;
 
 
 import android.app.Activity;
@@ -8,7 +8,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,13 +19,15 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.lavilog.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class FriendSearchFragment extends Fragment {
     private Activity activity;
     private ImageView ivFriend;
-    private TextView tvName;
+    private TextView tvFriendName;
     private RecyclerView recyclerView;
     private SearchView searchView;
     private List<Friend> friends;
@@ -101,11 +102,11 @@ public class FriendSearchFragment extends Fragment {
 
         private class MyViewHolder extends RecyclerView.ViewHolder {
             ImageView ivFriend;
-            TextView tvName;
+            TextView tvFriendName;
             public MyViewHolder(View itemView) {
                 super(itemView);
                 ivFriend = itemView.findViewById(R.id.ivFriend);
-                tvName = itemView.findViewById(R.id.tvName);
+                tvFriendName = itemView.findViewById(R.id.tvFriendName);
             }
         }
 
@@ -120,7 +121,7 @@ public class FriendSearchFragment extends Fragment {
         public void onBindViewHolder(@NonNull FriendSearchFragment.FriendAdapter.MyViewHolder viewHolder, int index) {
             final Friend friend = friends.get(index);
             viewHolder.ivFriend.setImageResource(friend.getImageId());
-            viewHolder.tvName.setText(friend.getName());
+            viewHolder.tvFriendName.setText(friend.getName());
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -132,9 +133,9 @@ public class FriendSearchFragment extends Fragment {
 
     private List<Friend> getFriends() {
         List<Friend> friends = new ArrayList<>();
-        friends.add(new Friend(R.drawable.mothersoup, "MontherSoupZhe1"));
-        friends.add(new Friend(R.drawable.mothersoup, "MontherSoupZhe2"));
-        friends.add(new Friend(R.drawable.mothersoup, "MontherSoupZhe3"));
+        friends.add(new Friend(R.drawable.mothersoup1, "MontherSoupZhe1"));
+        friends.add(new Friend(R.drawable.mothersoup1, "MontherSoupZhe2"));
+        friends.add(new Friend(R.drawable.mothersoup1, "MontherSoupZhe3"));
         return friends;
     }
 }

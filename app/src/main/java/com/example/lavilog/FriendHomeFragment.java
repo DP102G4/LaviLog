@@ -39,7 +39,7 @@ public class FriendHomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ivUserPhoto = view.findViewById(R.id.ivUserPhoto);
-        tvUserName = view.findViewById(R.id.tvUserName);
+        tvUserName = view.findViewById(R.id.tvFriendName);
         btSearchFriend = view.findViewById(R.id.btSearchFriend);
         btSearchID = view.findViewById(R.id.btSearchID);
         btQRcode = view.findViewById(R.id.btQRcode);
@@ -52,14 +52,14 @@ public class FriendHomeFragment extends Fragment {
             }
         });
 
-//        btSearchID.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Navigation.findNavController(view)
-//                        .navigate(R.id.action_friendHomeFragment_to_searchIDFragment);
-//            }
-//        });
-//
+        btSearchID.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view)
+                        .navigate(R.id.action_friendHomeFragment_to_searchUserIdFragment);
+            }
+        });
+
 //        btQRcode.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
