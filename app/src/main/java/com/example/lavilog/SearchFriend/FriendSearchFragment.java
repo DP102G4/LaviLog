@@ -136,10 +136,10 @@ public class FriendSearchFragment extends Fragment {
 
     private List<Friend> getFriends() {
         List<Friend> friends = new ArrayList<>();
-        friends.add(new Friend(R.drawable.mothersoup1, "MontherSoupZhe1"));
-        friends.add(new Friend(R.drawable.mothersoup1, "MontherSoupZhe2"));
-        friends.add(new Friend(R.drawable.mothersoup1, "MontherSoupZhe3"));
-        friends.add(new Friend(R.drawable.mothersoup1, "MontherSoupZhe33"));
+        friends.add(new Friend(R.drawable.mothersoup1, "Friend1"));
+        friends.add(new Friend(R.drawable.mothersoup1, "Friend2"));
+        friends.add(new Friend(R.drawable.mothersoup1, "Friend3"));
+        friends.add(new Friend(R.drawable.mothersoup1, "Friend33"));
         return friends;
     }
 }

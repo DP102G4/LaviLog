@@ -2,25 +2,30 @@ package com.example.lavilog.QRcode;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.lavilog.R;
 
 import com.google.zxing.integration.android.IntentIntegrator; // 掃描QRcode 使⽤IntentIntegrator類別功能
-import com.google.zxing.integration.android.IntentResult;
+
 
 public class QRcodeFragment extends Fragment {
     private Activity activity;
-    private Button btScanQR, btAlbum, btShowQR;
+    private Button btScanQR, btPickPicture, btShowQR;
+    private static final int PER_EXTERNAL_STORAGE = 0;
+    private static final int REQ_PICK_PICTUEE = 1;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,7 +44,7 @@ public class QRcodeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         btScanQR = view.findViewById(R.id.btScanQR);
-        btAlbum = view.findViewById(R.id.btAlbum);
+        btPickPicture = view.findViewById(R.id.btPickPicture);
         btShowQR = view.findViewById(R.id.btShowQR);
 
         btScanQR.setOnClickListener(new View.OnClickListener() {
@@ -67,10 +72,15 @@ public class QRcodeFragment extends Fragment {
             }
         });
 
-        btAlbum.setOnClickListener(new View.OnClickListener() {
+        btPickPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                if (intent.resolveActivity(activity.getPackageManager()) != null) {
+                    startActivityForResult(intent, REQ_PICK_PICTUEE);
+                } else {
+                    Toast.makeText(activity, "請選擇照片", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
