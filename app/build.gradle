@@ -8,6 +8,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -30,6 +31,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.1.0'
     implementation 'com.google.firebase:firebase-storage:19.1.0'
     implementation 'com.google.firebase:firebase-firestore:21.1.1'
+    compile 'com.android.support:multidex:1.0.0'
 
     implementation 'com.google.zxing:core:3.3.3' // 產生QRcode
     implementation 'com.journeyapps:zxing-android-embedded:3.4.0' // 掃描QRcode

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/signInFragment">
+    app:startDestination="@id/friendHomeFragment">
 
     <fragment
         android:id="@+id/friendHomeFragment"
@@ -58,17 +58,13 @@
     <fragment
         android:id="@+id/signUp_1_Fragment"
         android:name="com.example.lavilog.signUp_1_Fragment"
-        android:label="signUp_1_Fragment" />
+        android:label="signUp_1_Fragment"
+        tools:layout="@layout/fragment_sign_up_1_"/>
     <fragment
         android:id="@+id/friendSearchResultFragment"
         android:name="com.example.lavilog.SearchFriend.FriendSearchResultFragment"
         android:label="fragment_friend_search_result"
         tools:layout="@layout/fragment_friend_search_result" />
-        android:label="signUp_1_Fragment"
-        tools:layout="@layout/fragment_sign_up_1_" >
-        <action
-            android:id="@+id/action_signUp_1_Fragment_to_signUp_2_Fragment"
-            app:destination="@id/sign_Up_2_Fragment" />
     <fragment
         android:id="@+id/QRcodeFragment"
         android:name="com.example.lavilog.QRcode.QRcodeFragment"
@@ -79,19 +75,4 @@
         android:name="com.example.lavilog.SearchUserId.SearchUserIdResultFragment"
         android:label="fragment_search_user_id_result"
         tools:layout="@layout/fragment_search_user_id_result" />
-</fragment>
-    <fragment
-        android:id="@+id/signUp_2_Fragment"
-        android:name="com.example.lavilog.signUp_2_Fragment"
-        android:label="fragment_sign_up_2_"
-        tools:layout="@layout/fragment_sign_up_2_" >
-        <action
-            android:id="@+id/action_signUp_2_Fragment_to_signUp_3_Fragment"
-            app:destination="@id/signUp_3_Fragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/signUp_3_Fragment"
-        android:name="com.example.lavilog.signUp_3_Fragment"
-        android:label="fragment_sign_up_3_"
-        tools:layout="@layout/fragment_sign_up_3_" />
 </navigation>

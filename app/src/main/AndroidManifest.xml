@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.lavilog">
+    package="com.example.lavilog"
+    >
+    public class LaviLog extends Application{
+
+    @Override
+    protected void attachBaseContext(Context base) {
+    super.attachBaseContext(base);
+    MultiDex.install(this);
+    }
+
 
     <application
         android:allowBackup="true"
