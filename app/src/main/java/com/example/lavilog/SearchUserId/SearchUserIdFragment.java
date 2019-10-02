@@ -154,10 +154,10 @@ public class SearchUserIdFragment extends Fragment {
 
     private List<User> getUsers() {
         List<User> users = new ArrayList<>();
-        users.add(new User(R.drawable.mothersoup1, "MontherSoupZhe1"));
-        users.add(new User(R.drawable.mothersoup1, "MontherSoupZhe2"));
-        users.add(new User(R.drawable.mothersoup1, "MontherSoupZhe3"));
-        users.add(new User(R.drawable.mothersoup1, "MontherSoupZhe33"));
+        users.add(new User(R.drawable.mothersoup1, "user1"));
+        users.add(new User(R.drawable.mothersoup1, "user2"));
+        users.add(new User(R.drawable.mothersoup1, "user3"));
+        users.add(new User(R.drawable.mothersoup1, "user33"));
         return users;
     }
 }

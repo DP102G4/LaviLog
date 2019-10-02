@@ -56,7 +56,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btAddFriend" />
 
     <Button
-        android:id="@+id/btQRcode"
+        android:id="@+id/btScanQR"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"

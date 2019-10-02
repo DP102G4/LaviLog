@@ -68,7 +68,7 @@
         tools:layout="@layout/fragment_sign_up_1_" >
         <action
             android:id="@+id/action_signUp_1_Fragment_to_signUp_2_Fragment"
-            app:destination="@id/signUp_2_Fragment" />
+            app:destination="@id/sign_Up_2_Fragment" />
     <fragment
         android:id="@+id/QRcodeFragment"
         android:name="com.example.lavilog.QRcode.QRcodeFragment"

@@ -7,7 +7,7 @@
     tools:context=".QRcode.QRcodeFragment">
 
     <Button
-        android:id="@+id/btQRcode"
+        android:id="@+id/btScanQR"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
@@ -27,10 +27,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btQRcode" />
+        app:layout_constraintTop_toBottomOf="@+id/btScanQR" />
 
     <Button
-        android:id="@+id/btShowQRcode"
+        android:id="@+id/btShowQR"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"

@@ -45,7 +45,7 @@ public class FriendHomeFragment extends Fragment {
         tvUserName = view.findViewById(R.id.tvName);
         btSearchFriend = view.findViewById(R.id.btAddFriend);
         btSearchID = view.findViewById(R.id.btSearchID);
-        btQRcode = view.findViewById(R.id.btQRcode);
+        btQRcode = view.findViewById(R.id.btScanQR);
 
 
 
