@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -144,7 +145,8 @@ public class SearchUserIdFragment extends Fragment {
             viewholder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context, user.getName(), Toast.LENGTH_SHORT).show();
+                    Navigation.findNavController(searchView)
+                            .navigate(R.id.action_searchUserIdFragment_to_searchUserIdResultFragment);
                 }
             });
         }

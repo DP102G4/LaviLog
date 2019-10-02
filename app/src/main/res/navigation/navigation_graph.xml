@@ -45,7 +45,11 @@
         android:id="@+id/searchUserIdFragment"
         android:name="com.example.lavilog.SearchUserId.SearchUserIdFragment"
         android:label="fragment_search_user_id"
-        tools:layout="@layout/fragment_search_user_id" />
+        tools:layout="@layout/fragment_search_user_id" >
+        <action
+            android:id="@+id/action_searchUserIdFragment_to_searchUserIdResultFragment"
+            app:destination="@id/searchUserIdResultFragment" />
+    </fragment>
     <fragment
         android:id="@+id/forgetPW_1_Fragment"
         android:name="com.example.lavilog.forgetPW_1_Fragment"
@@ -67,9 +71,14 @@
             app:destination="@id/signUp_2_Fragment" />
     <fragment
         android:id="@+id/QRcodeFragment"
-        android:name="com.example.lavilog.QRcodeFragment"
+        android:name="com.example.lavilog.QRcode.QRcodeFragment"
         android:label="fragment_qrcode"
         tools:layout="@layout/fragment_qrcode" />
+    <fragment
+        android:id="@+id/searchUserIdResultFragment"
+        android:name="com.example.lavilog.SearchUserId.SearchUserIdResultFragment"
+        android:label="fragment_search_user_id_result"
+        tools:layout="@layout/fragment_search_user_id_result" />
 </fragment>
     <fragment
         android:id="@+id/signUp_2_Fragment"

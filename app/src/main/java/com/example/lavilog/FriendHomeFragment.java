@@ -43,7 +43,7 @@ public class FriendHomeFragment extends Fragment {
         // 取得介面元件
         ivUser = view.findViewById(R.id.ivUser);
         tvUserName = view.findViewById(R.id.tvName);
-        btSearchFriend = view.findViewById(R.id.btFriendDiary);
+        btSearchFriend = view.findViewById(R.id.btAddFriend);
         btSearchID = view.findViewById(R.id.btSearchID);
         btQRcode = view.findViewById(R.id.btQRcode);
 
@@ -55,23 +55,23 @@ public class FriendHomeFragment extends Fragment {
             public void onClick(View view) {
                 Navigation.findNavController(view)
                         .navigate(R.id.action_friendHomeFragment_to_friendSearchFragment);
-            } // 搜尋好友日誌按鈕
-        });
+            }
+        }); // 搜尋好友日誌按鈕
 
         btSearchID.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Navigation.findNavController(view)
                         .navigate(R.id.action_friendHomeFragment_to_searchUserIdFragment);
-            } // 加入帳號按鈕
-        });
+            }
+        }); // 加入帳號按鈕
 
         btQRcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Navigation.findNavController(view)
                         .navigate(R.id.action_friendHomeFragment_to_QRcodeFragment);
-            } // 行動條碼掃描按鈕
-        });
+            }
+        }); // 行動條碼掃描按鈕
     }
 }

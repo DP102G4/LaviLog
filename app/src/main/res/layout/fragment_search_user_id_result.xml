@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchFriend.FriendSearchResultFragment" >
+    tools:context=".SearchUserId.SearchUserIdResultFragment" >
 
     <ImageView
         android:id="@+id/ivUser"
@@ -39,9 +39,10 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="32dp"
         android:background="#C2FCE3"
-        android:text="搜尋好友日誌"
+        android:text="發送好友邀請"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
