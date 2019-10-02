@@ -15,7 +15,7 @@ import android.widget.Button;
 
 import com.example.lavilog.R;
 
-import com.google.zxing.integration.android.IntentIntegrator;  // 掃描QR code • 使⽤用IntentIntegrator類別功能
+import com.google.zxing.integration.android.IntentIntegrator; // 掃描QRcode 使⽤IntentIntegrator類別功能
 import com.google.zxing.integration.android.IntentResult;
 
 public class QRcodeFragment extends Fragment {
@@ -60,7 +60,7 @@ public class QRcodeFragment extends Fragment {
                 // By default, the orientation is locked. Set to false to not lock.
                 integrator.setOrientationLocked(false); // 現況無效，此意義為拍照框是否可調整成直立或橫向拍照
                 // Set a prompt to display on the capture screen.
-                integrator.setPrompt("Scan a QR Code"); // 顯示文字在掃描視窗上方
+                integrator.setPrompt("對準行動條碼後，即能自動讀取。"); // 顯示文字在掃描視窗上方
                 // Initiates a scan
                 integrator.initiateScan(); // 開始掃描
 

@@ -3,11 +3,11 @@
     package="com.example.lavilog">
     public class LaviLog extends Application{
 
-    @Override
-    protected void attachBaseContext(Context base) {
-    super.attachBaseContext(base);
-    MultiDex.install(this);
-    }
+<!--    @Override-->
+<!--    protected void attachBaseContext(Context base) {-->
+<!--    super.attachBaseContext(base);-->
+<!--    MultiDex.install(this);-->
+<!--    }-->
 
 
     <application
