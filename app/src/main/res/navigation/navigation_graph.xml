@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/friendHomeFragment">
+    app:startDestination="@id/signInFragment">
 
     <fragment
         android:id="@+id/friendHomeFragment"
@@ -52,12 +52,16 @@
     </fragment>
     <fragment
         android:id="@+id/forgetPW_1_Fragment"
-        android:name="com.example.lavilog.forgetPW_1_Fragment"
+        android:name="com.example.lavilog.forgetPW.forgetPW_1_Fragment"
         android:label="fragment_forget_pw_1_"
-        tools:layout="@layout/fragment_forget_pw_1_" />
+        tools:layout="@layout/fragment_forget_pw_1_" >
+        <action
+            android:id="@+id/action_forgetPW_1_Fragment_to_fotgetPW_2_Fragment"
+            app:destination="@id/fotgetPW_2_Fragment" />
+    </fragment>
     <fragment
         android:id="@+id/signUp_1_Fragment"
-        android:name="com.example.lavilog.signUp_1_Fragment"
+        android:name="com.example.lavilog.signUp.signUp_1_Fragment"
         android:label="signUp_1_Fragment"
         tools:layout="@layout/fragment_sign_up_1_">
         <action
@@ -90,7 +94,7 @@
         tools:layout="@layout/fragment_default_qrcode" />
     <fragment
         android:id="@+id/signUp_2_Fragment"
-        android:name="com.example.lavilog.signUp_2_Fragment"
+        android:name="com.example.lavilog.signUp.signUp_2_Fragment"
         android:label="fragment_sign_up_2_"
         tools:layout="@layout/fragment_sign_up_2_" >
         <action
@@ -99,11 +103,16 @@
     </fragment>
     <fragment
         android:id="@+id/signUp_3_Fragment"
-        android:name="com.example.lavilog.signUp_3_Fragment"
+        android:name="com.example.lavilog.signUp.signUp_3_Fragment"
         android:label="fragment_sign_up_3_"
         tools:layout="@layout/fragment_sign_up_3_" >
         <action
             android:id="@+id/action_signUp_3_Fragment_to_signInFragment"
             app:destination="@id/signInFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/fotgetPW_2_Fragment"
+        android:name="com.example.lavilog.forgetPW.fotgetPW_2_Fragment"
+        android:label="fragment_fotget_pw_2_"
+        tools:layout="@layout/fragment_fotget_pw_2_" />
 </navigation>

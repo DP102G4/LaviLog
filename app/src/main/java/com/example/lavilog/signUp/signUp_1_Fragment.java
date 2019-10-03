@@ -1,4 +1,4 @@
-package com.example.lavilog;
+package com.example.lavilog.signUp;
 
 
 import android.app.Activity;
@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.lavilog.R;
 
 public class signUp_1_Fragment extends Fragment {
     private Activity activity;
