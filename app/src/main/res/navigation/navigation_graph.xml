@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/signInFragment">
+    app:startDestination="@id/friendHomeFragment">
 
     <fragment
         android:id="@+id/friendHomeFragment"
@@ -87,11 +87,7 @@
         android:id="@+id/defaultQRcodeFragment"
         android:name="com.example.lavilog.QRcode.DefaultQRcodeFragment"
         android:label="fragment_default_qrcode"
-        tools:layout="@layout/fragment_default_qrcode" >
-        <action
-            android:id="@+id/action_defaultQRcodeFragment_to_QRcodeFragment"
-            app:destination="@id/QRcodeFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_default_qrcode" />
     <fragment
         android:id="@+id/signUp_2_Fragment"
         android:name="com.example.lavilog.signUp_2_Fragment"
