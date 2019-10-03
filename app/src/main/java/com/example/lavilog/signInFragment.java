@@ -15,11 +15,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class signInFragment extends Fragment {
     Activity activity;
@@ -85,6 +87,7 @@ public class signInFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         // 登入成功轉至下頁；失敗則顯示錯誤訊息
                         if (task.isSuccessful()) {
+                            Toast.makeText(activity,"登入成功，首頁製作中",Toast.LENGTH_SHORT).show();
    //                         Navigation.findNavController(etAccount)
    //                                 .navigate(R.id.);id
                         } else {
@@ -94,5 +97,13 @@ public class signInFragment extends Fragment {
                         }
                     }
                 });
+    }
+    public void onStart() {
+        super.onStart();
+        // 檢查user是否已經登入，是則FirebaseUser物件不為null
+        FirebaseUser user = auth.getCurrentUser();
+        if (user != null) {
+            Toast.makeText(activity,"首頁製作中",Toast.LENGTH_SHORT);
+        }
     }
 }
