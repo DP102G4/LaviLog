@@ -1,13 +1,17 @@
 package com.example.lavilog.QRcode;
 
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -20,12 +24,14 @@ import com.example.lavilog.R;
 
 import com.google.zxing.integration.android.IntentIntegrator; // 掃描QRcode 使⽤IntentIntegrator類別功能
 
+import java.security.Permission;
+
 
 public class QRcodeFragment extends Fragment {
     private Activity activity;
     private Button btScanQR, btPickPicture, btShowQR;
-    private static final int PER_EXTERNAL_STORAGE = 0;
-    private static final int REQ_PICK_PICTUEE = 1;
+    private static final int PER_EXTERNAL_STORAGE = 0; // 同意存儲外部照片
+    private static final int REQ_PICK_PICTUEE = 1; // 同意選擇相簿照片
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,8 +93,39 @@ public class QRcodeFragment extends Fragment {
         btShowQR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Navigation.findNavController(view)
+                        .navigate(R.id.action_QRcodeFragment_to_defaultQRcodeFragment);
 
             }
         });
     }
+
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        askExtrnalStoragePermission();
+//    }
+//
+//    private void askExtrnalStoragePermission() {
+//        String[] Permission = {
+//                Manifest.permission.READ_EXTERNAL_STORAGE};
+//
+//        int result = ContextCompat.checkSelfPermission(activity, Permission[0]);
+//        if (result == PackageManager.PERMISSION_DENIED) {
+//            requestPermissions(Permission, PER_EXTERNAL_STORAGE);
+//        }
+//    }
+//
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        if (requestCode == PER_EXTERNAL_STORAGE) {
+//            if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
+//                Toast.makeText(activity, "請授權權限", Toast.LENGTH_SHORT).show();
+//                btPickPicture.setEnabled(false);
+//            } else {
+//                btPickPicture.setEnabled(true);
+//            }
+//        }
+//    }
 }

@@ -69,10 +69,23 @@
         android:id="@+id/QRcodeFragment"
         android:name="com.example.lavilog.QRcode.QRcodeFragment"
         android:label="fragment_qrcode"
-        tools:layout="@layout/fragment_qrcode" />
+        tools:layout="@layout/fragment_qrcode" >
+        <action
+            android:id="@+id/action_QRcodeFragment_to_defaultQRcodeFragment"
+            app:destination="@id/defaultQRcodeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/searchUserIdResultFragment"
         android:name="com.example.lavilog.SearchUserId.SearchUserIdResultFragment"
         android:label="fragment_search_user_id_result"
         tools:layout="@layout/fragment_search_user_id_result" />
+    <fragment
+        android:id="@+id/defaultQRcodeFragment"
+        android:name="com.example.lavilog.QRcode.DefaultQRcodeFragment"
+        android:label="fragment_default_qrcode"
+        tools:layout="@layout/fragment_default_qrcode" >
+        <action
+            android:id="@+id/action_defaultQRcodeFragment_to_QRcodeFragment"
+            app:destination="@id/QRcodeFragment" />
+    </fragment>
 </navigation>

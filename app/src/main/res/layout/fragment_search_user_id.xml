@@ -15,9 +15,14 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+
+        android:iconifiedByDefault="false"
+        android:queryHint="請輸入好友的ID進行搜尋"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <!--若iconifiedByDefault為true SearchView下方虛線會先消失,點擊才出現-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
