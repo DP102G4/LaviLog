@@ -33,7 +33,6 @@ public class SearchUserIdFragment extends Fragment {
     private SearchView searchView;
     private List<User> users;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
