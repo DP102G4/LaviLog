@@ -54,17 +54,23 @@ public class SearchUserIdFragment extends Fragment {
 
         searchView = view.findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            // 必須能監聽到searchView內文字的改變
             @Override
-            public boolean onQueryTextSubmit(String newText) {
+            public boolean onQueryTextSubmit(String newText) { // 打完才搜尋
+                // 當user輸入東西,searchＶiew會傳回內容（newText)
                 recyclerView.setLayoutManager(new LinearLayoutManager(activity));
                 recyclerView.setAdapter(new UserAdapter(activity, users));
                 SearchUserIdFragment.UserAdapter adapter = (SearchUserIdFragment.UserAdapter) recyclerView.getAdapter();
+                // 要做SearchView時,須先做好SearchView的內容,本文為recyclerView
                 List<User> searchUserId = new ArrayList<>();
-                if (adapter != null) {
-                    // 如果搜尋條件為空字串，就顯示原始資料；否則就顯示搜尋後結果
-                    if (newText.isEmpty()) {
-                        if(users!=null) {
-                            users.removeAll(users); // 全部刪掉
+                // 為了搜集依照使用者提供的關鍵字,須設定一個新的List
+                // 將符合條件的data匯入
+                // 搜尋原始資料內有無包含關鍵字(不區別大小寫)
+                if (adapter != null) {                  // 如果適配器 不等於 空值
+                    // 如果搜尋條件為空字串，就顯示原始資料(User原始為空白)；否則就顯示搜尋後結果
+                    if (newText.isEmpty()) {            // 如果搜尋條件為空字串
+                        if(users!=null) {               // 如果user資料 不等於 空值
+                            users.removeAll(users);     // 全部刪掉
                             adapter.setUsers(users);
                         }
                     } else {
@@ -72,6 +78,7 @@ public class SearchUserIdFragment extends Fragment {
                         // 搜尋原始資料 equals
                         for (User user : users) {
                             if (user.getName().toUpperCase().equals(newText.toUpperCase())) {
+                                // contain為比對內容的動作,是否包含關鍵字
                                 searchUserId.add(user);
                             }
                         }
@@ -79,17 +86,20 @@ public class SearchUserIdFragment extends Fragment {
                     }
                 }
                 return false;
+                // return false代表事件沒有被處理到,需要往下走,不要終止
+                // webView的onKeyDown同理,返回上一頁是該返回網頁還是widget
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
+            public boolean onQueryTextChange(String newText) { // 打字就搜尋
                 recyclerView.setLayoutManager(new LinearLayoutManager(activity));
                 recyclerView.setAdapter(new UserAdapter(activity, users));
                 SearchUserIdFragment.UserAdapter adapter = (SearchUserIdFragment.UserAdapter) recyclerView.getAdapter();
                 List<User> searchUserId = new ArrayList<>();
                 if (adapter != null) {                  // 如果適配器 不等於 空值
+                    // 如果搜尋條件為空字串，就顯示原始資料(User原始為空白)；否則就顯示搜尋後結果
                     if (newText.isEmpty()) {            // 如果搜尋條件為空字串
-                        if (users != null) {            //
+                        if (users != null) {            // 如果user資料 不等於 空值
                             users.removeAll(users);     // 清空資料
                             adapter.setUsers(users);
                         }
@@ -99,6 +109,8 @@ public class SearchUserIdFragment extends Fragment {
                     }
                 }
                 return false;
+                // return false代表事件沒有被處理到,需要往下走,不要終止
+                // webView的onKeyDown同理,返回上一頁是該返回網頁還是widget
             }
         });
     }
@@ -114,6 +126,7 @@ public class SearchUserIdFragment extends Fragment {
         public void setUsers(List<User> users) {
             this.users = users;
         }
+        // 須依照SearchView的選擇調整users
 
         @Override
         public int getItemCount() {
