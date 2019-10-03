@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -33,12 +35,16 @@ public class signUp_3_Fragment extends Fragment {
     Button btConfirm, btBack;
     private FirebaseFirestore db;
     private FirebaseStorage storage;
+    private FirebaseAuth auth;
+    Boolean isRegister = false;//註冊帳號
+    Boolean isRegisterImformation;//填入註冊資料
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         acitvity = getActivity();
         db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -96,36 +102,67 @@ public class signUp_3_Fragment extends Fragment {
                 } else {
                     tvStatus_Name.setText("");
                 }
-                User user = new User();
-                final String id = db.collection("users").document().getId();
-                user.setId(id);
-                user.setAccount(account);
-                user.setPassword(password);
-                user.setName(name);
-                registered(user);
-                Log.e("TAG_", user.toString());
+                isRegisterImformation=signUp(account,password);
+                tvStatus_Account.setText("是否註冊資料: "+isRegisterImformation.toString());
+                if(isRegisterImformation){
+                    User user = new User();
+                    final String id = db.collection("users").document().getId();
+                    user.setId(id);
+                    user.setAccount(account);
+                    user.setPassword(password);
+                    user.setName(name);
+                    registered(user);
+                }
+//                User user = new User();
+//                final String id = db.collection("users").document().getId();
+//                user.setId(id);
+//                user.setAccount(account);
+//                user.setPassword(password);
+//                user.setName(name);
+//                registered(user);
+//                Log.e("TAG_", user.toString());
             }
         });
     }
-
+    private boolean signUp(String account, String password) {
+        auth.createUserWithEmailAndPassword(account,password)
+                .addOnCompleteListener(acitvity, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            isRegister = true;
+                            Toast.makeText(acitvity,"註冊成功",Toast.LENGTH_SHORT).show();
+                            tvStatus_Name.setText("firebase新增成功");
+                            tvStatus_Password.setText(isRegister.toString());
+                        }else{
+                            isRegister = false;
+                            Exception exception = task.getException();
+                            String message = exception == null ? "註冊失敗" : exception.getMessage();
+                            Toast.makeText(acitvity,"註冊失敗",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+        return isRegister;
+    }
     private void registered(User user) {
-        final String account = user.getAccount();
-        final String id = user.getId();
-        Query query = db.collection("users")
-                .whereEqualTo("account", account);
-        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
-                for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
-                    User userFB = documentSnapshot.toObject(User.class);
-                    String accountFB = userFB.getAccount();
-                    if (account.equals(accountFB)) {
-                        tvStatus_Account.setText("帳號已重複註冊");
-                    }
-                    }
-                }
-        });
+        db.collection("users").add(user);
+//        final String account = user.getAccount();
+//        final String id = user.getId();
+//        Query query = db.collection("users");
+////                .whereEqualTo("account", account);
+//        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
+//                for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+//                    User userFB = documentSnapshot.toObject(User.class);
+//                    String accountFB = userFB.getAccount();
+//                    if (account.equals(accountFB)) {
+//                        tvStatus_Account.setText("帳號已重複註冊");
+//                    }
+//                    }
+//                }
+//        });
 //            db.collection("users").document(user.getId()).set(user)
 //                    .addOnCompleteListener(new OnCompleteListener<Void>() {
 //                        @Override
