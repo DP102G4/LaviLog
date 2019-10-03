@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/friendHomeFragment">
+    app:startDestination="@id/signInFragment">
 
     <fragment
         android:id="@+id/friendHomeFragment"
@@ -59,7 +59,11 @@
         android:id="@+id/signUp_1_Fragment"
         android:name="com.example.lavilog.signUp_1_Fragment"
         android:label="signUp_1_Fragment"
-        tools:layout="@layout/fragment_sign_up_1_"/>
+        tools:layout="@layout/fragment_sign_up_1_">
+        <action
+            android:id="@+id/action_signUp_1_Fragment_to_signUp_2_Fragment"
+            app:destination="@id/signUp_2_Fragment" />
+    </fragment>
     <fragment
         android:id="@+id/friendSearchResultFragment"
         android:name="com.example.lavilog.SearchFriend.FriendSearchResultFragment"
@@ -87,5 +91,23 @@
         <action
             android:id="@+id/action_defaultQRcodeFragment_to_QRcodeFragment"
             app:destination="@id/QRcodeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUp_2_Fragment"
+        android:name="com.example.lavilog.signUp_2_Fragment"
+        android:label="fragment_sign_up_2_"
+        tools:layout="@layout/fragment_sign_up_2_" >
+        <action
+            android:id="@+id/action_signUp_2_Fragment_to_signUp_3_Fragment"
+            app:destination="@id/signUp_3_Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUp_3_Fragment"
+        android:name="com.example.lavilog.signUp_3_Fragment"
+        android:label="fragment_sign_up_3_"
+        tools:layout="@layout/fragment_sign_up_3_" >
+        <action
+            android:id="@+id/action_signUp_3_Fragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
     </fragment>
 </navigation>
