@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1055270585698",
+    "firebase_url": "https://lavilog.firebaseio.com",
+    "project_id": "lavilog",
+    "storage_bucket": "lavilog.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1055270585698:android:4b23036bdeac8191e2983b",
+        "android_client_info": {
+          "package_name": "com.example.lavilog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1055270585698-8n1tu2mhjbt5ncoejst4am6jolm2urpr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0r0MRAJr3UZ8QQdVJuewfWA9ZcXtoUPM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1055270585698-8n1tu2mhjbt5ncoejst4am6jolm2urpr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

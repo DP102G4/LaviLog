@@ -53,4 +53,121 @@
         android:name="com.example.lavilog.PickPictureFragment"
         android:label="fragment_pick_picture"
         tools:layout="@layout/fragment_pick_picture" />
+    app:startDestination="@id/signInFragment">
+
+    <fragment
+        android:id="@+id/friendHomeFragment"
+        android:name="com.example.lavilog.FriendHomeFragment"
+        android:label="fragment_friend_home"
+        tools:layout="@layout/fragment_friend_home" >
+        <action
+            android:id="@+id/action_friendHomeFragment_to_friendSearchFragment"
+            app:destination="@id/friendSearchFragment" />
+        <action
+            android:id="@+id/action_friendHomeFragment_to_searchUserIdFragment"
+            app:destination="@id/searchUserIdFragment" />
+        <action
+            android:id="@+id/action_friendHomeFragment_to_QRcodeFragment"
+            app:destination="@id/QRcodeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/friendSearchFragment"
+        android:name="com.example.lavilog.SearchFriend.FriendSearchFragment"
+        android:label="fragment_friend_search"
+        tools:layout="@layout/fragment_friend_search" >
+        <action
+            android:id="@+id/action_friendSearchFragment_to_friendSearchResultFragment"
+            app:destination="@id/friendSearchResultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.example.lavilog.signInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" >
+        <action
+            android:id="@+id/action_signInFragment_to_forgetPW_1_Fragment"
+            app:destination="@id/forgetPW_1_Fragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_signUp_1_Fragment"
+            app:destination="@id/signUp_1_Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchUserIdFragment"
+        android:name="com.example.lavilog.SearchUserId.SearchUserIdFragment"
+        android:label="fragment_search_user_id"
+        tools:layout="@layout/fragment_search_user_id" >
+        <action
+            android:id="@+id/action_searchUserIdFragment_to_searchUserIdResultFragment"
+            app:destination="@id/searchUserIdResultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/forgetPW_1_Fragment"
+        android:name="com.example.lavilog.forgetPW.forgetPW_1_Fragment"
+        android:label="fragment_forget_pw_1_"
+        tools:layout="@layout/fragment_forget_pw_1_" >
+        <action
+            android:id="@+id/action_forgetPW_1_Fragment_to_fotgetPW_2_Fragment"
+            app:destination="@id/fotgetPW_2_Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUp_1_Fragment"
+        android:name="com.example.lavilog.signUp.signUp_1_Fragment"
+        android:label="signUp_1_Fragment"
+        tools:layout="@layout/fragment_sign_up_1_">
+        <action
+            android:id="@+id/action_signUp_1_Fragment_to_signUp_2_Fragment"
+            app:destination="@id/signUp_2_Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/friendSearchResultFragment"
+        android:name="com.example.lavilog.SearchFriend.FriendSearchResultFragment"
+        android:label="fragment_friend_search_result"
+        tools:layout="@layout/fragment_friend_search_result" />
+    <fragment
+        android:id="@+id/QRcodeFragment"
+        android:name="com.example.lavilog.QRcode.QRcodeFragment"
+        android:label="fragment_qrcode"
+        tools:layout="@layout/fragment_qrcode" >
+        <action
+            android:id="@+id/action_QRcodeFragment_to_defaultQRcodeFragment"
+            app:destination="@id/defaultQRcodeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchUserIdResultFragment"
+        android:name="com.example.lavilog.SearchUserId.SearchUserIdResultFragment"
+        android:label="fragment_search_user_id_result"
+        tools:layout="@layout/fragment_search_user_id_result" />
+    <fragment
+        android:id="@+id/defaultQRcodeFragment"
+        android:name="com.example.lavilog.QRcode.DefaultQRcodeFragment"
+        android:label="fragment_default_qrcode"
+        tools:layout="@layout/fragment_default_qrcode" />
+    <fragment
+        android:id="@+id/signUp_2_Fragment"
+        android:name="com.example.lavilog.signUp.signUp_2_Fragment"
+        android:label="fragment_sign_up_2_"
+        tools:layout="@layout/fragment_sign_up_2_" >
+        <action
+            android:id="@+id/action_signUp_2_Fragment_to_signUp_3_Fragment"
+            app:destination="@id/signUp_3_Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUp_3_Fragment"
+        android:name="com.example.lavilog.signUp.signUp_3_Fragment"
+        android:label="fragment_sign_up_3_"
+        tools:layout="@layout/fragment_sign_up_3_" >
+        <action
+            android:id="@+id/action_signUp_3_Fragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fotgetPW_2_Fragment"
+        android:name="com.example.lavilog.forgetPW.fotgetPW_2_Fragment"
+        android:label="fragment_fotget_pw_2_"
+        tools:layout="@layout/fragment_fotget_pw_2_" />
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.example.lavilog.AccountFragment"
+        android:label="fragment_account"
+        tools:layout="@layout/fragment_account" />
 </navigation>
