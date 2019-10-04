@@ -123,6 +123,9 @@
         <action
             android:id="@+id/action_QRcodeFragment_to_defaultQRcodeFragment"
             app:destination="@id/defaultQRcodeFragment" />
+        <action
+            android:id="@+id/action_QRcodeFragment_to_QRcode2Fragment"
+            app:destination="@id/QRcode2Fragment" />
     </fragment>
     <fragment
         android:id="@+id/searchUserIdResultFragment"
@@ -133,7 +136,11 @@
         android:id="@+id/defaultQRcodeFragment"
         android:name="com.example.lavilog.QRcode.DefaultQRcodeFragment"
         android:label="fragment_default_qrcode"
-        tools:layout="@layout/fragment_default_qrcode" />
+        tools:layout="@layout/fragment_default_qrcode" >
+        <action
+            android:id="@+id/action_defaultQRcodeFragment_to_QRcode2Fragment2"
+            app:destination="@id/QRcode2Fragment" />
+    </fragment>
     <fragment
         android:id="@+id/signUp_2_Fragment"
         android:name="com.example.lavilog.signUp.signUp_2_Fragment"
@@ -162,4 +169,13 @@
         android:name="com.example.lavilog.AccountFragment"
         android:label="fragment_account"
         tools:layout="@layout/fragment_account" />
+    <fragment
+        android:id="@+id/QRcode2Fragment"
+        android:name="com.example.lavilog.QRcode.QRcode2Fragment"
+        android:label="fragment_qrcode2"
+        tools:layout="@layout/fragment_qrcode2" >
+        <action
+            android:id="@+id/action_QRcode2Fragment_to_searchUserIdFragment"
+            app:destination="@id/searchUserIdFragment" />
+    </fragment>
 </navigation>

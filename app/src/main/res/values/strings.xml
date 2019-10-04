@@ -16,4 +16,5 @@
     <string name="textTakePicture">開啟相機</string>
     <string name="textCancel">取消</string>
     <string name="textName">母湯哲</string>
+    <string name="textResultNotFound">掃描不到結果</string>
 </resources>
