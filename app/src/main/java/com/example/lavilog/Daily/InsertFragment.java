@@ -1,4 +1,4 @@
-package com.example.lavilog;
+package com.example.lavilog.Daily;
 
 
 import android.Manifest;
@@ -32,6 +32,9 @@ import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.lavilog.R;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
@@ -43,7 +46,7 @@ public class InsertFragment extends Fragment {
 
     private static final String TAG = "TAG_InsertFragment";
     private Activity activity;
-    //private FirebaseFirestor db;
+    private FirebaseFirestore db;
 //    private FirebaseStorage storage;
     private File file;
     private Answer answer;

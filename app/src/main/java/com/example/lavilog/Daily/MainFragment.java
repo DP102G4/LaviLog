@@ -1,4 +1,4 @@
-package com.example.lavilog;
+package com.example.lavilog.Daily;
 
 
 import android.app.Activity;
@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.example.lavilog.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 

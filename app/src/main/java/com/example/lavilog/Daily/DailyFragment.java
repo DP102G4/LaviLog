@@ -1,4 +1,4 @@
-package com.example.lavilog;
+package com.example.lavilog.Daily;
 
 
 import android.app.Activity;
@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+
+import com.example.lavilog.R;
 
 
 public class DailyFragment extends Fragment {
