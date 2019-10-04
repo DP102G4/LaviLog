@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="50sp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/purchaseDetail"
+        android:background="@drawable/purchasedetail"
         app:layout_constraintStart_toStartOf="@+id/btMyprofile"
         app:layout_constraintTop_toBottomOf="@+id/btMyprofile" />
 
@@ -51,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="50sp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/helpQA"
+        android:background="@drawable/helpqa"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 

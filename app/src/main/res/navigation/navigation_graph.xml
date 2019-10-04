@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/friendHomeFragment">
 
     <fragment
         android:id="@+id/mainFragment"
@@ -33,11 +33,7 @@
         android:id="@+id/instertFragment"
         android:name="com.example.lavilog.InsertFragment"
         android:label="fragment_insert"
-        tools:layout="@layout/fragment_insert" >
-        <action
-            android:id="@+id/action_instertFragment_to_pickPictureFragment"
-            app:destination="@id/pickPictureFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_insert" />
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.lavilog.SearchFragment"
@@ -47,14 +43,10 @@
         android:id="@+id/albumFragment"
         android:name="com.example.lavilog.AlbumFragment"
         android:label="fragment_album"
-        tools:layout="@layout/fragment_album" />
-    <fragment
-        android:id="@+id/pickPictureFragment"
-        android:name="com.example.lavilog.PickPictureFragment"
-        android:label="fragment_pick_picture"
-        tools:layout="@layout/fragment_pick_picture" />
+        tools:layout="@layout/fragment_album" /><![CDATA[
     app:startDestination="@id/signInFragment">
 
+    ]]>
     <fragment
         android:id="@+id/friendHomeFragment"
         android:name="com.example.lavilog.FriendHomeFragment"
