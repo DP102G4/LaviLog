@@ -30,11 +30,18 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui:2.1.0'
     implementation 'com.google.firebase:firebase-auth:19.1.0'
     implementation 'com.google.firebase:firebase-storage:19.1.0'
+    // build.gradle (Module) 增加Cloud Storage Android library設定
     implementation 'com.google.firebase:firebase-firestore:21.1.1'
+    implementation 'com.google.firebase:firebase-core:17.1.0'
+
     implementation 'com.android.support:multidex:1.0.0'
 
     implementation 'com.google.zxing:core:3.3.3' // 產生QRcode
     implementation 'com.journeyapps:zxing-android-embedded:3.4.0' // 掃描QRcode
+    implementation 'androidx.navigation:navigation-fragment:2.1.0'
+    implementation 'androidx.navigation:navigation-ui:2.1.0'
+
+
 }
 
 apply plugin: 'com.google.gms.google-services'

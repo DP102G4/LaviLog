@@ -21,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lavilog.R;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,9 @@ public class SearchUserIdFragment extends Fragment {
     private SearchView searchView;
     private List<User> users;
 
+    private FirebaseFirestore db;
+    private FirebaseStorage storage;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,6 +49,8 @@ public class SearchUserIdFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = getActivity();
+        db = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
     }
 
     @Override
@@ -154,6 +161,8 @@ public class SearchUserIdFragment extends Fragment {
             final User user = users.get(index);
             viewholder.ivUser.setImageResource(user.getImageId());
             viewholder.tvUserName.setText(user.getName());
+
+            // 點選會開啟好友頁面
             viewholder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:icon="@drawable/home"
+        android:title="首頁"
+        android:id="@+id/mainFragment"/>
+    <item
+        android:icon="@drawable/videoicon"
+        android:title="影片專區" />
+    <item
+        android:icon="@drawable/friendicon"
+        android:title="好友"
+        android:id="@+id/friendHomeFragment"/>
+    <item
+        android:icon="@drawable/shopicon"
+        android:title="購物" />
+    <item
+        android:icon="@drawable/myicon"
+        android:title="我的檔案" />
+</menu>
