@@ -11,10 +11,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="32dp"
         android:background="#C2FCE3"
-        android:text="開始掃描條碼"
+        android:text="1 . 點擊開始掃描條碼"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,20 +33,21 @@
 
     <TextView
         android:id="@+id/tvResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="177dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="177dp"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="#DFD2D2"
+        android:gravity="center"
         android:text="掃描後顯示結果"
         android:textColor="#F44336"
+
         android:textIsSelectable="true"
 
         android:textSize="20sp"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPrompt" />
+        app:layout_constraintTop_toBottomOf="@+id/tvPrompt3" />
     <!-- android:textIsSelectable="true" // 可被游標選取 -->>
 
     <TextView
@@ -65,24 +66,28 @@
         android:id="@+id/btToSearchUserId"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="150dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="32dp"
         android:background="#C2FCE3"
-        android:text="貼上複製內容"
+        android:text="3 . 點擊後貼上複製內容"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvResult" />
 
     <TextView
         android:id="@+id/tvPrompt3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="55dp"
-        android:layout_marginEnd="8dp"
-        android:text="掃描結果 : "
+        android:layout_marginEnd="32dp"
+        android:background="#C2FCE3"
+        android:gravity="center"
+        android:text="2 . 複製下方掃描結果"
         android:textColor="#000000"
-        app:layout_constraintEnd_toStartOf="@+id/tvResult"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPrompt" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
