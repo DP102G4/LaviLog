@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lavilog.R;
@@ -35,11 +36,11 @@ public class signUp_2_Fragment extends Fragment {
     Activity activity;
     EditText etPhone,etVerificationCode;
     Button btConfirm,btSend,btResend;
+    TextView textView3,textView4,textView5;
     private String verificationId;
     private ConstraintLayout layoutVerify;
     private PhoneAuthProvider.ForceResendingToken resendToken;
     private FirebaseAuth auth;
-    Boolean isAuthPhone;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,6 +67,9 @@ public class signUp_2_Fragment extends Fragment {
         btResend=view.findViewById(R.id.btResend);
         etVerificationCode=view.findViewById(R.id.etVerificationCode);
         btConfirm=view.findViewById(R.id.btConfirm2);
+        textView3=view.findViewById(R.id.textView3);
+        textView4=view.findViewById(R.id.textView4);
+        textView5=view.findViewById(R.id.textView5);
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,6 +79,10 @@ public class signUp_2_Fragment extends Fragment {
                     return;
                 }
                 sendVerificationCode(phone);
+                textView3.setVisibility(View.GONE);
+                textView4.setVisibility(View.GONE);
+                textView5.setVisibility(View.GONE);
+                etPhone.setVisibility(View.GONE);
                 btSend.setVisibility(View.GONE);
             }
         });
@@ -87,12 +95,9 @@ public class signUp_2_Fragment extends Fragment {
                     return;
                 }
                 verifyPhoneNumberWithCode(verificationId, verificationCode);
-                if(isAuthPhone) {
-                    String phone = etPhone.getText().toString().trim();
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("phone", phone);
-                    Navigation.findNavController(view).navigate(R.id.action_signUp_2_Fragment_to_signUp_3_Fragment, bundle);
-                }
+
+
+
             }
         });
 
@@ -139,13 +144,14 @@ public class signUp_2_Fragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                           isAuthPhone=true;
+                            String phone = etPhone.getText().toString().trim();
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("phone", phone);
+                            Navigation.findNavController(etPhone).navigate(R.id.action_signUp_2_Fragment_to_signUp_3_Fragment, bundle);
                         } else {
-                            isAuthPhone=false;
                             Exception exception = task.getException();
-                            String message = exception == null ? "登入失敗" : exception.getMessage();
-                            Toast.makeText(activity,"登入失敗",Toast.LENGTH_SHORT).show();
-//                            textView.setText(message);
+                            String message = exception == null ? "驗證失敗" : exception.getMessage();
+//                            Toast.makeText(activity,"登入失敗",Toast.LENGTH_SHORT).show();
                             if (exception instanceof FirebaseAuthInvalidCredentialsException) {
                                 etVerificationCode.setError("驗證碼錯誤");
                             }

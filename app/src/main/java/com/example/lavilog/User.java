@@ -8,13 +8,23 @@ public class User implements Serializable {
     private String password;
     private String name;
     private String imagePath;
+    private String phone;
 
     public User(){}
-    public User(String id,String account,String password,String name){
+    public User(String id,String account,String password,String name,String phone){
         this.id=id;
         this.account=account;
         this.password=password;
         this.name=name;
+        this.phone=phone;
+    }
+    public User(String id,String account,String password,String name,String phone,String imagePath){
+        this.id=id;
+        this.account=account;
+        this.password=password;
+        this.name=name;
+        this.phone=phone;
+        this.imagePath=imagePath;
     }
     public String getId() {
         return id;
@@ -54,5 +64,12 @@ public class User implements Serializable {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

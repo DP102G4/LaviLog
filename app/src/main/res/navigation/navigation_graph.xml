@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/signUp_2_Fragment">
+    app:startDestination="@id/mainFragment">
 
     <fragment
         android:id="@+id/mainFragment"
@@ -98,8 +98,8 @@
         android:label="fragment_forget_pw_1_"
         tools:layout="@layout/fragment_forget_pw_1_" >
         <action
-            android:id="@+id/action_forgetPW_1_Fragment_to_fotgetPW_2_Fragment"
-            app:destination="@id/fotgetPW_2_Fragment" />
+            android:id="@+id/action_forgetPW_1_Fragment_to_forgetPW_2_Fragment"
+            app:destination="@id/forgetPW_2_Fragment" />
     </fragment>
     <fragment
         android:id="@+id/signUp_1_Fragment"
@@ -158,12 +158,15 @@
         <action
             android:id="@+id/action_signUp_3_Fragment_to_signInFragment"
             app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_signUp_3_Fragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
-        android:id="@+id/fotgetPW_2_Fragment"
-        android:name="com.example.lavilog.forgetPW.fotgetPW_2_Fragment"
-        android:label="fragment_fotget_pw_2_"
-        tools:layout="@layout/fragment_fotget_pw_2_" />
+        android:id="@+id/forgetPW_2_Fragment"
+        android:name="com.example.lavilog.forgetPW.forgetPW_2_Fragment"
+        android:label="fragment_forget_pw_2_"
+        tools:layout="@layout/fragment_forget_pw_2_" />
     <fragment
         android:id="@+id/accountFragment"
         android:name="com.example.lavilog.AccountFragment"
