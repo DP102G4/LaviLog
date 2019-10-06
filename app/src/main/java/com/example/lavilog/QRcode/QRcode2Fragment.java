@@ -39,6 +39,7 @@ public class QRcode2Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        activity.setTitle("行動條碼掃條");
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_qrcode2, container, false);
     }

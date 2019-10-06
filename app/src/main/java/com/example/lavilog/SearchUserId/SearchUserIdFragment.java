@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.lavilog.R;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -144,7 +143,7 @@ public class SearchUserIdFragment extends Fragment {
             TextView tvUserName;
             public MyViewHolder(View itemView) {
                 super(itemView);
-                ivUser = itemView.findViewById(R.id.ivUser);
+                ivUser = itemView.findViewById(R.id.ivFriend);
                 tvUserName = itemView.findViewById(R.id.tvUserName);
             }
         }
