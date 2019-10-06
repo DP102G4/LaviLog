@@ -99,10 +99,7 @@ public class forgetPW_2_Fragment extends Fragment {
         });
     }
 
-    private void changePW(String accountChangePW, String passwordChangePW,String password,String id) {
-        signUPandUpdate(accountChangePW,passwordChangePW,password,id);
-    }
-    private void signUPandUpdate(final String accountChangePW,final String passwordChangePW, final String password,final String id) {
+    private void changePW(final String accountChangePW, final String passwordChangePW,final String password,final String id) {
         auth.signInWithEmailAndPassword(accountChangePW, passwordChangePW).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -137,13 +134,13 @@ public class forgetPW_2_Fragment extends Fragment {
                                             }
                                         });
                                     } else {
-                                        Toast.makeText(activity, "密碼修改失敗", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(activity, "建立異常，密碼修改失敗", Toast.LENGTH_SHORT).show();
 
                                     }
                                 }
                             });
                 }else{
-                    Toast.makeText(activity, "密碼U失敗", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "登入失敗，密碼修改失敗", Toast.LENGTH_SHORT).show();
                 }
             }
         });
