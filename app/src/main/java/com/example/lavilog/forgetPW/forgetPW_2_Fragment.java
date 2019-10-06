@@ -26,6 +26,7 @@ import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -39,10 +40,8 @@ public class forgetPW_2_Fragment extends Fragment {
     EditText etPassword,etPassword2;
     Button btChangePW;
     TextView tvChangePW;
-    private FirebaseStorage storage;
     private FirebaseAuth auth;
     private FirebaseFirestore db;
-    int count=0;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,12 +61,13 @@ public class forgetPW_2_Fragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Bundle bundle=getArguments();
-        final String phone=(String)bundle.getSerializable("phone");
         tvChangePW=view.findViewById(R.id.tvChangePW);
         etPassword=view.findViewById(R.id.etPassword);
         etPassword2=view.findViewById(R.id.etPassword2);
         btChangePW=view.findViewById(R.id.btChangePW);
+        Bundle bundle=getArguments();
+        final String phone=(String)bundle.getSerializable("phone");
+        auth.signOut();
 
         btChangePW.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,25 +75,75 @@ public class forgetPW_2_Fragment extends Fragment {
                 final String password=etPassword.getText().toString().trim();
                 String password2=etPassword2.getText().toString().trim();
                 if(password.equals(password2)){
-                    tvChangePW.setText("111");
                     Query query =db.collection("users");
-                    tvChangePW.setText(query.toString());
                     query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
                             for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
                                 User userChangePW = documentSnapshot.toObject(User.class);
-                            String phone=userChangePW.getPhone();
-//                                String id = userChangePW.getId();
-//                                userChangePW.setPassword(password);
-//                                db.collection("users").document(id).set(userChangePW);
-//                                Toast.makeText(activity,"修改完成",Toast.LENGTH_SHORT).show();
+                                String phonePW=userChangePW.getPhone();
+                                if(phone.equals(phonePW)){
+                                    String accountChangePW=userChangePW.getAccount();
+                                    String passwordChangePW=userChangePW.getPassword();
+                                    String id = userChangePW.getId();
+                                    changePW(accountChangePW,passwordChangePW,password,id);
+                                }
                             }
                         }
                     });
                 }else{
                     tvChangePW.setText("兩次密碼輸入不同，請重新輸入");
+                }
+            }
+        });
+    }
+
+    private void changePW(String accountChangePW, String passwordChangePW,String password,String id) {
+        signUPandUpdate(accountChangePW,passwordChangePW,password,id);
+    }
+    private void signUPandUpdate(final String accountChangePW,final String passwordChangePW, final String password,final String id) {
+        auth.signInWithEmailAndPassword(accountChangePW, passwordChangePW).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    FirebaseUser user1 = auth.getCurrentUser();
+                    user1.delete();
+                    Toast.makeText(activity,"111",Toast.LENGTH_SHORT).show();
+                    auth.createUserWithEmailAndPassword(accountChangePW, password)
+                            .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        Query query = db.collection("users");
+                                        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
+                                                for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                                                    User userChangePW = documentSnapshot.toObject(User.class);
+                                                    String account = userChangePW.getAccount();
+                                                    if (account.equals(accountChangePW)) {
+                                                        userChangePW.setPassword(password);
+                                                        db.collection("users").document(id).set(userChangePW);
+                                                        Toast.makeText(activity, "修改完成，請重新登入", Toast.LENGTH_SHORT).show();
+                                                        Navigation.findNavController(btChangePW).navigate(R.id.action_forgetPW_2_Fragment_to_signInFragment);
+                                                    } else {
+                                                        Exception exception = task.getException();
+                                                        String message = exception == null ? "" : exception.getMessage();
+                                                        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    } else {
+                                        Toast.makeText(activity, "密碼修改失敗", Toast.LENGTH_SHORT).show();
+
+                                    }
+                                }
+                            });
+                }else{
+                    Toast.makeText(activity, "密碼U失敗", Toast.LENGTH_SHORT).show();
                 }
             }
         });

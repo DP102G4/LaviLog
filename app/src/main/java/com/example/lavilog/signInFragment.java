@@ -35,6 +35,7 @@ public class signInFragment extends Fragment {
         super.onCreate(savedInstanceState);
         activity = getActivity();
         auth = FirebaseAuth.getInstance();
+
     }
 
     @Override
@@ -59,7 +60,12 @@ public class signInFragment extends Fragment {
             public void onClick(View v) {
                 String account = etAccount.getText().toString();
                 String password = etPassword.getText().toString();
-                signIn(account, password);
+                if(!account.isEmpty()||!password.isEmpty()){
+                    signIn(account, password);
+                }else{
+                    tvStatus.setText("帳號與密碼不得為空");
+                }
+
             }
         });
 
@@ -87,9 +93,7 @@ public class signInFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         // 登入成功轉至下頁；失敗則顯示錯誤訊息
                         if (task.isSuccessful()) {
-                            Toast.makeText(activity,"登入成功，首頁製作中",Toast.LENGTH_SHORT).show();
-   //                         Navigation.findNavController(etAccount)
-   //                                 .navigate(R.id.);id
+                            Navigation.findNavController(etAccount).navigate(R.id.action_signInFragment_to_mainFragment);
                         } else {
                             Exception exception = task.getException();
                             String message = (exception == null ? "登入失敗" : exception.getMessage());

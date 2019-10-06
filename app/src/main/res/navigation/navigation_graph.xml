@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/signInFragment">
 
     <fragment
         android:id="@+id/mainFragment"
@@ -82,6 +82,9 @@
         <action
             android:id="@+id/action_signInFragment_to_signUp_1_Fragment"
             app:destination="@id/signUp_1_Fragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchUserIdFragment"
@@ -166,7 +169,11 @@
         android:id="@+id/forgetPW_2_Fragment"
         android:name="com.example.lavilog.forgetPW.forgetPW_2_Fragment"
         android:label="fragment_forget_pw_2_"
-        tools:layout="@layout/fragment_forget_pw_2_" />
+        tools:layout="@layout/fragment_forget_pw_2_" >
+        <action
+            android:id="@+id/action_forgetPW_2_Fragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
     <fragment
         android:id="@+id/accountFragment"
         android:name="com.example.lavilog.AccountFragment"
