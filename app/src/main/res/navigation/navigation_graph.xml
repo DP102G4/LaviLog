@@ -43,10 +43,7 @@
         android:id="@+id/albumFragment"
         android:name="com.example.lavilog.Daily.AlbumFragment"
         android:label="fragment_album"
-        tools:layout="@layout/fragment_album" /><![CDATA[
-    app:startDestination="@id/signInFragment">
-
-    ]]>
+        tools:layout="@layout/fragment_album" />
     <fragment
         android:id="@+id/friendHomeFragment"
         android:name="com.example.lavilog.FriendHomeFragment"
