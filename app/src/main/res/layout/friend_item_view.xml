@@ -20,7 +20,6 @@
             android:id="@+id/ivFriend"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/mothersoup1"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
