@@ -32,6 +32,7 @@ public class SearchUserIdResultFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        activity.setTitle("LaviLog");
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search_user_id_result, container, false);
     }

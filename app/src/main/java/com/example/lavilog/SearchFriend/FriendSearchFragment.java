@@ -57,7 +57,7 @@ public class FriendSearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        activity.setTitle("好友");
+        activity.setTitle("好友管理");
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_friend_search, container, false);
     }
@@ -145,17 +145,24 @@ public class FriendSearchFragment extends Fragment {
         db.collection("friends").get() // 把friends裡面所有的每一筆資料都取出
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {       // snapshot 螢幕截圖,複製品,快照
-                        if (task.isSuccessful() && task.getResult() != null) {        // 拿到資料 ,就去跑for each取得每一筆資料
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        // snapshot 螢幕截圖,複製品,快照
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            // 拿到資料 ,就去跑for each取得每一筆資料
                             List<Friend> friends = new ArrayList<>();
-                            for (QueryDocumentSnapshot document : task.getResult()) { // result內含QuerySnapshot
-                                friends.add(document.toObject(Friend.class)); // 類似gson.fromJson,原本是要給key取值,提供我們認為document的類別,spot.class
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                // result內含QuerySnapshot
+                                friends.add(document.toObject(Friend.class));
+                                // 類似gson.fromJson,原本是要給key取值,提供我們認為document的類別,spot.class
+                                // 讓系統去依照finders的格式去解析document
+
+//                                測試
 //                                Friend friend1=(document.toObject(Friend.class));
 //                                friends.add(friend1);
 //                                if (friends!=null){
 //                                    textView123.setText(friends.toString());
 //                                }
-                            }                                                         // 讓系統去依照finders的格式去解析document
+                            }
                             recyclerView.setAdapter(new FriendAdapter(activity, friends));
                         }  else {
                             String message = task.getException() == null ?

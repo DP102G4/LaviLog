@@ -34,6 +34,7 @@ public class DefaultQRcodeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        activity.setTitle("顯示行動條碼");
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_default_qrcode, container, false);
     }

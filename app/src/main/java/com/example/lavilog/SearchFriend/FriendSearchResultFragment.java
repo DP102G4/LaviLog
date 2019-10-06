@@ -26,6 +26,7 @@ public class FriendSearchResultFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        activity.setTitle("LaviLog");
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_friend_search_result, container, false);
     }
