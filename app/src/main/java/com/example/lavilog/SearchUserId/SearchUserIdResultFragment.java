@@ -39,8 +39,8 @@ public class SearchUserIdResultFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ivUser = view.findViewById(R.id.ivUser);
-        tvName = view.findViewById(R.id.tvName);
+        ivUser = view.findViewById(R.id.ivFriend);
+        tvName = view.findViewById(R.id.tvFriendName);
         btAddFriend = view.findViewById(R.id.btAddFriend);
 
         btAddFriend.setOnClickListener(new View.OnClickListener() {

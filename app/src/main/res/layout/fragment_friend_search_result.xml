@@ -7,7 +7,7 @@
     tools:context=".SearchFriend.FriendSearchResultFragment" >
 
     <ImageView
-        android:id="@+id/ivUser"
+        android:id="@+id/ivFriend"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="140dp"
@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/mothersoup1" />
 
     <TextView
-        android:id="@+id/tvName"
+        android:id="@+id/tvFriendName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="180dp"
@@ -29,7 +29,7 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivUser" />
+        app:layout_constraintTop_toBottomOf="@+id/ivFriend" />
 
     <Button
         android:id="@+id/btAddFriend"
@@ -43,5 +43,5 @@
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvName" />
+        app:layout_constraintTop_toBottomOf="@+id/tvFriendName" />
 </androidx.constraintlayout.widget.ConstraintLayout>

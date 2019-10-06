@@ -1,20 +1,18 @@
 package com.example.lavilog.SearchFriend;
 
-public class Friend {
-    private int imageId;
+import java.io.Serializable;
+
+public class Friend implements Serializable {
     private String name;
+    private String imagePath;
 
-    public Friend(int imageId, String name) {
-        this.imageId = imageId;
+    public Friend() {
+
+    }
+
+    public Friend(String name, String imagePath) {
         this.name = name;
-    }
-
-    public int getImageId() {
-        return imageId;
-    }
-
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
+        this.imagePath = imagePath;
     }
 
     public String getName() {
@@ -23,5 +21,13 @@ public class Friend {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

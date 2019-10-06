@@ -19,8 +19,8 @@ import com.example.lavilog.R;
 
 public class FriendSearchResultFragment extends Fragment {
     private Activity activity;
-    private ImageView ivUser;
-    private TextView tvName;
+    private ImageView ivFriend;
+    private TextView tvFriendName;
     private Button btFriendDiary;
 
     @Override
@@ -39,8 +39,8 @@ public class FriendSearchResultFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ivUser = view.findViewById(R.id.ivUser);
-        tvName = view.findViewById(R.id.tvName);
+        ivFriend = view.findViewById(R.id.ivFriend);
+        tvFriendName = view.findViewById(R.id.tvFriendName);
         btFriendDiary = view.findViewById(R.id.btAddFriend);
 
         // 改成目的地頁面 進入好友日誌主題內
