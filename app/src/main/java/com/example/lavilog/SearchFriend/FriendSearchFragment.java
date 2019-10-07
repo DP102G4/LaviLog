@@ -3,6 +3,8 @@ package com.example.lavilog.SearchFriend;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +24,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lavilog.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 public class FriendSearchFragment extends Fragment {
+    private static final String TAG = "TAG_FriendSearchF";
     private Activity activity;
     private ImageView ivFriend;
     private TextView tvFriendName;
@@ -33,9 +50,14 @@ public class FriendSearchFragment extends Fragment {
     private SearchView searchView;
     private List<Friend> friends;
 
+    private FirebaseFirestore db;
+    private FirebaseStorage storage;
+    private ListenerRegistration registration;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        activity.setTitle("好友管理");
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_friend_search, container, false);
     }
@@ -44,7 +66,9 @@ public class FriendSearchFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = getActivity();
-        friends = getFriends();
+//        friends = getFriends();
+        db = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
     }
 
     @Override
@@ -52,58 +76,141 @@ public class FriendSearchFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
-        recyclerView.setAdapter(new FriendAdapter(activity, friends));
+        
+//        recyclerView.setAdapter(new FriendAdapter(activity, friends));
+//
+//        searchView = view.findViewById(R.id.searchView);
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            // 必須能監聽到searchView內文字的改變
+//            @Override
+//            public boolean onQueryTextSubmit(String query) { // 打完才搜尋
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) { // 打字就搜尋
+//                // 當user輸入東西,searchＶiew會傳回內容（newText)
+//                FriendSearchFragment.FriendAdapter adapter = (FriendSearchFragment.FriendAdapter) recyclerView.getAdapter();
+//                // 要做SearchView時,須先做好SearchView的內容,本文為recyclerView
+//                if (adapter != null) {
+//                    // 如果搜尋條件為空字串，就顯示原始資料；否則就顯示搜尋後結果
+//                    if (newText.isEmpty()) {
+//                        adapter.setFriends(friends);
+//                    } else {
+//                        List<Friend> searchFriends = new ArrayList<>();
+//                        // 為了搜集依照使用者提供的關鍵字,須設定一個新的List
+//                        // 將符合條件的data匯入
+//                        // 搜尋原始資料內有無包含關鍵字(不區別大小寫)
+//                        for (Friend friend : friends) {
+//                            if (friend.getName().toUpperCase().contains(newText.toUpperCase())) {
+//                                // contain為比對內容的動作,是否包含關鍵字
+//                                searchFriends.add(friend);
+//                            }
+//                        }
+//                        adapter.setFriends(searchFriends);
+//                    }
+//                    adapter.notifyDataSetChanged();
+//                    // return true;
+//                    // 有處理就可以return True,終止動作;
+//                    // data改變,但View不會自動變,要用notifyDataSetChanged
+//                    // 會再去呼叫getItemCount,若得到1,下方的bindViewHolder及onCreateViewHolder
+//                    // 就會只執行一次
+//                }
+//                return false;
+//                // return false代表事件沒有被處理到,需要往下走,不要終止
+//                // webView的onKeyDown同理,返回上一頁是該返回網頁還是widget
+//            }
+//        });
+   }
 
-        searchView = view.findViewById(R.id.searchView);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            // 必須能監聽到searchView內文字的改變
-            @Override
-            public boolean onQueryTextSubmit(String query) { // 打完才搜尋
-                return false;
-            }
+    @Override
+    public void onStart() {
+        super.onStart();
+        showAll();
+        // 加上異動監聽器
+        listenToSpots();
+    }
 
-            @Override
-            public boolean onQueryTextChange(String newText) { // 打字就搜尋
-                // 當user輸入東西,searchＶiew會傳回內容（newText)
-                FriendSearchFragment.FriendAdapter adapter = (FriendSearchFragment.FriendAdapter) recyclerView.getAdapter();
-                // 要做SearchView時,須先做好SearchView的內容,本文為recyclerView
-                if (adapter != null) {
-                    // 如果搜尋條件為空字串，就顯示原始資料；否則就顯示搜尋後結果
-                    if (newText.isEmpty()) {
-                        adapter.setFriends(friends);
-                    } else {
-                        List<Friend> searchFriends = new ArrayList<>();
-                        // 為了搜集依照使用者提供的關鍵字,須設定一個新的List
-                        // 將符合條件的data匯入
-                        // 搜尋原始資料內有無包含關鍵字(不區別大小寫)
-                        for (Friend friend : friends) {
-                            if (friend.getName().toUpperCase().contains(newText.toUpperCase())) {
-                                // contain為比對內容的動作,是否包含關鍵字
-                                searchFriends.add(friend);
+    @Override
+    public void onStop() {
+        super.onStop();
+        // 解除異動監聽器
+        registration.remove();
+        registration = null;
+        // 沒用到就不用再繼續監聽,移除並設成空值
+    }
+
+    /** 顯示所有好友資訊 */
+    private void showAll() {
+        db.collection("friends").get() // 把friends裡面所有的每一筆資料都取出
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        // snapshot 螢幕截圖,複製品,快照
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            // 拿到資料 ,就去跑for each取得每一筆資料
+                            List<Friend> friends = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                // result內含QuerySnapshot
+                                friends.add(document.toObject(Friend.class));
+                                // 類似gson.fromJson,原本是要給key取值,提供我們認為document的類別,spot.class
+                                // 讓系統去依照finders的格式去解析document
+
+//                                測試
+//                                Friend friend1=(document.toObject(Friend.class));
+//                                friends.add(friend1);
+//                                if (friends!=null){
+//                                    textView123.setText(friends.toString());
+//                                }
+                            }
+                            recyclerView.setAdapter(new FriendAdapter(activity, friends));
+                        }  else {
+                            String message = task.getException() == null ?
+                                    getString(R.string.textNo) :
+                                    task.getException().getMessage();
+                            Log.e(TAG, message);
+                            Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    /** 監聽資料是否發生異動，有則同步更新 */
+    private void listenToSpots() {
+        if (registration == null) { // 確認註冊監聽器物件是否空值
+            registration = db.collection("friends").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot snapshots,
+                                    @Nullable FirebaseFirestoreException e) {
+                    Log.d(TAG, "Friends change.");
+
+                    if (e == null) { // 沒有錯誤的話
+                        if (snapshots != null && snapshots.size() > 0) {
+                            List<Friend> friends = new ArrayList<>();
+                            for (DocumentSnapshot document : snapshots.getDocuments()) {
+                                friends.add(document.toObject(Friend.class));
+                            }
+                            FriendAdapter spotAdapter = (FriendAdapter) recyclerView.getAdapter();
+                            if (spotAdapter != null) {
+                                spotAdapter.setFriends(friends);
+                                spotAdapter.notifyDataSetChanged();
                             }
                         }
-                        adapter.setFriends(searchFriends);
+                    } else {
+                        Log.e(TAG, e.getMessage(), e);
                     }
-                    adapter.notifyDataSetChanged();
-                    // return true;
-                    // 有處理就可以return True,終止動作;
-                    // data改變,但View不會自動變,要用notifyDataSetChanged
-                    // 會再去呼叫getItemCount,若得到1,下方的bindViewHolder及onCreateViewHolder
-                    // 就會只執行一次
                 }
-                return false;
-                // return false代表事件沒有被處理到,需要往下走,不要終止
-                // webView的onKeyDown同理,返回上一頁是該返回網頁還是widget
-            }
-        });
+            });
+        }
     }
 
     private class FriendAdapter extends RecyclerView.Adapter<FriendSearchFragment.FriendAdapter.MyViewHolder> {
         Context context;
         List<Friend> friends;
-        public FriendAdapter(Context context, List<Friend> friends) {
+
+        FriendAdapter(Context context, List<Friend> friendList) {
             this.context = context;
-            this.friends = friends;
+            this.friends = friendList;
         }
 
         public void setFriends(List<Friend> friends) {
@@ -111,49 +218,82 @@ public class FriendSearchFragment extends Fragment {
         }
         // 須依照SearchView的選擇調整friends
 
+        class MyViewHolder extends RecyclerView.ViewHolder {
+            ImageView ivFriend;
+            TextView tvFriendName;
+
+            MyViewHolder(View itemView) {
+                super(itemView);
+                ivFriend = itemView.findViewById(R.id.ivFriend);
+                tvFriendName = itemView.findViewById(R.id.tvFriendName);
+
+            }
+        }
+
         @Override
         public int getItemCount() {
             return friends.size();
         }
 
-        private class MyViewHolder extends RecyclerView.ViewHolder {
-            ImageView ivFriend;
-            TextView tvFriendName;
-            public MyViewHolder(View itemView) {
-                super(itemView);
-                ivFriend = itemView.findViewById(R.id.ivFriend);
-                tvFriendName = itemView.findViewById(R.id.tvName);
-            }
-        }
-
         @NonNull
         @Override
-        public FriendSearchFragment.FriendAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-            View itemView = LayoutInflater.from(context).inflate(R.layout.friend_item_view, viewGroup, false);
-            return new FriendSearchFragment.FriendAdapter.MyViewHolder(itemView);
+        public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            LayoutInflater layoutInflater = LayoutInflater.from(context);
+            View itemView = layoutInflater.inflate(R.layout.friend_item_view, parent, false);
+            return new MyViewHolder(itemView);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull FriendSearchFragment.FriendAdapter.MyViewHolder viewHolder, int index) {
-            final Friend friend = friends.get(index);
-            viewHolder.ivFriend.setImageResource(friend.getImageId());
-            viewHolder.tvFriendName.setText(friend.getName());
-            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+        public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+            final Friend friend = friends.get(position);
+            if (friend.getImagePath() == null) { // 因為有分文字資料跟圖檔,所以先確認圖檔路徑是不是空值
+                                                 // 有值就要去抓圖,沒值就show沒檔的預設圖片
+                holder.ivFriend.setImageResource(R.drawable.no_image);
+            } else {
+                showImage(holder.ivFriend, friend.getImagePath());
+            }
+            holder.tvFriendName.setText(friend.getName());
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Navigation.findNavController(searchView)
-                            .navigate(R.id.action_friendSearchFragment_to_friendSearchResultFragment);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("friend", friend);
+                    Navigation.findNavController(v)
+                            .navigate(R.id.action_friendSearchFragment_to_friendSearchResultFragment, bundle);
                 }
             });
         }
     }
 
-    private List<Friend> getFriends() {
-        List<Friend> friends = new ArrayList<>();
-        friends.add(new Friend(R.drawable.mothersoup1, "Friend1"));
-        friends.add(new Friend(R.drawable.mothersoup1, "Friend2"));
-        friends.add(new Friend(R.drawable.mothersoup1, "Friend3"));
-        friends.add(new Friend(R.drawable.mothersoup1, "Friend33"));
-        return friends;
+    // 假資料
+//    private List<Friend> getFriends() {
+//        List<Friend> friends = new ArrayList<>();
+//        friends.add(new Friend("Friend1","1"));
+//
+//        return friends;
+//    }
+
+    /** 下載Firebase storage的照片並顯示在ImageView上 */
+    private void showImage(final ImageView imageView, final String path) {
+        final int ONE_MEGABYTE = 1024 * 1024;
+        StorageReference imageRef = storage.getReference().child(path); // 完整路徑
+        imageRef.getBytes(ONE_MEGABYTE)
+                .addOnCompleteListener(new OnCompleteListener<byte[]>() {
+                    @Override
+                    public void onComplete(@NonNull Task<byte[]> task) { // 若拿到完整的圖,回傳byte陣列
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            byte[] bytes = task.getResult();
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                            imageView.setImageBitmap(bitmap);
+                        } else {
+                            String message = task.getException() == null ?
+                                    getString(R.string.textImageDownloadFail) + ": " + path :
+                                    task.getException().getMessage() + ": " + path;
+                            Log.e(TAG, message);
+                            Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }

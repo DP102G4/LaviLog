@@ -23,7 +23,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 
 public class signUp_3_Fragment extends Fragment {
@@ -34,8 +37,10 @@ public class signUp_3_Fragment extends Fragment {
     private FirebaseFirestore db;
     private FirebaseStorage storage;
     private FirebaseAuth auth;
-    Boolean isRegister = false;//註冊帳號
-    Boolean isRegisterImformation;//填入註冊資料
+    String account;
+    String password;
+    String name;
+    String phone;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,7 +72,7 @@ public class signUp_3_Fragment extends Fragment {
         btConfirm = view.findViewById(R.id.btConfirm3);
         btBack = view.findViewById(R.id.btBack);
         Bundle bundle = getArguments();
-        String phone = (String) bundle.getSerializable("phone");
+        phone = (String) bundle.getSerializable("phone");
         tvPhone.setText(phone);
         btBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,10 +83,10 @@ public class signUp_3_Fragment extends Fragment {
         btConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String account = etAccount.getText().toString().trim();
-                String password = etPassword.getText().toString().trim();
+                account = etAccount.getText().toString().trim();
+                password = etPassword.getText().toString().trim();
                 String rePassword = etRePassword.getText().toString().trim();
-                String name = etName.getText().toString().trim();
+                name = etName.getText().toString().trim();
                 if (!account.contains("@")) {
                     tvStatus_Account.setText("帳號應為信箱格式");
                     return;
@@ -100,80 +105,58 @@ public class signUp_3_Fragment extends Fragment {
                 } else {
                     tvStatus_Name.setText("");
                 }
-                isRegisterImformation=signUp(account,password);
-                tvStatus_Account.setText("是否註冊資料: "+isRegisterImformation.toString());
-                if(isRegisterImformation){
-                    User user = new User();
-                    final String id = db.collection("users").document().getId();
-                    user.setId(id);
-                    user.setAccount(account);
-                    user.setPassword(password);
-                    user.setName(name);
-                    registered(user);
-                }
-//                User user = new User();
-//                final String id = db.collection("users").document().getId();
-//                user.setId(id);
-//                user.setAccount(account);
-//                user.setPassword(password);
-//                user.setName(name);
-//                registered(user);
-//                Log.e("TAG_", user.toString());
+                signUp(account,password);
             }
         });
     }
-    private boolean signUp(String account, String password) {
+    private void signUp(final String account, final String password) {
         auth.createUserWithEmailAndPassword(account,password)
                 .addOnCompleteListener(acitvity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            isRegister = true;
-                            Toast.makeText(acitvity,"註冊成功",Toast.LENGTH_SHORT).show();
-                            tvStatus_Name.setText("firebase新增成功");
-                            tvStatus_Password.setText(isRegister.toString());
+                            User user = new User();
+                            String id = db.collection("users").document().getId();
+                            user.setId(id);
+                            user.setAccount(account);
+                            user.setPassword(password);
+                            user.setName(name);
+                            user.setPhone(phone);
+                            registered(user);
                         }else{
-                            isRegister = false;
-                            Exception exception = task.getException();
-                            String message = exception == null ? "註冊失敗" : exception.getMessage();
-                            Toast.makeText(acitvity,"註冊失敗",Toast.LENGTH_SHORT).show();
+                            Query query = db.collection("users");
+                            query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
+                                    for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                                        User userFB = documentSnapshot.toObject(User.class);
+                                        String accountFB = userFB.getAccount();
+                                        if (account.equals(accountFB)) {
+                                            tvStatus_Account.setText("帳號已重複註冊");
+                                        }else{Exception exception = task.getException();
+                                            String message = exception == null ? "" : exception.getMessage();
+                                            Toast.makeText(acitvity, message, Toast.LENGTH_SHORT).show();}
+                                    }
+                                }
+                            });
+                            }
+                    }
+                });
+    }
+    private void registered(final User user) {
+//        db.collection("users").add(user);
+        db.collection("users").document(user.getId()).set(user)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(acitvity, "會員註冊完成", Toast.LENGTH_SHORT).show();
+                            Navigation.findNavController(btConfirm).navigate(R.id.action_signUp_3_Fragment_to_mainFragment);
+                        } else {
+                            Toast.makeText(acitvity, "會員註冊失敗，個人資料請再次填寫", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-        return isRegister;
-    }
-    private void registered(User user) {
-        db.collection("users").add(user);
-//        final String account = user.getAccount();
-//        final String id = user.getId();
-//        Query query = db.collection("users");
-////                .whereEqualTo("account", account);
-//        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
-//                for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
-//                    User userFB = documentSnapshot.toObject(User.class);
-//                    String accountFB = userFB.getAccount();
-//                    if (account.equals(accountFB)) {
-//                        tvStatus_Account.setText("帳號已重複註冊");
-//                    }
-//                    }
-//                }
-//        });
-//            db.collection("users").document(user.getId()).set(user)
-//                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<Void> task) {
-//                            if (task.isSuccessful()) {
-//                                Toast.makeText(acitvity, "註冊完成", Toast.LENGTH_SHORT).show();
-//                                tvStatus_Password.setText(tvStatus_Account.getText());
-//                            } else {
-//                                Toast.makeText(acitvity, "註冊失敗", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    });
-
         }
-
 }

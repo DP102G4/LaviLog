@@ -15,6 +15,7 @@
     <string name="textTextView">尺寸</string>
     <string name="textTakePicture">開啟相機</string>
     <string name="textCancel">取消</string>
+
     <string name="textName">母湯哲</string>
     <string name="textImageUploadSuccess">照片已上傳</string>
     <string name="textInserted">文章已新增</string>
@@ -24,4 +25,8 @@
 
 
 
+    <string name="textResultNotFound">掃描不到結果，請再試一次</string>
+
+    <string name="textNo">沒有</string>
+    <string name="textImageDownloadFail">圖片下載失敗</string>
 </resources>

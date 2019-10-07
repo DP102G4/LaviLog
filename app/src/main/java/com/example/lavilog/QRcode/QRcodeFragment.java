@@ -42,6 +42,7 @@ public class QRcodeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        activity.setTitle("行動條碼掃條");
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_qrcode, container, false);
     }
@@ -56,25 +57,27 @@ public class QRcodeFragment extends Fragment {
         btScanQR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /* 若在Activity內需要呼叫IntentIntegrator(Activity)建構式建立IntentIntegrator物件；
-                 * 而在Fragment內需要呼叫IntentIntegrator.forSupportFragment(Fragment)建立物件，
-                 * 掃瞄完畢時，Fragment.onActivityResult()才會被呼叫 */
-                // IntentIntegrator integrator = new IntentIntegrator(this);
-                IntentIntegrator integrator = IntentIntegrator.forSupportFragment(QRcodeFragment.this);
+                Navigation.findNavController(view)
+                        .navigate(R.id.action_QRcodeFragment_to_QRcode2Fragment);
 
-                // Set to true to enable saving the barcode image and sending its path in the result Intent.
-                integrator.setBarcodeImageEnabled(true);
-                // Set to false to disable beep on scan.
-                integrator.setBeepEnabled(false); // 掃描到就發出聲音
-                // Use the specified camera ID.
-                integrator.setCameraId(0); // 後鏡頭為0，前鏡頭為1
-                // By default, the orientation is locked. Set to false to not lock.
-                integrator.setOrientationLocked(false); // 現況無效，此意義為拍照框是否可調整成直立或橫向拍照
-                // Set a prompt to display on the capture screen.
-                integrator.setPrompt("對準行動條碼後，即能自動讀取。"); // 顯示文字在掃描視窗上方
-                // Initiates a scan
-                integrator.initiateScan(); // 開始掃描
-
+//                /* 若在Activity內需要呼叫IntentIntegrator(Activity)建構式建立IntentIntegrator物件；
+//                 * 而在Fragment內需要呼叫IntentIntegrator.forSupportFragment(Fragment)建立物件，
+//                 * 掃瞄完畢時，Fragment.onActivityResult()才會被呼叫 */
+//                // IntentIntegrator integrator = new IntentIntegrator(this);
+//                IntentIntegrator integrator = IntentIntegrator.forSupportFragment(QRcodeFragment.this);
+//
+//                // Set to true to enable saving the barcode image and sending its path in the result Intent.
+//                integrator.setBarcodeImageEnabled(true);
+//                // Set to false to disable beep on scan.
+//                integrator.setBeepEnabled(false); // 掃描到就發出聲音
+//                // Use the specified camera ID.
+//                integrator.setCameraId(0); // 後鏡頭為0，前鏡頭為1
+//                // By default, the orientation is locked. Set to false to not lock.
+//                integrator.setOrientationLocked(false); // 現況無效，此意義為拍照框是否可調整成直立或橫向拍照
+//                // Set a prompt to display on the capture screen.
+//                integrator.setPrompt("對準行動條碼後，即能自動讀取。"); // 顯示文字在掃描視窗上方
+//                // Initiates a scan
+//                integrator.initiateScan(); // 開始掃描
             }
         });
 

@@ -32,6 +32,7 @@ public class SearchUserIdResultFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        activity.setTitle("LaviLog");
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search_user_id_result, container, false);
     }
@@ -39,8 +40,8 @@ public class SearchUserIdResultFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ivUser = view.findViewById(R.id.ivUser);
-        tvName = view.findViewById(R.id.tvName);
+        ivUser = view.findViewById(R.id.ivFriend);
+        tvName = view.findViewById(R.id.tvFriendName);
         btAddFriend = view.findViewById(R.id.btAddFriend);
 
         btAddFriend.setOnClickListener(new View.OnClickListener() {

@@ -41,8 +41,8 @@ public class FriendHomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // 取得介面元件
-        ivUser = view.findViewById(R.id.ivUser);
-        tvUserName = view.findViewById(R.id.tvName);
+        ivUser = view.findViewById(R.id.ivFriend);
+        tvUserName = view.findViewById(R.id.tvFriendName);
         btSearchFriend = view.findViewById(R.id.btAddFriend);
         btSearchID = view.findViewById(R.id.btSearchID);
         btQRcode = view.findViewById(R.id.btScanQR);

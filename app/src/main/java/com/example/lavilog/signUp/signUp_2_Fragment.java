@@ -16,9 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lavilog.R;
+import com.example.lavilog.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -27,6 +29,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.concurrent.TimeUnit;
 
@@ -35,17 +41,19 @@ public class signUp_2_Fragment extends Fragment {
     Activity activity;
     EditText etPhone,etVerificationCode;
     Button btConfirm,btSend,btResend;
+    TextView tvPhone,textView3,textView4,textView5;
     private String verificationId;
     private ConstraintLayout layoutVerify;
     private PhoneAuthProvider.ForceResendingToken resendToken;
     private FirebaseAuth auth;
-    Boolean isAuthPhone;
+    private FirebaseFirestore db;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         auth = FirebaseAuth.getInstance();
         activity=getActivity();
+        db = FirebaseFirestore.getInstance();
     }
 
     @Override
@@ -66,16 +74,47 @@ public class signUp_2_Fragment extends Fragment {
         btResend=view.findViewById(R.id.btResend);
         etVerificationCode=view.findViewById(R.id.etVerificationCode);
         btConfirm=view.findViewById(R.id.btConfirm2);
+        textView3=view.findViewById(R.id.textView3);
+        textView4=view.findViewById(R.id.textView4);
+        textView5=view.findViewById(R.id.textView5);
+        tvPhone=view.findViewById(R.id.tvPhone);
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String phone = "+886" + etPhone.getText().toString().trim();
-                if (phone.isEmpty()) {
-                    etPhone.setError("電話格式錯誤");
+                String phone =etPhone.getText().toString().trim();
+                if (phone.isEmpty()||phone.length()!=10) {
+                    tvPhone.setText("電話格式錯誤");
                     return;
+                }else {
+                    Query query = db.collection("users");
+                    query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
+                            for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                                User userFB = documentSnapshot.toObject(User.class);
+                                String phone = etPhone.getText().toString().trim();
+                                String phoneFB = userFB.getPhone();
+                                if (phone.equals(phoneFB)) {
+                                    tvPhone.setText("手機號碼已重複註冊");
+                                    return;
+                                } else {
+                                    Exception exception = task.getException();
+                                    String message = exception == null ? "" : exception.getMessage();
+                                    Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+                                    phone="+886"+phone;
+                                    sendVerificationCode(phone);
+                                    textView3.setVisibility(View.GONE);
+                                    textView4.setVisibility(View.GONE);
+                                    textView5.setVisibility(View.GONE);
+                                    etPhone.setVisibility(View.GONE);
+                                    btSend.setVisibility(View.GONE);
+                                    tvPhone.setVisibility(View.GONE);
+                                }
+                            }
+                        }
+                    });
                 }
-                sendVerificationCode(phone);
-                btSend.setVisibility(View.GONE);
             }
         });
         btConfirm.setOnClickListener(new View.OnClickListener() {
@@ -87,12 +126,6 @@ public class signUp_2_Fragment extends Fragment {
                     return;
                 }
                 verifyPhoneNumberWithCode(verificationId, verificationCode);
-                if(isAuthPhone) {
-                    String phone = etPhone.getText().toString().trim();
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("phone", phone);
-                    Navigation.findNavController(view).navigate(R.id.action_signUp_2_Fragment_to_signUp_3_Fragment, bundle);
-                }
             }
         });
 
@@ -130,8 +163,8 @@ public class signUp_2_Fragment extends Fragment {
                 token); // 驗證碼發送後，verifyCallbacks.onCodeSent()會傳來token，方便user要求重傳驗證碼
     }
     private void verifyPhoneNumberWithCode(String verificationId, String verificationCode) {
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, verificationCode);
-        firebaseAuthWithPhoneNumber(credential);
+            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, verificationCode);
+            firebaseAuthWithPhoneNumber(credential);
     }
     private void firebaseAuthWithPhoneNumber(PhoneAuthCredential credential) {
         auth.signInWithCredential(credential)
@@ -139,13 +172,14 @@ public class signUp_2_Fragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                           isAuthPhone=true;
+                            String phone = etPhone.getText().toString().trim();
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("phone", phone);
+                            Navigation.findNavController(etPhone).navigate(R.id.action_signUp_2_Fragment_to_signUp_3_Fragment, bundle);
                         } else {
-                            isAuthPhone=false;
                             Exception exception = task.getException();
-                            String message = exception == null ? "登入失敗" : exception.getMessage();
-                            Toast.makeText(activity,"登入失敗",Toast.LENGTH_SHORT).show();
-//                            textView.setText(message);
+                            String message = exception == null ? "驗證失敗" : exception.getMessage();
+//                            Toast.makeText(activity,"登入失敗",Toast.LENGTH_SHORT).show();
                             if (exception instanceof FirebaseAuthInvalidCredentialsException) {
                                 etVerificationCode.setError("驗證碼錯誤");
                             }
@@ -186,7 +220,7 @@ public class signUp_2_Fragment extends Fragment {
             verificationId = id;
             resendToken = token;
             // 顯示填寫驗證碼版面
-            layoutVerify.setVisibility(View.VISIBLE);
+//            layoutVerify.setVisibility(View.VISIBLE);
         }
     };
 }
