@@ -33,7 +33,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lavilog.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,12 +51,11 @@ public class InsertFragment extends Fragment {
     private static final String TAG = "TAG_InsertFragment";
     private Activity activity;
     private FirebaseFirestore db;
-//    private FirebaseStorage storage;
+    private FirebaseStorage storage;
     private File file;
     private Answer answer;
     private ImageView imageView;
-//    private TextView tvYear, tvDate, tvQuestion;
-    private Button btUpdate, btPickPicture,btTakePicture,btCancle;
+    private Button btUpdate, btPickPicture, btTakePicture, btCancle;
     private EditText etArticle;
     private boolean pictureTaken;
     private TextClock textClock;
@@ -60,13 +63,14 @@ public class InsertFragment extends Fragment {
     private static final int PER_EXTERNAL_STORAGE = 0;
     private static final int REQ_PICK_PICTURE = 1;
     private static final int REQ_TAKE_PICTURE = 2;
+    private Uri contentUri;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = getActivity();
-//        db = FirebaseFirstore.getInstance();
-//        storage = FirebaseStorage.getInstance();
+        db = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
         answer = new Answer();
 
     }
@@ -89,6 +93,7 @@ public class InsertFragment extends Fragment {
         etArticle = view.findViewById(R.id.etArticle);
         textView = view.findViewById(R.id.textView);
         btTakePicture = view.findViewById(R.id.btTakePicture);
+        final String time=textClock.getText().toString();
         btTakePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,6 +136,54 @@ public class InsertFragment extends Fragment {
                 Navigation.findNavController(view).popBackStack();
             }
         });
+
+        btUpdate = view.findViewById(R.id.btUpdate);
+        btUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //先取得插入document的ID
+                final String id = db.collection("articles").document().getId();
+                answer.setArticle(id);
+                //測試取得時間放入firebase
+//                final String date = db.collection("textClocks").document().getId();
+                answer.setTextClock(time);
+                answer.setId(id);
+
+                String article = etArticle.getText().toString();
+                if (article.length() <= 0) {
+                    Toast.makeText(activity, "請回答問題", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                answer.setArticle(article);
+                //如果有拍照，上傳至Firebase storage
+                if (pictureTaken) {
+                    // document ID成為image path一部分，避免與其他圖檔的檔名重複
+                    final String imagepath =  "/images_daily/" + answer.getArticle();
+                    storage.getReference().child(imagepath).putFile(contentUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, getString(R.string.textImageUploadSuccess));
+                                answer.setImagePath(imagepath);
+                                addOrReplace(answer);
+                            } else {
+                                String message = task.getException() == null ?
+                                        getString(R.string.textImageUploadFail) :
+                                        task.getException().getMessage();
+                                Log.e(TAG, message);
+                                Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+
+
+                }else {
+                    addOrReplace(answer);}
+
+            }
+        });
+
     }
 
     @Override
@@ -177,6 +230,7 @@ public class InsertFragment extends Fragment {
                                 Bitmap bitmap = BitmapFactory.decodeStream(
                                         activity.getContentResolver().openInputStream(uri));
                                 imageView.setImageBitmap(bitmap);
+                                pictureTaken = true;
                                 int width = bitmap.getWidth();
                                 int height = bitmap.getHeight();
                                 String text = String.format(Locale.getDefault(), "%s 照片尺寸 = %d x %d", width, height);
@@ -185,6 +239,8 @@ public class InsertFragment extends Fragment {
                         } catch (IOException e) {
                             Log.e(TAG, toString());
                         }
+                        pictureTaken = false;
+
                     } else {
                         ImageDecoder.OnHeaderDecodedListener listener = new ImageDecoder.OnHeaderDecodedListener() {
                             @Override
@@ -204,21 +260,28 @@ public class InsertFragment extends Fragment {
                             imageView.setImageBitmap(bitmap);
                         } catch (IOException e) {
                             Log.e(TAG, e.toString());
+
                         }
 
                     }
                     break;
+
             }
 
 
         }
+
     }
+
+
 
     @Override
     public void onStart() {
         super.onStart();
         askExtrnalStoragePermission();//請求外部儲存體的存取權限
     }
+
+
     private void askExtrnalStoragePermission() {
         String[] Permission = {  //要求的權限
                 Manifest.permission.READ_EXTERNAL_STORAGE};  //外部儲存公開目錄
@@ -230,47 +293,41 @@ public class InsertFragment extends Fragment {
         }
 
     }
+    private void addOrReplace(final Answer answer) {
+        // 如果Firestore沒有該ID的Document就建立新的，已經有就更新內容
+        db.collection("article").document(answer.getId()).set(answer)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            String message = getString(R.string.textInserted)
+                                    + " with ID: " + answer.getArticle();
+                            Log.d(TAG, message);
+                            Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+                            // 新增完畢回上頁
+                            Navigation.findNavController(imageView).popBackStack();
+                        } else {
+                            String message = task.getException() == null ?
+                                    getString(R.string.textInsertFail) :
+                                    task.getException().getMessage();
+                            Log.e(TAG, message);
+                            Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PER_EXTERNAL_STORAGE) {
-            if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
-                Toast.makeText(activity, "請授權權限", Toast.LENGTH_SHORT).show();
-                btPickPicture.setEnabled(false);
-            } else {
-                btPickPicture.setEnabled(true);
-            }
-        }
-    }
-
-    //    btUpdate = view.findViewById(R.id.btUpdate);
-//        btUpdate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //先取得插入document的ID
-//                final String id = db.collection("article").document().getID();
-//                answer.setArticle(id);
-//
-//                String article = etArticle.getText().toString();
-//                if(article.length()<=0){
-//                    Toast.makeText(activity,R.string.textarticleIsInvalid,Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//                answer.setArticle(article);
-//                //如果有拍照，上傳至Firebase storage
-//                if (pictureTaken) {
-//                    // document ID成為image path一部分，避免與其他圖檔的檔名重複
-//                    final String imagepath = getString(R.string.app_name) + "/images/" + answer.getArticle();
-//                    storage.getReference().child(imagepath).putFile(contentUri)
-//
-//
-//                }
-//
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        if (requestCode == PER_EXTERNAL_STORAGE) {
+//            if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
+//                Toast.makeText(activity, "請授權權限", Toast.LENGTH_SHORT).show();
+//                btPickPicture.setEnabled(false);
+//            } else {
+//                btPickPicture.setEnabled(true);
 //            }
-//        });
+//        }
 
-//    }
 
 //    @Override
 //    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -290,4 +347,5 @@ public class InsertFragment extends Fragment {
 
 
     }
+}
 
