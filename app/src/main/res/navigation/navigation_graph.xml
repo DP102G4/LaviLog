@@ -185,4 +185,18 @@
             android:id="@+id/action_QRcode2Fragment_to_searchUserIdFragment"
             app:destination="@id/searchUserIdFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/commodityHomeFragment"
+        android:name="com.example.lavilog.Commodity.commodityHomeFragment"
+        android:label="fragment_commodity_home"
+        tools:layout="@layout/fragment_commodity_home" >
+        <action
+            android:id="@+id/action_commodityHomeFragment_to_commodityDetailFragment"
+            app:destination="@id/commodityDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/commodityDetailFragment"
+        android:name="com.example.lavilog.Commodity.commodityDetailFragment"
+        android:label="fragment_commodity_detail"
+        tools:layout="@layout/fragment_commodity_detail" />
 </navigation>
