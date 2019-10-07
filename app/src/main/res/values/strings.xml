@@ -16,4 +16,12 @@
     <string name="textTakePicture">開啟相機</string>
     <string name="textCancel">取消</string>
     <string name="textName">母湯哲</string>
+    <string name="textImageUploadSuccess">照片已上傳</string>
+    <string name="textInserted">文章已新增</string>
+    <string name="textInsertFail">上傳失敗</string>
+    <string name="textImageUploadFail">照片上傳失敗</string>
+
+
+
+
 </resources>
