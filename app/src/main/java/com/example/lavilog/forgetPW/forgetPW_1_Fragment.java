@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lavilog.R;
+import com.example.lavilog.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -28,7 +29,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.concurrent.TimeUnit;
 
@@ -42,7 +46,6 @@ public class forgetPW_1_Fragment extends Fragment {
     private FirebaseAuth auth;
     private FirebaseFirestore db;
     private PhoneAuthProvider.ForceResendingToken resendToken;
-    String phone;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,18 +92,37 @@ public class forgetPW_1_Fragment extends Fragment {
                     tvStatus.setText("電話號碼長度錯誤");
                     return;
                 }
-                tvPhone.setText(("請輸入寄送到"+phone+"的認證碼以確認變更"));
-                phone="+886"+phone;
-                textView8.setVisibility(View.GONE);
-                etPhone.setVisibility(View.GONE);
-                tvStatus.setVisibility(View.GONE);
-                btConfirm.setVisibility(View.GONE);
-                tvVerificationCode.setVisibility(View.VISIBLE);
-                btConfirmCode.setVisibility(View.VISIBLE);
-                tvPhone.setVisibility(View.VISIBLE);
-                etVerificationCode.setVisibility(View.VISIBLE);
-                btResendCode.setVisibility(View.VISIBLE);
-                sendVerificationCode(phone);
+                Query query = db.collection("users");
+                query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
+                        for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                            User userFB = documentSnapshot.toObject(User.class);
+                            String phone = etPhone.getText().toString().trim();
+                            String phoneFB = userFB.getPhone();
+                            if (!phone.equals(phoneFB)) {
+                                tvStatus.setText("此手機號碼未註冊");
+                            } else {
+                                Exception exception = task.getException();
+                                String message = exception == null ? "" : exception.getMessage();
+                                Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+                                tvPhone.setText(("請輸入寄送到"+phone+"的認證碼以確認變更"));
+                                phone="+886"+phone;
+                                textView8.setVisibility(View.GONE);
+                                etPhone.setVisibility(View.GONE);
+                                tvStatus.setVisibility(View.GONE);
+                                btConfirm.setVisibility(View.GONE);
+                                tvVerificationCode.setVisibility(View.VISIBLE);
+                                btConfirmCode.setVisibility(View.VISIBLE);
+                                tvPhone.setVisibility(View.VISIBLE);
+                                etVerificationCode.setVisibility(View.VISIBLE);
+                                btResendCode.setVisibility(View.VISIBLE);
+                                sendVerificationCode(phone);
+                            }
+                        }
+                    }
+                });
             }
         });
         btResendCode.setOnClickListener(new View.OnClickListener() {
@@ -155,6 +177,7 @@ public class forgetPW_1_Fragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            String phone=etPhone.getText().toString().trim();
                             Bundle bundle=new Bundle();
                             bundle.putSerializable("phone",phone);
                             Navigation.findNavController(btConfirmCode).navigate(R.id.action_forgetPW_1_Fragment_to_forgetPW_2_Fragment,bundle);
