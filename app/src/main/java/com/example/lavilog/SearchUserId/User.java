@@ -1,33 +1,37 @@
 package com.example.lavilog.SearchUserId;
 
-import android.icu.text.PluralRules;
-import android.media.Image;
+import java.io.Serializable;
 
-public class User {
-    private int ImageId;
+public class User implements Serializable {
+
     private String name;
+    private String imagePath;
 
-    public User(int imageId, String name) {
-        ImageId = imageId;
+
+    public User() {
+
+    }
+
+    public User(String name) {
         this.name = name;
     }
 
-    public User() {
-    }
-
-    public int getImageId() {
-        return ImageId;
-    }
-
-    public void setImageId(int imageId) {
-        ImageId = imageId;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }
+

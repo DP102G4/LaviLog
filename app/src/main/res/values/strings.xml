@@ -16,9 +16,11 @@
     <string name="textTakePicture">開啟相機</string>
     <string name="textCancel">取消</string>
 
+    <!-- QRcode -->
     <string name="textName">母湯哲</string>
     <string name="textResultNotFound">掃描不到結果，請再試一次</string>
-
-    <string name="textNo">沒有</string>
+    <!-- SearchFreind, SearchUser -->
+    <string name="textNo">沒有好友</string>
+    <string name="textNo2">沒有帳號</string>
     <string name="textImageDownloadFail">圖片下載失敗</string>
 </resources>

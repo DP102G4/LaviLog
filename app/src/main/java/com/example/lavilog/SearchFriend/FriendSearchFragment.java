@@ -39,8 +39,6 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import static androidx.constraintlayout.widget.Constraints.TAG;
-
 public class FriendSearchFragment extends Fragment {
     private static final String TAG = "TAG_FriendSearchF";
     private Activity activity;
@@ -68,7 +66,6 @@ public class FriendSearchFragment extends Fragment {
 //        friends = getFriends();
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
-
     }
 
     @Override
@@ -80,7 +77,6 @@ public class FriendSearchFragment extends Fragment {
         // recyclerView.setAdapter(new FriendAdapter(activity, friends));
 
         searchView = view.findViewById(R.id.searchView);
-
    }
 
     @Override
@@ -91,7 +87,7 @@ public class FriendSearchFragment extends Fragment {
         listenToSpots();
 //        friends = firebase的值
         FriendAdapter adapter = (FriendAdapter) recyclerView.getAdapter();
-        if (adapter == null) { // 如果適配器等於空值就建立
+        if (adapter == null) { // 如果適配器等於空值就建立新的
             recyclerView.setAdapter(new FriendAdapter(activity, friends));
         } else { // 如果適配器不等於空值就用原本的
             adapter.setFriends(friends);
