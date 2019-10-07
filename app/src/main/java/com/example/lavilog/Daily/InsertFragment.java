@@ -93,6 +93,7 @@ public class InsertFragment extends Fragment {
         etArticle = view.findViewById(R.id.etArticle);
         textView = view.findViewById(R.id.textView);
         btTakePicture = view.findViewById(R.id.btTakePicture);
+        final String time=textClock.getText().toString();
         btTakePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -144,9 +145,9 @@ public class InsertFragment extends Fragment {
                 final String id = db.collection("articles").document().getId();
                 answer.setArticle(id);
                 //測試取得時間放入firebase
-                final String date = db.collection("textClocks").document().getId();
-                answer.setTextClock(date);
-//                Log.d(TAG, String.valueOf(textClock));
+//                final String date = db.collection("textClocks").document().getId();
+                answer.setTextClock(time);
+                answer.setId(id);
 
                 String article = etArticle.getText().toString();
                 if (article.length() <= 0) {
@@ -157,7 +158,7 @@ public class InsertFragment extends Fragment {
                 //如果有拍照，上傳至Firebase storage
                 if (pictureTaken) {
                     // document ID成為image path一部分，避免與其他圖檔的檔名重複
-                    final String imagepath = getString(R.string.app_name) + "/images/" + answer.getArticle();
+                    final String imagepath =  "/images_daily/" + answer.getArticle();
                     storage.getReference().child(imagepath).putFile(contentUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
@@ -294,7 +295,7 @@ public class InsertFragment extends Fragment {
     }
     private void addOrReplace(final Answer answer) {
         // 如果Firestore沒有該ID的Document就建立新的，已經有就更新內容
-        db.collection("article").document(answer.getArticle()).set(answer)
+        db.collection("article").document(answer.getId()).set(answer)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
