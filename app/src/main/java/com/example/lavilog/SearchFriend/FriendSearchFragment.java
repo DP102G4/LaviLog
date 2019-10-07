@@ -42,13 +42,13 @@ import java.util.List;
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class FriendSearchFragment extends Fragment {
-    private static final String TAG = "TAGFriendSearchFragment";
+    private static final String TAG = "TAG_FriendSearchF";
     private Activity activity;
     private ImageView ivFriend;
     private TextView tvFriendName;
     private RecyclerView recyclerView;
     private SearchView searchView;
-    // private List<Friend> friends;
+    private List<Friend> friends;
 
     private FirebaseFirestore db;
     private FirebaseStorage storage;
@@ -121,7 +121,7 @@ public class FriendSearchFragment extends Fragment {
 //                // webView的onKeyDown同理,返回上一頁是該返回網頁還是widget
 //            }
 //        });
-    }
+   }
 
     @Override
     public void onStart() {
