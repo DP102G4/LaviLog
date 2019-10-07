@@ -26,9 +26,6 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.navigation);
         NavController navController = Navigation.findNavController(this,R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(bottomNavigationView,navController);
-
-
-
     }
 
     @Override
@@ -40,9 +37,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.action_changestyle){
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 }
