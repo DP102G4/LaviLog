@@ -111,7 +111,7 @@ public class SearchUserIdFragment extends Fragment {
                         }
                     } else {
                         // users = getUsers();
-                        //users= getusers();
+                        // users= getusers();
                         // 搜尋原始資料 equals
                         for (User user : users) {
                             if (user.getName().toUpperCase().equals(newText.toUpperCase())) {
@@ -282,6 +282,7 @@ public class SearchUserIdFragment extends Fragment {
                     bundle.putSerializable("user", user);
                     Navigation.findNavController(v) //searchView
                             .navigate(R.id.action_searchUserIdFragment_to_searchUserIdResultFragment, bundle);
+
                 }
             });
         }

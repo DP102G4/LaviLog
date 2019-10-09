@@ -139,6 +139,7 @@ public class FriendSearchFragment extends Fragment {
         });
     }
 
+
     @Override
     public void onStop() {
         super.onStop();

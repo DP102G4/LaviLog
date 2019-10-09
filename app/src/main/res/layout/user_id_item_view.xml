@@ -33,5 +33,6 @@
             android:text="TextView"
             android:textColor="#0000FF"
             android:textSize="22sp" />
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -20,7 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lavilog.R;
-import com.example.lavilog.SearchFriend.Friend;
+//import com.example.lavilog.SearchFriend.Friend;
+//import com.example.lavilog.SearchUserId.User;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,8 +32,8 @@ import com.google.firebase.storage.StorageReference;
 public class SearchUserIdResultFragment extends Fragment {
     private static final String TAG = "TAGFSearchUserIdResultF";
     private Activity activity;
-    private ImageView ivUser;
-    private TextView tvUserName;
+    private ImageView ivUser, imageView123;
+    private TextView tvUserName, textView1234;
     private Button btAddFriend;
 
     private User user;
@@ -61,13 +63,39 @@ public class SearchUserIdResultFragment extends Fragment {
         ivUser = view.findViewById(R.id.ivUser);
         tvUserName = view.findViewById(R.id.tvUserName);
         btAddFriend = view.findViewById(R.id.btAddFriend);
-//
-//        if (getArguments() != null) {
-//            user = (User) getArguments().getSerializable("user");
-//            if (user != null) {
+//        textView1234 = view.findViewById(R.id.tvUserName);
+//        imageView123 = view.findViewById(R.id.ivUser);
+
+        //textView1234.setText("123");
+
+        if (getArguments() != null) {
+            user = (User) getArguments().getSerializable("user");
+            if (user != null) {
+                Log.e(TAG, "" + user.getName());
+                tvUserName = view.findViewById(R.id.tvUserName);
+                tvUserName.setText(user.getName());
 //                tvUserName.setText(user.getName());
+
+                //
+                if (user.getImagePath() != null) {
+                    showImage(ivUser, user.getImagePath());
+                }
+            }
+        }
+
+
+//        Bundle bundle = getArguments();
+//        if (bundle != null) {
+//        //if (getArguments() != null) {
+//            //user = (User) getArguments().getSerializable("user");
+//            user = (User) bundle.getSerializable("user");
+//            if (user != null) {
+//                Log.e(TAG, "" + user.getName());
+//                tvUserName = view.findViewById(R.id.tvUserName);
+//                tvUserName.setText("123");
+////                tvUserName.setText(user.getName());
 //
-//                // 如果存有圖片路徑，取得圖片後顯示
+//                //
 //                if (user.getImagePath() != null) {
 //                    showImage(ivUser, user.getImagePath());
 //                }
@@ -83,16 +111,14 @@ public class SearchUserIdResultFragment extends Fragment {
         });
     }
 
-    /**
-     * 下載Firebase storage的照片並顯示在ImageView上
-     */
+    /** 下載Firebase storage的照片並顯示在ImageView上 */
     private void showImage(final ImageView imageView, final String path) {
         final int ONE_MEGABYTE = 1024 * 1024;
-        StorageReference imageRef = storage.getReference().child(path); // 完整路徑
+        StorageReference imageRef = storage.getReference().child(path);//完整路徑
         imageRef.getBytes(ONE_MEGABYTE)
                 .addOnCompleteListener(new OnCompleteListener<byte[]>() {
                     @Override
-                    public void onComplete(@NonNull Task<byte[]> task) { // 若拿到完整的圖,回傳byte陣列
+                    public void onComplete(@NonNull Task<byte[]> task) {//若拿到完整的圖,回傳byte陣列
                         if (task.isSuccessful() && task.getResult() != null) {
                             byte[] bytes = task.getResult();
                             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
