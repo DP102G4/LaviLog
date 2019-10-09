@@ -76,7 +76,7 @@ public class FriendSearchFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
-        
+
 //        recyclerView.setAdapter(new FriendAdapter(activity, friends));
 //
 //        searchView = view.findViewById(R.id.searchView);

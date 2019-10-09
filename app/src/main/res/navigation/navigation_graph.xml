@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_mainFragment_to_dailyFragment"
             app:destination="@id/dailyFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
     </fragment>
     <fragment
         android:id="@+id/dailyFragment"
@@ -175,7 +178,14 @@
         android:id="@+id/accountFragment"
         android:name="com.example.lavilog.AccountFragment"
         android:label="fragment_account"
-        tools:layout="@layout/fragment_account" />
+        tools:layout="@layout/fragment_account" >
+        <action
+            android:id="@+id/action_accountFragment_to_myProfileFragment"
+            app:destination="@id/myProfileFragment" />
+        <action
+            android:id="@+id/action_accountFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
     <fragment
         android:id="@+id/QRcode2Fragment"
         android:name="com.example.lavilog.QRcode.QRcode2Fragment"
@@ -185,4 +195,18 @@
             android:id="@+id/action_QRcode2Fragment_to_searchUserIdFragment"
             app:destination="@id/searchUserIdFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/myProfileFragment"
+        android:name="com.example.lavilog.myProfileFragment"
+        android:label="fragment_my_profile"
+        tools:layout="@layout/fragment_my_profile" >
+        <action
+            android:id="@+id/action_myProfileFragment_to_editPhotoFragment"
+            app:destination="@id/editPhotoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editPhotoFragment"
+        android:name="com.example.lavilog.editPhotoFragment"
+        android:label="fragment_edit_photo"
+        tools:layout="@layout/fragment_edit_photo" />
 </navigation>
