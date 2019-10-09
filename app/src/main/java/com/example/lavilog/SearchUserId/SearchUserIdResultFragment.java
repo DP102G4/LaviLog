@@ -32,8 +32,8 @@ import com.google.firebase.storage.StorageReference;
 public class SearchUserIdResultFragment extends Fragment {
     private static final String TAG = "TAGFSearchUserIdResultF";
     private Activity activity;
-    private ImageView ivUser, imageView123;
-    private TextView tvUserName, textView1234;
+    private ImageView ivUser;
+    private TextView tvUserName, tvAccount;
     private Button btAddFriend;
 
     private User user;
@@ -62,45 +62,22 @@ public class SearchUserIdResultFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ivUser = view.findViewById(R.id.ivUser);
         tvUserName = view.findViewById(R.id.tvUserName);
+        tvAccount = view.findViewById(R.id.tvAccount);
         btAddFriend = view.findViewById(R.id.btAddFriend);
-//        textView1234 = view.findViewById(R.id.tvUserName);
-//        imageView123 = view.findViewById(R.id.ivUser);
-
-        //textView1234.setText("123");
 
         if (getArguments() != null) {
             user = (User) getArguments().getSerializable("user");
             if (user != null) {
-                Log.e(TAG, "" + user.getName());
-                tvUserName = view.findViewById(R.id.tvUserName);
+                Log.e(TAG, "" + user.getAccount());
                 tvUserName.setText(user.getName());
-//                tvUserName.setText(user.getName());
+                tvAccount.setText(user.getAccount());
 
-                //
+                // 如果存有圖片路徑，取得圖片後顯示
                 if (user.getImagePath() != null) {
                     showImage(ivUser, user.getImagePath());
                 }
             }
         }
-
-
-//        Bundle bundle = getArguments();
-//        if (bundle != null) {
-//        //if (getArguments() != null) {
-//            //user = (User) getArguments().getSerializable("user");
-//            user = (User) bundle.getSerializable("user");
-//            if (user != null) {
-//                Log.e(TAG, "" + user.getName());
-//                tvUserName = view.findViewById(R.id.tvUserName);
-//                tvUserName.setText("123");
-////                tvUserName.setText(user.getName());
-//
-//                //
-//                if (user.getImagePath() != null) {
-//                    showImage(ivUser, user.getImagePath());
-//                }
-//            }
-//        }
 
         btAddFriend.setOnClickListener(new View.OnClickListener() {
             @Override

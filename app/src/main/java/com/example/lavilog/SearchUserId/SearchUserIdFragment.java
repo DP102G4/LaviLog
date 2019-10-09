@@ -91,6 +91,8 @@ public class SearchUserIdFragment extends Fragment {
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             // 必須能監聽到searchView內文字的改變
+
+            // onQueryTextSubmit 打完才搜尋
             @Override
             public boolean onQueryTextSubmit(String newText) { // 打完才搜尋
                 // 當user輸入東西,searchＶiew會傳回內容（newText)
@@ -114,7 +116,15 @@ public class SearchUserIdFragment extends Fragment {
                         // users= getusers();
                         // 搜尋原始資料 equals
                         for (User user : users) {
-                            if (user.getName().toUpperCase().equals(newText.toUpperCase())) {
+
+                            // 搜尋名字
+//                            if (user.getName().toUpperCase().equals(newText.toUpperCase())) {
+//                                // contain為比對內容的動作,是否包含關鍵字
+//                                searchUserIds.add(user);
+//                            }
+
+                            // 搜尋帳號
+                            if (user.getAccount().toUpperCase().equals(newText.toUpperCase())) {
                                 // contain為比對內容的動作,是否包含關鍵字
                                 searchUserIds.add(user);
                             }
@@ -127,6 +137,7 @@ public class SearchUserIdFragment extends Fragment {
                 // webView的onKeyDown同理,返回上一頁是該返回網頁還是widget
             }
 
+            // onQueryTextChange 打字就搜尋
             @Override
             public boolean onQueryTextChange(String newText) { // 打字就搜尋
                 recyclerView.setLayoutManager(new LinearLayoutManager(activity));
@@ -274,6 +285,7 @@ public class SearchUserIdFragment extends Fragment {
                 showImage(holder.ivUser, user.getImagePath());
             }
             holder.tvUserName.setText(user.getName());
+
             // 點選會開啟好友頁面
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

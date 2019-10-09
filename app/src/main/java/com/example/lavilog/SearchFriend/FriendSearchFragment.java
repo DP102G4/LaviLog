@@ -96,13 +96,16 @@ public class FriendSearchFragment extends Fragment {
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             // 必須能監聽到searchView內文字的改變
+
+            // onQueryTextSubmit 打完才搜尋
             @Override
             public boolean onQueryTextSubmit(String query) { // 打完才搜尋
                 return false;
             }
 
+            // onQueryTextChange 打字就搜尋
             @Override
-            public boolean onQueryTextChange(String newText) { // 打字就搜尋
+            public boolean onQueryTextChange(String newText) { //打字就搜尋
                 // 當user輸入東西,searchＶiew會傳回內容（newText)
 
                 FriendSearchFragment.FriendAdapter adapter = (FriendSearchFragment.FriendAdapter) recyclerView.getAdapter();
