@@ -39,17 +39,14 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import static androidx.constraintlayout.widget.Constraints.TAG;
-
 public class FriendSearchFragment extends Fragment {
-    private static final String TAG = "TAGFriendSearchFragment";
+    private static final String TAG = "TAG_FriendSearchF";
     private Activity activity;
-    private ImageView ivFriend;
-    private TextView tvFriendName;
+//    private ImageView ivFriend;
+//    private TextView tvFriendName;
     private RecyclerView recyclerView;
     private SearchView searchView;
-    // private List<Friend> friends;
-
+    private static List<Friend> friends;
     private FirebaseFirestore db;
     private FirebaseStorage storage;
     private ListenerRegistration registration;
@@ -76,52 +73,11 @@ public class FriendSearchFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        
+        // recyclerView.setAdapter(new FriendAdapter(activity, friends));
 
-//        recyclerView.setAdapter(new FriendAdapter(activity, friends));
-//
-//        searchView = view.findViewById(R.id.searchView);
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            // 必須能監聽到searchView內文字的改變
-//            @Override
-//            public boolean onQueryTextSubmit(String query) { // 打完才搜尋
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) { // 打字就搜尋
-//                // 當user輸入東西,searchＶiew會傳回內容（newText)
-//                FriendSearchFragment.FriendAdapter adapter = (FriendSearchFragment.FriendAdapter) recyclerView.getAdapter();
-//                // 要做SearchView時,須先做好SearchView的內容,本文為recyclerView
-//                if (adapter != null) {
-//                    // 如果搜尋條件為空字串，就顯示原始資料；否則就顯示搜尋後結果
-//                    if (newText.isEmpty()) {
-//                        adapter.setFriends(friends);
-//                    } else {
-//                        List<Friend> searchFriends = new ArrayList<>();
-//                        // 為了搜集依照使用者提供的關鍵字,須設定一個新的List
-//                        // 將符合條件的data匯入
-//                        // 搜尋原始資料內有無包含關鍵字(不區別大小寫)
-//                        for (Friend friend : friends) {
-//                            if (friend.getName().toUpperCase().contains(newText.toUpperCase())) {
-//                                // contain為比對內容的動作,是否包含關鍵字
-//                                searchFriends.add(friend);
-//                            }
-//                        }
-//                        adapter.setFriends(searchFriends);
-//                    }
-//                    adapter.notifyDataSetChanged();
-//                    // return true;
-//                    // 有處理就可以return True,終止動作;
-//                    // data改變,但View不會自動變,要用notifyDataSetChanged
-//                    // 會再去呼叫getItemCount,若得到1,下方的bindViewHolder及onCreateViewHolder
-//                    // 就會只執行一次
-//                }
-//                return false;
-//                // return false代表事件沒有被處理到,需要往下走,不要終止
-//                // webView的onKeyDown同理,返回上一頁是該返回網頁還是widget
-//            }
-//        });
-    }
+        searchView = view.findViewById(R.id.searchView);
+   }
 
     @Override
     public void onStart() {
@@ -129,7 +85,63 @@ public class FriendSearchFragment extends Fragment {
         showAll();
         // 加上異動監聽器
         listenToSpots();
+//        friends = firebase的值
+        FriendAdapter adapter = (FriendAdapter) recyclerView.getAdapter();
+        if (adapter == null) { // 如果適配器等於空值就建立新的
+            recyclerView.setAdapter(new FriendAdapter(activity, friends));
+        } else { // 如果適配器不等於空值就用原本的
+            adapter.setFriends(friends);
+            adapter.notifyDataSetChanged();
+        }
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            // 必須能監聽到searchView內文字的改變
+
+            // onQueryTextSubmit 打完才搜尋
+            @Override
+            public boolean onQueryTextSubmit(String query) { // 打完才搜尋
+                return false;
+            }
+
+            // onQueryTextChange 打字就搜尋
+            @Override
+            public boolean onQueryTextChange(String newText) { //打字就搜尋
+                // 當user輸入東西,searchＶiew會傳回內容（newText)
+
+                FriendSearchFragment.FriendAdapter adapter = (FriendSearchFragment.FriendAdapter) recyclerView.getAdapter();
+                // 要做SearchView時,須先做好SearchView的內容,本文為recyclerView
+                if (adapter != null) {
+                    // 如果搜尋條件為空字串，就顯示原始資料；否則就顯示搜尋後結果
+                    if (newText.isEmpty()) {
+                        adapter.setFriends(friends);
+                    } else {
+                        List<Friend> searchFriends = new ArrayList<>();
+                        // 為了搜集依照使用者提供的關鍵字,須設定一個新的List
+                        // 將符合條件的data匯入
+                        // 搜尋原始資料內有無包含關鍵字(不區別大小寫)
+                        for (Friend friend : friends) {
+                            if (friend.getName().toUpperCase().contains(newText.toUpperCase())) {
+                                // contain為比對內容的動作,是否包含關鍵字
+                                searchFriends.add(friend);
+                            }
+                        }
+                        adapter.setFriends(searchFriends);
+
+                    }
+                    adapter.notifyDataSetChanged();
+                    // return true;
+                    // 有處理就可以return True,終止動作;
+                    // data改變,但View不會自動變,要用notifyDataSetChanged
+                    // 會再去呼叫getItemCount,若得到1,下方的bindViewHolder及onCreateViewHolder
+                    // 就會只執行一次
+                }
+                return false;
+                // return false代表事件沒有被處理到,需要往下走,不要終止
+                // webView的onKeyDown同理,返回上一頁是該返回網頁還是widget
+            }
+        });
     }
+
 
     @Override
     public void onStop() {
@@ -190,10 +202,11 @@ public class FriendSearchFragment extends Fragment {
                             for (DocumentSnapshot document : snapshots.getDocuments()) {
                                 friends.add(document.toObject(Friend.class));
                             }
-                            FriendAdapter spotAdapter = (FriendAdapter) recyclerView.getAdapter();
-                            if (spotAdapter != null) {
-                                spotAdapter.setFriends(friends);
-                                spotAdapter.notifyDataSetChanged();
+                            FriendAdapter friendAdapter = (FriendAdapter) recyclerView.getAdapter();
+                            if (friendAdapter != null) {
+                                friendAdapter.setFriends(friends);
+                                FriendSearchFragment.friends = friends;
+                                friendAdapter.notifyDataSetChanged();
                             }
                         }
                     } else {
@@ -232,6 +245,9 @@ public class FriendSearchFragment extends Fragment {
 
         @Override
         public int getItemCount() {
+            if(friends == null){
+                return 0;
+            }
             return friends.size();
         }
 

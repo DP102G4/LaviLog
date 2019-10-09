@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/signInFragment">
+    app:startDestination="@id/friendHomeFragment">
 
     <fragment
         android:id="@+id/mainFragment"
@@ -209,4 +209,18 @@
         android:name="com.example.lavilog.editPhotoFragment"
         android:label="fragment_edit_photo"
         tools:layout="@layout/fragment_edit_photo" />
+    <fragment
+        android:id="@+id/commodityHomeFragment"
+        android:name="com.example.lavilog.Commodity.commodityHomeFragment"
+        android:label="fragment_commodity_home"
+        tools:layout="@layout/fragment_commodity_home" >
+        <action
+            android:id="@+id/action_commodityHomeFragment_to_commodityDetailFragment"
+            app:destination="@id/commodityDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/commodityDetailFragment"
+        android:name="com.example.lavilog.Commodity.commodityDetailFragment"
+        android:label="fragment_commodity_detail"
+        tools:layout="@layout/fragment_commodity_detail" />
 </navigation>
