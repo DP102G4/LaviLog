@@ -194,7 +194,7 @@ public class myProfileFragment extends Fragment {
                 alertDialog.show();
             }
         });
-
+//
         tvEditPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
