@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
 
     //1008
+    //國慶日快樂！
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
