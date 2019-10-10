@@ -14,9 +14,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class MainActivity extends AppCompatActivity {
-    static public BottomNavigationView bottomNavigationView;
+    private BottomNavigationView bottomNavigationView;
 
     //1008
+    //1010
     //國慶日快樂！
 
     @Override
