@@ -7,42 +7,42 @@
     tools:context=".QRcode.DefaultQRcodeFragment" >
 
     <Button
-        android:id="@+id/btScanQR"
+        android:id="@+id/btGenerateQrCode"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="45dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="100dp"
         android:background="#C2FCE3"
-        android:text="行動條碼掃描"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextView" />
-
-    <TextView
-        android:id="@+id/TextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:text="對方僅需使用LaviLog的行動條碼掃瞄器，並對準本行動條碼，即可將您加入好友名單內。"
-        android:textSize="20sp"
+        android:text="產生我的行動條碼"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivQRcode" />
+
+    <TextView
+        android:id="@+id/tvQRtext"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btGenerateQrCode" />
 
     <ImageView
         android:id="@+id/ivQRcode"
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:layout_marginStart="80dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="80dp"
-        android:src="@drawable/defaultqrcode"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

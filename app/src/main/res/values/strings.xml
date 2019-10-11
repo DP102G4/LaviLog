@@ -16,17 +16,16 @@
     <string name="textTakePicture">開啟相機</string>
     <string name="textCancel">取消</string>
 
-    <!-- QRcode -->
     <string name="textName">母湯哲</string>
     <string name="textImageUploadSuccess">照片已上傳</string>
     <string name="textInserted">文章已新增</string>
     <string name="textInsertFail">上傳失敗</string>
     <string name="textImageUploadFail">照片上傳失敗</string>
 
-
-
-
+    <!-- QRcode -->
     <string name="textResultNotFound">掃描不到結果，請再試一次</string>
+    <string name="textQRView">對方僅需使用LaviLog的行動條碼掃瞄器，並對準本行動條碼，即可將您加入好友名單內。</string>
+
     <!-- SearchFreind, SearchUser -->
     <string name="textNo">沒有好友</string>
     <string name="textNo2">沒有帳號</string>
