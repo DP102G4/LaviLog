@@ -237,8 +237,8 @@ public class FriendSearchFragment extends Fragment {
 
             MyViewHolder(View itemView) {
                 super(itemView);
-                ivFriend = itemView.findViewById(R.id.ivFriend);
-                tvFriendName = itemView.findViewById(R.id.tvFriendName);
+                ivFriend = itemView.findViewById(R.id.ivAccountPhoto);
+                tvFriendName = itemView.findViewById(R.id.tvAccountName);
 
             }
         }
