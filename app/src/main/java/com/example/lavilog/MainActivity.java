@@ -18,7 +18,8 @@ public class MainActivity extends AppCompatActivity {
     // 這邊要使用 static public BottomNavigationView bottomNavigationView;
     // 勿用 private BottomNavigationView bottomNavigationView;
 
-    // 國慶日快樂！
+    // 國慶日快樂
+    //
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
