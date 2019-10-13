@@ -57,8 +57,8 @@ public class FriendSearchResultFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ivFriend = view.findViewById(R.id.ivFriend);
-        tvFriendName = view.findViewById(R.id.tvFriendName);
+        ivFriend = view.findViewById(R.id.ivAccountPhoto);
+        tvFriendName = view.findViewById(R.id.tvAccountName);
         btFriendDiary = view.findViewById(R.id.btAddFriend);
 
         if (getArguments() != null) {

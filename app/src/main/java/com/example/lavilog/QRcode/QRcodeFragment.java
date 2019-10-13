@@ -81,17 +81,17 @@ public class QRcodeFragment extends Fragment {
             }
         });
 
-        btPickPicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                if (intent.resolveActivity(activity.getPackageManager()) != null) {
-                    startActivityForResult(intent, REQ_PICK_PICTUEE);
-                } else {
-                    Toast.makeText(activity, "請選擇照片", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        btPickPicture.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                if (intent.resolveActivity(activity.getPackageManager()) != null) {
+//                    startActivityForResult(intent, REQ_PICK_PICTUEE);
+//                } else {
+//                    Toast.makeText(activity, "請選擇照片", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
 
         btShowQR.setOnClickListener(new View.OnClickListener() {
             @Override

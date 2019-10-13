@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,7 +36,7 @@ public class signInFragment extends Fragment {
         super.onCreate(savedInstanceState);
         activity = getActivity();
         auth = FirebaseAuth.getInstance();
-
+        MainActivity.bottomNavigationView.setVisibility(View.GONE);
     }
 
     @Override
@@ -60,7 +61,7 @@ public class signInFragment extends Fragment {
             public void onClick(View v) {
                 String account = etAccount.getText().toString();
                 String password = etPassword.getText().toString();
-                if(!account.isEmpty()||!password.isEmpty()){
+                if(!account.isEmpty()&&!password.isEmpty()){
                     signIn(account, password);
                 }else{
                     tvStatus.setText("帳號與密碼不得為空");
@@ -94,9 +95,16 @@ public class signInFragment extends Fragment {
                         // 登入成功轉至下頁；失敗則顯示錯誤訊息
                         if (task.isSuccessful()) {
                             Navigation.findNavController(etAccount).navigate(R.id.action_signInFragment_to_mainFragment);
+                            Toast.makeText(activity,"登入成功",Toast.LENGTH_SHORT).show();
                         } else {
                             Exception exception = task.getException();
                             String message = (exception == null ? "登入失敗" : exception.getMessage());
+                            if(message.contains("no user")){
+                                message="此帳號未註冊";
+                            }
+                            if(message.contains("invalid")){
+                                message="登入密碼錯誤";
+                            }
                             tvStatus.setText(message);
                         }
                     }

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.lavilog.MainActivity;
 import com.example.lavilog.R;
 
 public class signUp_1_Fragment extends Fragment {
@@ -27,6 +28,7 @@ public class signUp_1_Fragment extends Fragment {
         super.onCreate(savedInstanceState);
         activity=getActivity();
         activity.setTitle("會員註冊");
+        MainActivity.bottomNavigationView.setVisibility(View.GONE);
     }
 
     @Override

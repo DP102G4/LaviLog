@@ -28,9 +28,13 @@
     <string name="textDeleteFail">Delete failed</string>
 
 
+    <!-- QRcode -->
     <string name="textResultNotFound">掃描不到結果，請再試一次</string>
+    <string name="textQRView">對方僅需使用LaviLog的行動條碼掃瞄器，並對準本行動條碼，即可將您加入好友名單內。</string>
 
-    <string name="textNo">沒有</string>
+    <!-- SearchFreind, SearchUser -->
+    <string name="textNo">沒有好友</string>
+    <string name="textNo2">沒有帳號</string>
     <string name="textImageDownloadFail">圖片下載失敗</string>
     <string name="textDate">日期</string>
     <string name="textItemQuestion">當日問題</string>

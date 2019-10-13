@@ -9,6 +9,8 @@ public class User implements Serializable {
     private String name;
     private String imagePath;
     private String phone;
+    private String birthDay;
+    private String gender;
 
     public User(){}
     public User(String id,String account,String password,String name,String phone){
@@ -26,6 +28,18 @@ public class User implements Serializable {
         this.phone=phone;
         this.imagePath=imagePath;
     }
+
+    public User(String id,String account,String password,String name,String phone,String imagePath,String gender,String birthDay){
+        this.id=id;
+        this.account=account;
+        this.password=password;
+        this.name=name;
+        this.phone=phone;
+        this.imagePath=imagePath;
+        this.birthDay=birthDay;
+        this.gender=gender;
+    }
+
     public String getId() {
         return id;
     }
@@ -65,11 +79,28 @@ public class User implements Serializable {
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
+
     public String getPhone() {
         return phone;
     }
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(String birthDay) {
+        this.birthDay = birthDay;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

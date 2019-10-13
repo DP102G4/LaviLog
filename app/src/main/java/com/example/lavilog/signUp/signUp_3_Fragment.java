@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.lavilog.MainActivity;
 import com.example.lavilog.R;
 import com.example.lavilog.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -48,6 +49,7 @@ public class signUp_3_Fragment extends Fragment {
         acitvity = getActivity();
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
+        MainActivity.bottomNavigationView.setVisibility(View.GONE);
     }
 
     @Override
@@ -146,6 +148,9 @@ public class signUp_3_Fragment extends Fragment {
     }
     private void registered(final User user) {
 //        db.collection("users").add(user);
+        String accountLower=user.getAccount().toLowerCase();
+        //google信箱帳號不區分大小寫，一律轉成小寫，所以資料庫存的帳號也必須是小寫英文
+        user.setAccount(accountLower);
         db.collection("users").document(user.getId()).set(user)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

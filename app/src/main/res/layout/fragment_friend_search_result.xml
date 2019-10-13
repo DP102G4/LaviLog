@@ -7,7 +7,7 @@
     tools:context=".SearchFriend.FriendSearchResultFragment" >
 
     <ImageView
-        android:id="@+id/ivFriend"
+        android:id="@+id/ivAccountPhoto"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="140dp"
@@ -19,7 +19,7 @@
         tools:src="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tvFriendName"
+        android:id="@+id/tvAccountName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="180dp"
@@ -29,7 +29,7 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivFriend" />
+        app:layout_constraintTop_toBottomOf="@+id/ivAccountPhoto" />
 
     <Button
         android:id="@+id/btAddFriend"
@@ -43,5 +43,5 @@
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvFriendName" />
+        app:layout_constraintTop_toBottomOf="@+id/tvAccountName" />
 </androidx.constraintlayout.widget.ConstraintLayout>

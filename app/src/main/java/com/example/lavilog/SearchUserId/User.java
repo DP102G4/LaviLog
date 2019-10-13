@@ -1,26 +1,21 @@
 package com.example.lavilog.SearchUserId;
 
-import android.icu.text.PluralRules;
-import android.media.Image;
+import java.io.Serializable;
 
-public class User {
-    private int ImageId;
+public class User implements Serializable {
     private String name;
+    private String imagePath;
+    private String account;
 
-    public User(int imageId, String name) {
-        ImageId = imageId;
-        this.name = name;
-    }
 
     public User() {
+
     }
 
-    public int getImageId() {
-        return ImageId;
-    }
-
-    public void setImageId(int imageId) {
-        ImageId = imageId;
+    public User(String name, String imagePath, String account) {
+        this.name = name;
+        this.imagePath = imagePath;
+        this.account = account;
     }
 
     public String getName() {
@@ -30,4 +25,21 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
 }
+
