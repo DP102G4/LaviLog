@@ -68,7 +68,7 @@ public class signUp_3_Fragment extends Fragment {
         tvStatus_Account = view.findViewById(R.id.tvStatus_Account);
         tvStatus_Password = view.findViewById(R.id.tvStatus_Password);
         tvStatus_Name = view.findViewById(R.id.tvStatus_Name);
-        tvPhone = view.findViewById(R.id.tvPhone);
+        tvPhone = view.findViewById(R.id.tvQuestion);
         btConfirm = view.findViewById(R.id.btConfirm3);
         btBack = view.findViewById(R.id.btBack);
         Bundle bundle = getArguments();

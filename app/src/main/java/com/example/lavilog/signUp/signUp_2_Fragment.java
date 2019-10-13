@@ -77,7 +77,7 @@ public class signUp_2_Fragment extends Fragment {
         textView3=view.findViewById(R.id.textView3);
         textView4=view.findViewById(R.id.textView4);
         textView5=view.findViewById(R.id.textView5);
-        tvPhone=view.findViewById(R.id.tvPhone);
+        tvPhone=view.findViewById(R.id.tvQuestion);
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
