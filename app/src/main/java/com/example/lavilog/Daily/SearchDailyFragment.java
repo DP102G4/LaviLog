@@ -32,6 +32,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -87,7 +88,7 @@ public class SearchDailyFragment extends Fragment {
     }
 
     private void showAll() {
-        db.collection("article").orderBy("textClock").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("article").orderBy("textClock",Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful() && task.getResult() !=null){
@@ -109,7 +110,7 @@ public class SearchDailyFragment extends Fragment {
 
     private void listenToDaily() {
         if (registration == null){
-            registration = db.collection("article").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            registration = db.collection("article").orderBy("textClock").addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
                     Log.d(TAG,"article change.");
