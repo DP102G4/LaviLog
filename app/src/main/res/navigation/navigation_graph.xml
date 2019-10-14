@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/friendHomeFragment">
+    app:startDestination="@id/signInFragment">
 
     <fragment
         android:id="@+id/mainFragment"
@@ -85,6 +85,9 @@
         <action
             android:id="@+id/action_signInFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_myProfileFragment"
+            app:destination="@id/myProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchUserIdFragment"
@@ -173,6 +176,9 @@
         <action
             android:id="@+id/action_forgetPW_2_Fragment_to_signInFragment"
             app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_forgetPW_2_Fragment_to_myProfileFragment"
+            app:destination="@id/myProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/accountFragment"
@@ -203,6 +209,12 @@
         <action
             android:id="@+id/action_myProfileFragment_to_editPhotoFragment"
             app:destination="@id/editPhotoFragment" />
+        <action
+            android:id="@+id/action_myProfileFragment_to_forgetPW_1_Fragment"
+            app:destination="@id/forgetPW_1_Fragment" />
+        <action
+            android:id="@+id/action_myProfileFragment_to_changePhoneFragment"
+            app:destination="@id/changePhoneFragment" />
     </fragment>
     <fragment
         android:id="@+id/editPhotoFragment"
@@ -223,4 +235,13 @@
         android:name="com.example.lavilog.Commodity.commodityDetailFragment"
         android:label="fragment_commodity_detail"
         tools:layout="@layout/fragment_commodity_detail" />
+    <fragment
+        android:id="@+id/changePhoneFragment"
+        android:name="com.example.lavilog.changePhoneFragment"
+        android:label="fragment_change_phone"
+        tools:layout="@layout/fragment_change_phone" >
+        <action
+            android:id="@+id/action_changePhoneFragment_to_myProfileFragment"
+            app:destination="@id/myProfileFragment" />
+    </fragment>
 </navigation>

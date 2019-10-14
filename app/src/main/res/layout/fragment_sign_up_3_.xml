@@ -66,7 +66,7 @@
         android:layout_marginTop="30dp"
         android:ems="10"
         android:hint="user@gmail.com"
-        android:inputType="textPersonName"
+        android:inputType="textEmailAddress"
         android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@+id/textView11"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />

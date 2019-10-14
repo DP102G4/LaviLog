@@ -24,8 +24,6 @@
     <string name="textImageUploadFail">照片上傳失敗</string>
 
 
-
-
     <string name="textResultNotFound">掃描不到結果，請再試一次</string>
     <!-- SearchFreind, SearchUser -->
     <string name="textNo">沒有好友</string>

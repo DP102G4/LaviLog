@@ -55,8 +55,9 @@ public class myProfileFragment extends Fragment {
     TextView tvEditPhoto,tvAccount;
     Button btChangeName,btChangeGender,btChangeBirthDay,btChangePhone,btChangePassword;
     final String arror="     >";//點選欄位內的右邊箭頭
-    String id,account,days;
+    String id,account,days,phone;
     User user;
+    static public boolean accountChangePassword;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +86,12 @@ public class myProfileFragment extends Fragment {
         btChangePassword=view.findViewById(R.id.btChangePassword);
         btChangePhone=view.findViewById(R.id.btChangePhone);
         btChangeGender=view.findViewById(R.id.btChangeGender);
+        String changePhone;
+        Bundle bundle=new Bundle();
+        changePhone=(String) bundle.getSerializable("changePhone");
+        if(changePhone!=null){
+            Toast.makeText(activity, "手機號碼更換完成", Toast.LENGTH_SHORT).show();
+        }//若是改手機頁面跳轉回來，則要顯示Toast
         account=auth.getCurrentUser().getEmail();
         Query query=db.collection("users");
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -106,7 +113,8 @@ public class myProfileFragment extends Fragment {
                             ivAccountPhoto.setImageResource(R.drawable.no_image);
                         }
                         btChangeName.setText(name+arror);
-                        btChangePhone.setText(user.getPhone()+arror);
+                        phone=user.getPhone();
+                        btChangePhone.setText(phone+arror);
                         String gender=user.getGender();
                         if(gender==null){
                             btChangeGender.setText("尚未設定"+arror);
@@ -274,6 +282,21 @@ public class myProfileFragment extends Fragment {
                     }
                 };
                 new DatePickerDialog(activity, onDateSetListener, mYear, mMonth, mDay).show();
+            }
+        });
+        btChangePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accountChangePassword=true;// 確認修改密碼後轉回本頁
+                Navigation.findNavController(view).navigate(R.id.action_myProfileFragment_to_forgetPW_1_Fragment);
+            }
+        });
+        btChangePhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("phone",phone);
+                Navigation.findNavController(view).navigate(R.id.action_myProfileFragment_to_changePhoneFragment,bundle);
             }
         });
     }

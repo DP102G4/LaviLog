@@ -16,8 +16,9 @@
         android:background="@android:color/background_light"
         android:ems="10"
         android:hint="輸入新密碼"
-        android:inputType="phone"
+        android:inputType="textPassword"
         android:textSize="15sp"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,7 +30,7 @@
         android:background="@android:color/background_light"
         android:ems="10"
         android:hint="再次輸入新密碼"
-        android:inputType="phone"
+        android:inputType="textPassword"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPassword" />

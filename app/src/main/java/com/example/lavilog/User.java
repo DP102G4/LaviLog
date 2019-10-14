@@ -11,6 +11,9 @@ public class User implements Serializable {
     private String phone;
     private String birthDay;
     private String gender;
+    private String verificationId;
+    private String verificationCode;
+    private String status;
 
     public User(){}
     public User(String id,String account,String password,String name,String phone){
@@ -38,6 +41,20 @@ public class User implements Serializable {
         this.imagePath=imagePath;
         this.birthDay=birthDay;
         this.gender=gender;
+    }
+
+    public User(String id,String account,String password,String name,String phone,String imagePath,String gender,String birthDay,String verificationId,String verificationCode,String status){
+        this.id=id;
+        this.account=account;
+        this.password=password;
+        this.name=name;
+        this.phone=phone;
+        this.imagePath=imagePath;
+        this.birthDay=birthDay;
+        this.gender=gender;
+        this.verificationId=verificationId;
+        this.verificationCode=verificationCode;
+        this.status=status;
     }
 
     public String getId() {
@@ -96,11 +113,33 @@ public class User implements Serializable {
         this.birthDay = birthDay;
     }
 
+    public String getVerificationId() {
+        return verificationId;
+    }
+
+    public void setVerificationId(String verificationId) {
+        this.verificationId = verificationId;
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) { this.verificationCode = verificationCode; }
+
     public String getGender() {
         return gender;
     }
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
