@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.lavilog.MainActivity;
 import com.example.lavilog.R;
 import com.example.lavilog.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -49,6 +50,7 @@ public class forgetPW_2_Fragment extends Fragment {
         activity=getActivity();
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        MainActivity.bottomNavigationView.setVisibility(View.GONE);
     }
 
     @Nullable

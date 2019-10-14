@@ -39,8 +39,6 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import static androidx.constraintlayout.widget.Constraints.TAG;
-
 public class FriendSearchFragment extends Fragment {
     private static final String TAG = "TAG_FriendSearchF";
     private Activity activity;
@@ -68,7 +66,6 @@ public class FriendSearchFragment extends Fragment {
 //        friends = getFriends();
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
-
     }
 
     @Override
@@ -80,7 +77,6 @@ public class FriendSearchFragment extends Fragment {
         // recyclerView.setAdapter(new FriendAdapter(activity, friends));
 
         searchView = view.findViewById(R.id.searchView);
-
    }
 
     @Override
@@ -91,7 +87,7 @@ public class FriendSearchFragment extends Fragment {
         listenToSpots();
 //        friends = firebase的值
         FriendAdapter adapter = (FriendAdapter) recyclerView.getAdapter();
-        if (adapter == null) { // 如果適配器等於空值就建立
+        if (adapter == null) { // 如果適配器等於空值就建立新的
             recyclerView.setAdapter(new FriendAdapter(activity, friends));
         } else { // 如果適配器不等於空值就用原本的
             adapter.setFriends(friends);
@@ -100,13 +96,16 @@ public class FriendSearchFragment extends Fragment {
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             // 必須能監聽到searchView內文字的改變
+
+            // onQueryTextSubmit 打完才搜尋
             @Override
             public boolean onQueryTextSubmit(String query) { // 打完才搜尋
                 return false;
             }
 
+            // onQueryTextChange 打字就搜尋
             @Override
-            public boolean onQueryTextChange(String newText) { // 打字就搜尋
+            public boolean onQueryTextChange(String newText) { //打字就搜尋
                 // 當user輸入東西,searchＶiew會傳回內容（newText)
 
                 FriendSearchFragment.FriendAdapter adapter = (FriendSearchFragment.FriendAdapter) recyclerView.getAdapter();
@@ -142,6 +141,7 @@ public class FriendSearchFragment extends Fragment {
             }
         });
     }
+
 
     @Override
     public void onStop() {
@@ -237,8 +237,8 @@ public class FriendSearchFragment extends Fragment {
 
             MyViewHolder(View itemView) {
                 super(itemView);
-                ivFriend = itemView.findViewById(R.id.ivFriend);
-                tvFriendName = itemView.findViewById(R.id.tvFriendName);
+                ivFriend = itemView.findViewById(R.id.ivAccountPhoto);
+                tvFriendName = itemView.findViewById(R.id.tvAccountName);
 
             }
         }

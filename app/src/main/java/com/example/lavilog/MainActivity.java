@@ -14,9 +14,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class MainActivity extends AppCompatActivity {
-    private BottomNavigationView bottomNavigationView;
+    static public BottomNavigationView bottomNavigationView;
+    // 這邊要使用 static public BottomNavigationView bottomNavigationView;
+    // 勿用 private BottomNavigationView bottomNavigationView;
 
-
+    // 國慶日快樂
+    //
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +40,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.action_changestyle){
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 }
