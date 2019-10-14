@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="@+id/btBack" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/ivDailyPicture"
         android:layout_width="420dp"
         android:layout_height="100dp"
         android:scrollbarSize="0dp"
@@ -36,10 +36,10 @@
         android:text="手機號碼"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="@+id/textView11"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/ivDailyPicture" />
 
     <TextView
-        android:id="@+id/tvPhone"
+        android:id="@+id/tvQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"

@@ -7,7 +7,7 @@
     tools:context=".signUp.signUp_2_Fragment">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/ivDailyPicture"
         android:layout_width="wrap_content"
         android:layout_height="162dp"
         android:scrollbarSize="0dp"
@@ -27,7 +27,7 @@
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/ivDailyPicture" />
 
     <TextView
         android:id="@+id/textView4"
@@ -128,7 +128,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/tvPhone"
+        android:id="@+id/tvQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"

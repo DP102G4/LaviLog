@@ -23,10 +23,16 @@
     <string name="textImageUploadFail">照片上傳失敗</string>
 
 
+    <string name="textNoDailyFound">找不到日誌</string>
+    <string name="textImageDeleted">Image is deleted</string>
+    <string name="textDeleteFail">Delete failed</string>
 
 
     <string name="textResultNotFound">掃描不到結果，請再試一次</string>
 
     <string name="textNo">沒有</string>
     <string name="textImageDownloadFail">圖片下載失敗</string>
+    <string name="textDate">日期</string>
+    <string name="textItemQuestion">當日問題</string>
+    <string name="textItemAnswer">當日回答</string>
 </resources>

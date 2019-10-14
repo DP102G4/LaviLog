@@ -4,7 +4,8 @@ package com.example.lavilog.Daily;
 import java.io.Serializable;
 
 public class Answer implements Serializable {
-    private String article;
+    private String question;
+    private String answer;
     private String imagePath;
     private String textClock;
     private String id;
@@ -13,19 +14,28 @@ public class Answer implements Serializable {
     public Answer() { //先不傳值所以為空
     }
 
-    public Answer(String article, String imagePath, String textClock,String id) {
-        this.article = article;
+    public Answer(String question,String answer, String imagePath, String textClock,String id) {
+        this.question = question;
+        this.answer = answer;
         this.imagePath = imagePath;
         this.textClock = textClock;
         this.id = id;
     }
 
-    public String getArticle() {
-        return article;
+    public String getQuestion() {
+        return question;
     }
 
-    public void setArticle(String article) {
-        this.article = article;
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
     public String getImagePath() {
