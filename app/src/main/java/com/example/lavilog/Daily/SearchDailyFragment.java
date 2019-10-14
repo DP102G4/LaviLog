@@ -251,4 +251,3 @@ public class SearchDailyFragment extends Fragment {
 
 
 }
-//
