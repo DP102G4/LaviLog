@@ -135,6 +135,9 @@ public class signInFragment extends Fragment {
                             if(message.contains("invalid")){
                                 message="登入密碼錯誤";
                             }
+                            if(message.contains("again")){
+                                message="錯誤登入太多次，請稍後再嘗試";
+                            }
                             tvStatus.setText(message);
                         }
                     }

@@ -73,7 +73,7 @@ public class forgetPW_1_Fragment extends Fragment {
         etPhone=view.findViewById(R.id.etPhone);
         etVerificationCode=view.findViewById(R.id.etVerificationCode);
         tvStatus=view.findViewById(R.id.tvStatus);
-        tvPhone=view.findViewById(R.id.tvQuestion);
+        tvPhone=view.findViewById(R.id.tvPhone);
         textView8=view.findViewById(R.id.textView8);
         tvVerificationCode=view.findViewById(R.id.tvVerificationCode);
         btConfirmCode=view.findViewById(R.id.btConfirmCode);
