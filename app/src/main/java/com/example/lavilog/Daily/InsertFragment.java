@@ -1,10 +1,8 @@
 package com.example.lavilog.Daily;
 
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageDecoder;
@@ -14,7 +12,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -41,7 +38,6 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -57,7 +53,7 @@ public class InsertFragment extends Fragment {
     private ImageView imageView;
     private Button btUpdate, btPickPicture, btTakePicture, btCancle;
     private EditText etArticle;
-    private boolean pictureTaken;
+    private boolean pictureTaken, picturePick;
     private TextClock textClock;
     private TextView textView;
     private static final int PER_EXTERNAL_STORAGE = 0;
@@ -88,12 +84,12 @@ public class InsertFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         textClock = view.findViewById(R.id.textClock);
+        final String time = textClock.getText().toString();
         textClock.setFormat12Hour("yyyy年MM月dd日");
-        imageView = view.findViewById(R.id.imageView);
+        imageView = view.findViewById(R.id.ivDailyPicture);
         etArticle = view.findViewById(R.id.etArticle);
         textView = view.findViewById(R.id.textView);
         btTakePicture = view.findViewById(R.id.btTakePicture);
-        final String time=textClock.getText().toString();
         btTakePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,7 +102,7 @@ public class InsertFragment extends Fragment {
                     }
                 }
                 file = new File(dir, "picture.jpg");
-                Uri contentUri = FileProvider.getUriForFile(activity, activity.getPackageName() + ".provider", file);
+                contentUri = FileProvider.getUriForFile(activity, activity.getPackageName() + ".provider", file);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, contentUri);
                 if (intent.resolveActivity(activity.getPackageManager()) != null) {
                     startActivityForResult(intent, REQ_TAKE_PICTURE);
@@ -123,7 +119,7 @@ public class InsertFragment extends Fragment {
                 if (intent.resolveActivity(activity.getPackageManager()) != null) {
                     startActivityForResult(intent, REQ_PICK_PICTURE);
                 } else {
-                    Toast.makeText(activity, "請選取照片", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "開啟相簿權限", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -143,9 +139,8 @@ public class InsertFragment extends Fragment {
             public void onClick(View view) {
                 //先取得插入document的ID
                 final String id = db.collection("articles").document().getId();
-                answer.setArticle(id);
+                answer.setAnswer(id);
                 //測試取得時間放入firebase
-//                final String date = db.collection("textClocks").document().getId();
                 answer.setTextClock(time);
                 answer.setId(id);
 
@@ -154,17 +149,17 @@ public class InsertFragment extends Fragment {
                     Toast.makeText(activity, "請回答問題", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                answer.setArticle(article);
+                answer.setAnswer(article);
                 //如果有拍照，上傳至Firebase storage
                 if (pictureTaken) {
                     // document ID成為image path一部分，避免與其他圖檔的檔名重複
-                    final String imagepath =  "/images_daily/" + answer.getArticle();
-                    storage.getReference().child(imagepath).putFile(contentUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    final String imagePath = "/images_daily/" + answer.getId();
+                    storage.getReference().child(imagePath).putFile(contentUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                             if (task.isSuccessful()) {
                                 Log.d(TAG, getString(R.string.textImageUploadSuccess));
-                                answer.setImagePath(imagepath);
+                                answer.setImagePath(imagePath);
                                 addOrReplace(answer);
                             } else {
                                 String message = task.getException() == null ?
@@ -177,122 +172,93 @@ public class InsertFragment extends Fragment {
                     });
 
 
-
-                }else {
-                    addOrReplace(answer);}
+                } else {
+                    addOrReplace(answer);
+                }
+//                if (picturePick){
+//                    final String imagePath = "/images_daily"+answer.getId();
+//                    storage.getReference().child(imagePath).putFile(contentUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+//                            if(task.isSuccessful()){
+//                                Log.d(TAG,getString(R.string.textImageUploadSuccess));
+//                                answer.setImagePath(imagePath);
+//                                addOrReplace(answer);
+//                            }else {
+//                                String message = task.getException() == null ?
+//                                        getString(R.string.textImageUploadFail) :
+//                                        task.getException().getMessage();
+//                                Log.e(TAG,message);
+//                                Toast.makeText(activity,message,Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//                    });
+//                }else {
+//                    addOrReplace(answer);
+//                }
 
             }
         });
 
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         if (resultCode == RESULT_OK) {
-            Uri uri = intent.getData();
             switch (requestCode) {
                 case REQ_TAKE_PICTURE:
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
-                        Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
+                    Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
+                    if (bitmap != null) {
                         imageView.setImageBitmap(bitmap);
-                        int width = bitmap.getWidth();
-                        int height = bitmap.getHeight();
-                        String text = String.format(Locale.getDefault(), "%s照片尺寸 = %d x %d", width, height);
-                        textView.setText(text);
-                    } else {
-                        ImageDecoder.OnHeaderDecodedListener listener = new ImageDecoder.OnHeaderDecodedListener() {
-                            @Override
-                            public void onHeaderDecoded(@NonNull ImageDecoder imageDecoder, @NonNull ImageDecoder.ImageInfo imageInfo, @NonNull ImageDecoder.Source source) {
-                                String mimeType = imageInfo.getMimeType();
-                                int width = imageInfo.getSize().getWidth();
-                                int height = imageInfo.getSize().getHeight();
-                                String text = String.format(Locale.getDefault(), "%s照片尺寸 = %d x %d", mimeType, width, height);
-                                textView.setText(text);
+                        pictureTaken = true;
+                        return;
 
-                            }
-                        };
-                        ImageDecoder.Source source = ImageDecoder.createSource(file);
-                        try {
-                            Bitmap bitmap = ImageDecoder.decodeBitmap(source, listener);
-                            imageView.setImageBitmap(bitmap);
-                        } catch (IOException e) {
-                            Log.e(TAG, e.toString());
-                        }
                     }
                     break;
 
 
                 case REQ_PICK_PICTURE:
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
-                        try {
-                            if (uri != null) {
-                                Bitmap bitmap = BitmapFactory.decodeStream(
-                                        activity.getContentResolver().openInputStream(uri));
+                    Uri uri = intent.getData();
+                    if (uri != null) {
+//                        switch (requestCode) {
+//                            case REQ_PICK_PICTURE:
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+                            try {
+                                 bitmap = BitmapFactory.decodeStream(activity.getContentResolver().openInputStream(uri));
                                 imageView.setImageBitmap(bitmap);
-                                pictureTaken = true;
-                                int width = bitmap.getWidth();
-                                int height = bitmap.getHeight();
-                                String text = String.format(Locale.getDefault(), "%s 照片尺寸 = %d x %d", width, height);
-                                textView.setText(text);
+                                picturePick = true;
+                            } catch (IOException e) {
+                                Log.e(TAG, e.toString());
                             }
-                        } catch (IOException e) {
-                            Log.e(TAG, toString());
-                        }
-                        pictureTaken = false;
-
-                    } else {
-                        ImageDecoder.OnHeaderDecodedListener listener = new ImageDecoder.OnHeaderDecodedListener() {
-                            @Override
-                            public void onHeaderDecoded(ImageDecoder decoder, ImageDecoder.ImageInfo imageInfo, ImageDecoder.Source source) {
-                                String mimeType = imageInfo.getMimeType();
-                                int width = imageInfo.getSize().getWidth();
-                                int height = imageInfo.getSize().getHeight();
-                                String text = String.format(Locale.getDefault(), "%s 照片尺寸 = %d x %d", mimeType, width, height);
-                                textView.setText(text);
-
-
+                        } else {
+                            ImageDecoder.OnHeaderDecodedListener listener = new ImageDecoder.OnHeaderDecodedListener() {
+                                @Override
+                                public void onHeaderDecoded(@NonNull ImageDecoder decoder, @NonNull ImageDecoder.ImageInfo info, @NonNull ImageDecoder.Source source) {
+                                }
+                            };
+                            ImageDecoder.Source source = ImageDecoder.createSource(activity.getContentResolver(), uri);
+                            try {
+                                 bitmap = ImageDecoder.decodeBitmap(source, listener);
+                                imageView.setImageBitmap(bitmap);
+                                picturePick = true;
+                            } catch (IOException e) {
+                                Log.e(TAG, e.toString());
                             }
-                        };
-                        ImageDecoder.Source source = ImageDecoder.createSource(activity.getContentResolver(), uri);
-                        try {
-                            Bitmap bitmap = ImageDecoder.decodeBitmap(source, listener);
-                            imageView.setImageBitmap(bitmap);
-                        } catch (IOException e) {
-                            Log.e(TAG, e.toString());
 
-                        }
-
+//                                }
+//                                break;
+                        }break;
                     }
-                    break;
-
             }
 
-
         }
 
+        pictureTaken = false;
     }
 
 
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        askExtrnalStoragePermission();//請求外部儲存體的存取權限
-    }
-
-
-    private void askExtrnalStoragePermission() {
-        String[] Permission = {  //要求的權限
-                Manifest.permission.READ_EXTERNAL_STORAGE};  //外部儲存公開目錄
-
-        int result = ContextCompat.checkSelfPermission(activity, Permission[0]);
-        if (result == PackageManager.PERMISSION_DENIED) { //如果使用者不同意存取
-            requestPermissions(Permission, PER_EXTERNAL_STORAGE); //呼叫API請求是否允許此app存取外部公開目錄才會到OPR
-
-        }
-
-    }
     private void addOrReplace(final Answer answer) {
         // 如果Firestore沒有該ID的Document就建立新的，已經有就更新內容
         db.collection("article").document(answer.getId()).set(answer)
@@ -301,7 +267,7 @@ public class InsertFragment extends Fragment {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             String message = getString(R.string.textInserted)
-                                    + " with ID: " + answer.getArticle();
+                                    + " with ID: " + answer.getAnswer();
                             Log.d(TAG, message);
                             Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
                             // 新增完畢回上頁
@@ -315,6 +281,113 @@ public class InsertFragment extends Fragment {
                         }
                     }
                 });
+//            Uri uri = intent.getData();
+//            switch (requestCode) {
+//                case REQ_TAKE_PICTURE:
+//                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+//                        Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
+//                        imageView.setImageBitmap(bitmap);
+//                        pictureTaken = true;
+//                        return;
+//                        int width = bitmap.getWidth();
+//                        int height = bitmap.getHeight();
+//                        String text = String.format(Locale.getDefault(), "%s照片尺寸 = %d x %d", width, height);
+//                        textView.setText(text);
+//                    } else {
+//                        ImageDecoder.OnHeaderDecodedListener listener = new ImageDecoder.OnHeaderDecodedListener() {
+//                            @Override
+//                            public void onHeaderDecoded(@NonNull ImageDecoder imageDecoder, @NonNull ImageDecoder.ImageInfo imageInfo, @NonNull ImageDecoder.Source source) {
+//                                String mimeType = imageInfo.getMimeType();
+//                                int width = imageInfo.getSize().getWidth();
+//                                int height = imageInfo.getSize().getHeight();
+//                                String text = String.format(Locale.getDefault(), "%s照片尺寸 = %d x %d", mimeType, width, height);
+//                                textView.setText(text);
+
+//                            }
+//                        };
+//                        ImageDecoder.Source source = ImageDecoder.createSource(file);
+//                        try {
+//                            Bitmap bitmap = ImageDecoder.decodeBitmap(source, listener);
+//                            imageView.setImageBitmap(bitmap);
+//                        } catch (IOException e) {
+//                            Log.e(TAG, e.toString());
+//                        }
+//                    }
+//                    break;
+//
+//
+//                case REQ_PICK_PICTURE:
+//                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+//                        try {
+//                            if (uri != null) {
+//                                Bitmap bitmap = BitmapFactory.decodeStream(
+//                                        activity.getContentResolver().openInputStream(uri));
+//                                imageView.setImageBitmap(bitmap);
+//                                pictureTaken = true;
+//                                int width = bitmap.getWidth();
+//                                int height = bitmap.getHeight();
+//                                String text = String.format(Locale.getDefault(), "%s 照片尺寸 = %d x %d", width, height);
+//                                textView.setText(text);
+//                            }
+//                        } catch (IOException e) {
+//                            Log.e(TAG, toString());
+//                        }
+//                        pictureTaken = false;
+//
+//                    } else {
+//                        ImageDecoder.OnHeaderDecodedListener listener = new ImageDecoder.OnHeaderDecodedListener() {
+//                            @Override
+//                            public void onHeaderDecoded(ImageDecoder decoder, ImageDecoder.ImageInfo imageInfo, ImageDecoder.Source source) {
+//                                String mimeType = imageInfo.getMimeType();
+//                                int width = imageInfo.getSize().getWidth();
+//                                int height = imageInfo.getSize().getHeight();
+//                                String text = String.format(Locale.getDefault(), "%s 照片尺寸 = %d x %d", mimeType, width, height);
+//                                textView.setText(text);
+
+
+//                            }
+//                        };
+//                        ImageDecoder.Source source = ImageDecoder.createSource(activity.getContentResolver(), uri);
+//                        try {
+//                            Bitmap bitmap = ImageDecoder.decodeBitmap(source, listener);
+//                            imageView.setImageBitmap(bitmap);
+//                        } catch (IOException e) {
+//                            Log.e(TAG, e.toString());
+//
+//                        }
+//
+//                    }
+//                    break;
+//
+//            }
+//
+//
+//        }
+//
+//    }
+
+
+//
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        askExtrnalStoragePermission();//請求外部儲存體的存取權限
+//    }
+
+
+//    private void askExtrnalStoragePermission() {
+//        String[] Permission = {  //要求的權限
+//                Manifest.permission.READ_EXTERNAL_STORAGE};  //外部儲存公開目錄
+//
+//        int result = ContextCompat.checkSelfPermission(activity, Permission[0]);
+//        if (result == PackageManager.PERMISSION_DENIED) { //如果使用者不同意存取
+//            requestPermissions(Permission, PER_EXTERNAL_STORAGE); //呼叫API請求是否允許此app存取外部公開目錄才會到OPR
+//
+//        }
+//
+//    }
+
+
 
 //    @Override
 //    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

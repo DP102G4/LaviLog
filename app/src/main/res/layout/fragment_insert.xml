@@ -54,7 +54,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvQuestion" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/ivDailyPicture"
         android:layout_width="100dp"
         android:layout_height="81dp"
         android:layout_marginStart="139dp"
@@ -83,9 +83,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="今日問題"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/ivDailyPicture"
+        app:layout_constraintStart_toStartOf="@+id/ivDailyPicture"
+        app:layout_constraintTop_toBottomOf="@+id/ivDailyPicture"
         tools:text="@string/textQuestion" />
 
     <TextView

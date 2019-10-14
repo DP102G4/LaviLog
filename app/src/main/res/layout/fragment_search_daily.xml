@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Daily.AlbumFragment">
+    tools:context=".Daily.SearchDailyFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvDailyAlbum"
+        android:id="@+id/rvAnswer"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </FrameLayout>

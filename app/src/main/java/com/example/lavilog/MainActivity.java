@@ -15,6 +15,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
     static public BottomNavigationView bottomNavigationView;
+    // 這邊要使用 static public BottomNavigationView bottomNavigationView;
+    // 勿用 private BottomNavigationView bottomNavigationView;
 
     //1008
 
