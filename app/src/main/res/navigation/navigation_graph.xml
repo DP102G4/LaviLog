@@ -244,4 +244,9 @@
             android:id="@+id/action_changePhoneFragment_to_myProfileFragment"
             app:destination="@id/myProfileFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/backStageFragment"
+        android:name="com.example.lavilog.BackStageFragment"
+        android:label="fragment_back_stage"
+        tools:layout="@layout/fragment_back_stage" />
 </navigation>

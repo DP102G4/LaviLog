@@ -39,4 +39,9 @@
     <string name="textDate">日期</string>
     <string name="textItemQuestion">當日問題</string>
     <string name="textItemAnswer">當日回答</string>
+    <string name="btInsert">Insert</string>
+    <string name="backManager">後台人員</string>
+    <string name="userManager">會員管理</string>
+    <string name="CommodityManage">商品管理</string>
+    <string name="ReportManage">檢舉管理</string>
 </resources>
