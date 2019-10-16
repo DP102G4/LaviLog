@@ -36,6 +36,8 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 
+import static com.example.lavilog.myProfileFragment.accountChangePassword;
+
 public class forgetPW_2_Fragment extends Fragment {
     Activity activity;
     EditText etPassword,etPassword2;
@@ -108,7 +110,6 @@ public class forgetPW_2_Fragment extends Fragment {
                 if (task.isSuccessful()) {
                     FirebaseUser user1 = auth.getCurrentUser();
                     user1.delete();
-                    Toast.makeText(activity,"111",Toast.LENGTH_SHORT).show();
                     auth.createUserWithEmailAndPassword(accountChangePW, password)
                             .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -125,8 +126,14 @@ public class forgetPW_2_Fragment extends Fragment {
                                                     if (account.equals(accountChangePW)) {
                                                         userChangePW.setPassword(password);
                                                         db.collection("users").document(id).set(userChangePW);
-                                                        Toast.makeText(activity, "修改完成，請重新登入", Toast.LENGTH_SHORT).show();
-                                                        Navigation.findNavController(btChangePW).navigate(R.id.action_forgetPW_2_Fragment_to_signInFragment);
+
+                                                        if(accountChangePassword){
+                                                            Toast.makeText(activity, "修改完成", Toast.LENGTH_SHORT).show();
+                                                            Navigation.findNavController(btChangePW).navigate(R.id.action_forgetPW_2_Fragment_to_myProfileFragment);
+                                                        }else{
+                                                            Toast.makeText(activity, "修改完成，請重新登入", Toast.LENGTH_SHORT).show();
+                                                            Navigation.findNavController(btChangePW).navigate(R.id.action_forgetPW_2_Fragment_to_signInFragment);
+                                                        }
                                                     } else {
                                                         Exception exception = task.getException();
                                                         String message = exception == null ? "" : exception.getMessage();

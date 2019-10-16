@@ -91,10 +91,10 @@
         android:textAlignment="center"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvQuestion" />
+        app:layout_constraintTop_toBottomOf="@+id/tvPhone" />
 
     <TextView
-        android:id="@+id/tvQuestion"
+        android:id="@+id/tvPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="190dp"
@@ -107,11 +107,13 @@
 
     <Button
         android:id="@+id/btConfirmCode"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="110dp"
         android:background="#C2FCE3"
         android:text="確定"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvVerificationCode" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

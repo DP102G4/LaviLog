@@ -37,13 +37,16 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.concurrent.TimeUnit;
 
+import static java.lang.String.valueOf;
+
 public class signUp_2_Fragment extends Fragment {
     private String TAG = "TAG_signUp_2_";
     Activity activity;
     EditText etPhone,etVerificationCode;
     Button btConfirm,btSend,btResend;
-    TextView tvPhone,textView3,textView4,textView5;
+    TextView tvPhone,tvPhoneCheck,textView3,textView4,textView5;
     private String verificationId;
+    private String verificationCode;
     private ConstraintLayout layoutVerify;
     private PhoneAuthProvider.ForceResendingToken resendToken;
     private FirebaseAuth auth;
@@ -79,16 +82,18 @@ public class signUp_2_Fragment extends Fragment {
         textView3=view.findViewById(R.id.textView3);
         textView4=view.findViewById(R.id.textView4);
         textView5=view.findViewById(R.id.textView5);
-        tvPhone=view.findViewById(R.id.tvQuestion);
+        tvPhone=view.findViewById(R.id.tvPhone);
+        tvPhoneCheck=view.findViewById(R.id.tvPhoneCheck);
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                tvPhone.setText("");
                 String phone =etPhone.getText().toString().trim();
                 if (phone.isEmpty()||phone.length()!=10) {
                     tvPhone.setText("電話格式錯誤");
                     return;
                 }else {
-                    Query query = db.collection("users");
+                    Query query = db.collection("users").whereEqualTo("phone",phone);
                     query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -100,7 +105,9 @@ public class signUp_2_Fragment extends Fragment {
                                 if (phone.equals(phoneFB)) {
                                     tvPhone.setText("手機號碼已重複註冊");
                                     return;
-                                } else {
+                                }
+                            }
+                                    String phone =etPhone.getText().toString().trim();
                                     Exception exception = task.getException();
                                     String message = exception == null ? "" : exception.getMessage();
                                     Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
@@ -112,8 +119,8 @@ public class signUp_2_Fragment extends Fragment {
                                     etPhone.setVisibility(View.GONE);
                                     btSend.setVisibility(View.GONE);
                                     tvPhone.setVisibility(View.GONE);
-                                }
-                            }
+                                    tvPhoneCheck.setText("請輸入傳至"+etPhone.getText().toString().trim()+"號碼的驗證碼");
+
                         }
                     });
                 }
@@ -122,7 +129,7 @@ public class signUp_2_Fragment extends Fragment {
         btConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String verificationCode = etVerificationCode.getText().toString().trim();
+                verificationCode = etVerificationCode.getText().toString().trim();
                 if (verificationCode.isEmpty()) {
                     etVerificationCode.setError("驗證碼為空白");
                     return;
@@ -177,6 +184,8 @@ public class signUp_2_Fragment extends Fragment {
                             String phone = etPhone.getText().toString().trim();
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("phone", phone);
+                            bundle.putSerializable("verificationId",verificationId);
+                            bundle.putSerializable("verificationCode",verificationCode);
                             Navigation.findNavController(etPhone).navigate(R.id.action_signUp_2_Fragment_to_signUp_3_Fragment, bundle);
                         } else {
                             Exception exception = task.getException();

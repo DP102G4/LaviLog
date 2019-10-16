@@ -36,6 +36,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.concurrent.TimeUnit;
 
+import static com.example.lavilog.myProfileFragment.accountChangePassword;
+import static java.lang.String.valueOf;
+
 public class forgetPW_1_Fragment extends Fragment {
     private String TAG = "TAG_forgetPW_1_";
     Activity activity;
@@ -70,7 +73,7 @@ public class forgetPW_1_Fragment extends Fragment {
         etPhone=view.findViewById(R.id.etPhone);
         etVerificationCode=view.findViewById(R.id.etVerificationCode);
         tvStatus=view.findViewById(R.id.tvStatus);
-        tvPhone=view.findViewById(R.id.tvQuestion);
+        tvPhone=view.findViewById(R.id.tvPhone);
         textView8=view.findViewById(R.id.textView8);
         tvVerificationCode=view.findViewById(R.id.tvVerificationCode);
         btConfirmCode=view.findViewById(R.id.btConfirmCode);
@@ -84,6 +87,7 @@ public class forgetPW_1_Fragment extends Fragment {
         btConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                tvStatus.setText("");
                 String phone=etPhone.getText().toString().trim();
                 if(phone.isEmpty()){
                     tvStatus.setText("電話號碼不得為空白");
@@ -102,23 +106,39 @@ public class forgetPW_1_Fragment extends Fragment {
                             User userFB = documentSnapshot.toObject(User.class);
                             String phone = etPhone.getText().toString().trim();
                             String phoneFB = userFB.getPhone();
-                            if (!phone.equals(phoneFB)) {
+                            if(accountChangePassword){
+                                final String emailUser=auth.getCurrentUser().getEmail();
+                                Query query=db.collection("users").whereEqualTo("account",emailUser);
+                                query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
+                                        for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()){
+                                            User userChangePW = documentSnapshot.toObject(User.class);
+                                            String phoneChangePassword=userChangePW.getPhone();
+                                            String phone = etPhone.getText().toString().trim();//定義final會影響下方變數變更
+                                            if(!phoneChangePassword.equals(phone)) {
+                                                tvStatus.setText("非本帳號註冊的手機");
+                                                return;
+                                            }else{   //下面重複部分，使用方法代替
+                                                Exception exception = task.getException();
+                                                String message = exception == null ? "" : exception.getMessage();
+                                                Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+                                                goneAndVisible(phone);
+                                                phone="+886"+phone;
+                                                sendVerificationCode(phone);
+                                            }
+                                        }
+                                    }
+                                });
+                            }else if (!phone.equals(phoneFB)) {
                                 tvStatus.setText("此手機號碼未註冊");
                             } else {
                                 Exception exception = task.getException();
                                 String message = exception == null ? "" : exception.getMessage();
                                 Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
-                                tvPhone.setText(("請輸入寄送到"+phone+"的認證碼以確認變更"));
+                                goneAndVisible(phone);
                                 phone="+886"+phone;
-                                textView8.setVisibility(View.GONE);
-                                etPhone.setVisibility(View.GONE);
-                                tvStatus.setVisibility(View.GONE);
-                                btConfirm.setVisibility(View.GONE);
-                                tvVerificationCode.setVisibility(View.VISIBLE);
-                                btConfirmCode.setVisibility(View.VISIBLE);
-                                tvPhone.setVisibility(View.VISIBLE);
-                                etVerificationCode.setVisibility(View.VISIBLE);
-                                btResendCode.setVisibility(View.VISIBLE);
                                 sendVerificationCode(phone);
                             }
                         }
@@ -228,4 +248,17 @@ public class forgetPW_1_Fragment extends Fragment {
             resendToken = token;
         }
     };
+
+    public void goneAndVisible(String phone){
+        tvPhone.setText(("請輸入寄送到"+phone+"的認證碼以確認變更"));
+        textView8.setVisibility(View.GONE);
+        etPhone.setVisibility(View.GONE);
+        tvStatus.setVisibility(View.GONE);
+        btConfirm.setVisibility(View.GONE);
+        tvVerificationCode.setVisibility(View.VISIBLE);
+        btConfirmCode.setVisibility(View.VISIBLE);
+        tvPhone.setVisibility(View.VISIBLE);
+        etVerificationCode.setVisibility(View.VISIBLE);
+        btResendCode.setVisibility(View.VISIBLE);
+    }
 }

@@ -42,6 +42,8 @@ public class signUp_3_Fragment extends Fragment {
     String password;
     String name;
     String phone;
+    String verificationId,verificationCode;
+    String status="0";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,11 +72,13 @@ public class signUp_3_Fragment extends Fragment {
         tvStatus_Account = view.findViewById(R.id.tvStatus_Account);
         tvStatus_Password = view.findViewById(R.id.tvStatus_Password);
         tvStatus_Name = view.findViewById(R.id.tvStatus_Name);
-        tvPhone = view.findViewById(R.id.tvQuestion);
+        tvPhone = view.findViewById(R.id.tvPhone);
         btConfirm = view.findViewById(R.id.btConfirm3);
         btBack = view.findViewById(R.id.btBack);
         Bundle bundle = getArguments();
         phone = (String) bundle.getSerializable("phone");
+        verificationId=(String) bundle.getSerializable("verificationId");
+        verificationCode=(String) bundle.getSerializable("verificationCode");
         tvPhone.setText(phone);
         btBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,11 +93,15 @@ public class signUp_3_Fragment extends Fragment {
                 password = etPassword.getText().toString().trim();
                 String rePassword = etRePassword.getText().toString().trim();
                 name = etName.getText().toString().trim();
-                if (!account.contains("@")) {
+                if(!isValidEmail(account)){
                     tvStatus_Account.setText("帳號應為信箱格式");
                     return;
-                } else {
+                }else {
                     tvStatus_Account.setText("");
+                }
+                if(password.isEmpty()){
+                    tvStatus_Password.setText("密碼不得為空");
+                    return;
                 }
                 if (!password.equals(rePassword)) {
                     tvStatus_Password.setText("兩次密碼輸入不同，請重新輸入");
@@ -124,6 +132,9 @@ public class signUp_3_Fragment extends Fragment {
                             user.setPassword(password);
                             user.setName(name);
                             user.setPhone(phone);
+                            user.setVerificationId(verificationId);
+                            user.setVerificationCode(verificationCode);
+                            user.setStatus(status);
                             registered(user);
                         }else{
                             Query query = db.collection("users");
@@ -164,4 +175,12 @@ public class signUp_3_Fragment extends Fragment {
                     }
                 });
         }
+    private boolean isValidEmail(String account){
+        String emailRegex ="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        if(account.matches(emailRegex))
+        {
+            return true;
+        }
+        return false;
+    }
 }
