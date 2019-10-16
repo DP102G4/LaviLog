@@ -109,7 +109,8 @@ public class changePhoneFragment extends Fragment {
                                 User userAA = documentSnapshot.toObject(User.class);
                                 String accountFB = userAA.getAccount();
                                 tvStatus.setText("此電話已被註冊過"+phone+" =  "+accountFB);
-                                return; }
+                                return;
+                            }
                         }
 //這邊不能設定if跟else，因為若資料庫找不到該欄位指定值，整個就是null
                             tvStatus.setText("有過");
