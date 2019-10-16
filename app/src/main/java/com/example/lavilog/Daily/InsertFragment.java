@@ -85,6 +85,10 @@ public class InsertFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         textClock = view.findViewById(R.id.textClock);
         final String time = textClock.getText().toString();
+       final String year = time.substring(0,4);
+       final String month = time.substring(5,7);
+       final String day = time.substring(8,10);
+
         textClock.setFormat12Hour("yyyy年MM月dd日");
         imageView = view.findViewById(R.id.ivDailyPicture);
         etArticle = view.findViewById(R.id.etArticle);
@@ -143,6 +147,11 @@ public class InsertFragment extends Fragment {
                 //測試取得時間放入firebase
                 answer.setTextClock(time);
                 answer.setId(id);
+                answer.setYear(year);
+                answer.setMonth(month);
+                answer.setDay(day);
+
+
 
                 String article = etArticle.getText().toString();
                 if (article.length() <= 0) {
