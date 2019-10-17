@@ -1,57 +1,73 @@
 package com.example.lavilog.Commodity;
 
 public class Commodity {
-    private int imageID;
-    private String name;
-    private String owner;
-    private String detail;
-    private int price;
+    private String productId;
+    private String imageUrl;
+    private String productName;
+    private int productPrice;
+    private boolean onsale;
+    private String productInfo;
 
-    public Commodity(int imageID, String name, String owner, String detail, int price) {
-        this.imageID = imageID;
-        this.name = name;
-        this.owner = owner;
-        this.detail = detail;
-        this.price = price;
+
+
+    public Commodity(){
+
     }
 
-    public int getImageID() {
-        return imageID;
+    public Commodity(String productId, String imageUrl, String productName, int productPrice, boolean onsale, String productInfo) {
+        this.productId = productId;
+        this.imageUrl = imageUrl;
+        this.productName = productName;
+        this.productPrice = productPrice;
+        this.onsale = onsale;
+        this.productInfo = productInfo;
     }
 
-    public void setImageID(int imageID) {
-        this.imageID = imageID;
+    public String getProductId() {
+        return productId;
     }
 
-    public String getName() {
-        return name;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public String getOwner() {
-        return owner;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public void setOwner(String owner) {
-        this.owner = owner;
+    public String getProductName() {
+        return productName;
     }
 
-    public String getDetail() {
-        return detail;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    public void setDetail(String detail) {
-        this.detail = detail;
+    public int getProductPrice() {
+        return productPrice;
     }
 
-    public int getPrice() {
-        return price;
+    public void setProductPrice(int productPrice) {
+        this.productPrice = productPrice;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public boolean isOnsale() {
+        return onsale;
+    }
+
+    public void setOnsale(boolean onsale) {
+        this.onsale = onsale;
+    }
+
+    public String getProductInfo() {
+        return productInfo;
+    }
+
+    public void setProductInfo(String productInfo) {
+        this.productInfo = productInfo;
     }
 }

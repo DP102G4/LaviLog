@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/signInFragment">
+    app:startDestination="@id/commodityHomeFragment">
 
     <fragment
         android:id="@+id/mainFragment"
@@ -255,7 +255,7 @@
     </fragment>
     <fragment
         android:id="@+id/commodityInsertFragment"
-        android:name="com.example.lavilog.CommodityInsertFragment"
+        android:name="com.example.lavilog.Commodity.CommodityInsertFragment"
         android:label="fragment_commodity_insert"
         tools:layout="@layout/fragment_commodity_insert" />
 </navigation>
