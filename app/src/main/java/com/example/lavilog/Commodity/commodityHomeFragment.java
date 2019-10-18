@@ -106,7 +106,7 @@ public class commodityHomeFragment extends Fragment {
     }
 
     private void listenToCommodities(){
-        if(registration != null){
+        if(registration == null){
             registration = db.collection("commodity").addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot snapshots,
@@ -181,8 +181,8 @@ public class commodityHomeFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
-                    bundle.putString("Product", commodity.getProductId());
-                    Navigation.findNavController(v).navigate(R.id.action_commodityHomeFragment_to_commodityDetailFragment);
+                    bundle.putString("ProductID", commodity.getProductId());
+                    Navigation.findNavController(v).navigate(R.id.action_commodityHomeFragment_to_commodityDetailFragment, bundle);
                 }
             });
         }
