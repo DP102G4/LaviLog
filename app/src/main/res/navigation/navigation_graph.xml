@@ -269,4 +269,9 @@
         android:name="com.example.lavilog.order_1_Fragment"
         android:label="fragment_order_1_"
         tools:layout="@layout/fragment_order_1_" />
+    <fragment
+        android:id="@+id/newsListFragment"
+        android:name="com.example.lavilog.News.NewsListFragment"
+        android:label="fragment_news_list"
+        tools:layout="@layout/fragment_news_list" />
 </navigation>
