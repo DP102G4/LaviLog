@@ -114,7 +114,7 @@ public class signInFragment extends Fragment {
                                                 Toast.makeText(activity,"登入成功",Toast.LENGTH_SHORT).show();
                                                 break;
                                             case "1":
-                                                Navigation.findNavController(etAccount).navigate(R.id.action_signInFragment_to_myProfileFragment);
+                                                Navigation.findNavController(etAccount).navigate(R.id.action_signInFragment_to_backStageFragment);
                                                 Toast.makeText(activity,"管理員登入成功",Toast.LENGTH_SHORT).show();
                                                 break;
                                             case "2":
