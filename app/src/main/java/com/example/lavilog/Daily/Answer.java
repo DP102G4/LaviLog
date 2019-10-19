@@ -13,13 +13,12 @@ public class Answer implements Serializable {
     private String year;
     private String month;
     private String day;
-    private String account;
 
 
     public Answer() { //先不傳值所以為空
     }
 
-    public Answer(String question, String answer, String imagePath, String textClock, String id, String year, String month, String day, String account) {
+    public Answer(String question, String answer, String imagePath, String textClock, String id, String year, String month, String day) {
         this.question = question;
         this.answer = answer;
         this.imagePath = imagePath;
@@ -28,7 +27,6 @@ public class Answer implements Serializable {
         this.year = year;
         this.month = month;
         this.day = day;
-        this.account = account;
     }
 
     public String getQuestion() {
@@ -93,14 +91,6 @@ public class Answer implements Serializable {
 
     public void setDay(String day) {
         this.day = day;
-    }
-
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
     }
 }
 

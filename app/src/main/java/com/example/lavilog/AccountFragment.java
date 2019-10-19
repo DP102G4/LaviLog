@@ -71,5 +71,15 @@ public class AccountFragment extends Fragment {
                 builder1.show();
             }
         });
+
+        btPurchaseDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String account = auth.getCurrentUser().getEmail();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("account",account);
+                Navigation.findNavController(btPurchaseDetail).navigate(R.id.action_accountFragment_to_order_1_Fragment,bundle);
+            }
+        });
     }
 }

@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/ivProductDT"
         android:layout_width="93dp"
         android:layout_height="111dp"
         android:src="@drawable/notebook_red"
@@ -20,42 +20,44 @@
         app:layout_constraintVertical_bias="0.28" />
 
     <TextView
-        android:id="@+id/tvName"
+        android:id="@+id/tvProductNameDT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="@+id/imageView2"
-        app:layout_constraintStart_toStartOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintEnd_toEndOf="@id/ivProductDT"
+        app:layout_constraintStart_toStartOf="@id/ivProductDT"
+        app:layout_constraintTop_toBottomOf="@id/ivProductDT" />
 
     <TextView
-        android:id="@+id/tvDetal"
+        android:id="@+id/tvProductDetalDT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="@+id/tvName"
-        app:layout_constraintStart_toStartOf="@+id/tvName"
-        app:layout_constraintTop_toBottomOf="@+id/tvName" />
+        app:layout_constraintEnd_toEndOf="@id/tvProductNameDT"
+        app:layout_constraintStart_toStartOf="@id/tvProductNameDT"
+        app:layout_constraintTop_toBottomOf="@id/tvProductNameDT" />
 
     <TextView
-        android:id="@+id/tvPrice"
+        android:id="@+id/tvProductPriceDT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="@+id/tvDetal"
-        app:layout_constraintStart_toStartOf="@+id/tvDetal"
-        app:layout_constraintTop_toBottomOf="@+id/tvDetal" />
+        app:layout_constraintEnd_toEndOf="@+id/tvProductDetalDT"
+        app:layout_constraintStart_toStartOf="@id/tvProductDetalDT"
+        app:layout_constraintTop_toBottomOf="@+id/tvProductDetalDT" />
 
     <Button
         android:id="@+id/btBuy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="161dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="162dp"
         android:text="BUY"
-        app:layout_constraintEnd_toEndOf="@+id/tvPrice"
-        app:layout_constraintStart_toStartOf="@+id/tvPrice"
-        app:layout_constraintTop_toBottomOf="@+id/tvPrice" />
+        app:layout_constraintEnd_toEndOf="@id/tvProductPriceDT"
+        app:layout_constraintStart_toStartOf="@id/tvProductPriceDT"
+        app:layout_constraintTop_toBottomOf="@+id/tvProductPriceDT" />
 </androidx.constraintlayout.widget.ConstraintLayout>

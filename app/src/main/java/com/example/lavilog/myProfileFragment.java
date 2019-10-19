@@ -44,6 +44,8 @@ import android.graphics.RectF;
 
 import java.util.Calendar;
 
+import static android.widget.Toast.LENGTH_SHORT;
+
 
 public class myProfileFragment extends Fragment {
     private static final String TAG = "TAG_myProfileFragment";
@@ -55,8 +57,9 @@ public class myProfileFragment extends Fragment {
     TextView tvEditPhoto,tvAccount;
     Button btChangeName,btChangeGender,btChangeBirthDay,btChangePhone,btChangePassword;
     final String arror="     >";//點選欄位內的右邊箭頭
-    String id,account,days;
+    String id,account,days,phone;
     User user;
+    static public boolean accountChangePassword;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +88,12 @@ public class myProfileFragment extends Fragment {
         btChangePassword=view.findViewById(R.id.btChangePassword);
         btChangePhone=view.findViewById(R.id.btChangePhone);
         btChangeGender=view.findViewById(R.id.btChangeGender);
+        String changePhone;
+        Bundle bundle=new Bundle();
+        changePhone=(String) bundle.getSerializable("changePhone");
+        if(changePhone!=null){
+            Toast.makeText(activity, "手機號碼更換完成", LENGTH_SHORT).show();
+        }//若是改手機頁面跳轉回來，則要顯示Toast
         account=auth.getCurrentUser().getEmail();
         Query query=db.collection("users");
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -106,7 +115,8 @@ public class myProfileFragment extends Fragment {
                             ivAccountPhoto.setImageResource(R.drawable.no_image);
                         }
                         btChangeName.setText(name+arror);
-                        btChangePhone.setText(user.getPhone()+arror);
+                        phone=user.getPhone();
+                        btChangePhone.setText(phone+arror);
                         String gender=user.getGender();
                         if(gender==null){
                             btChangeGender.setText("尚未設定"+arror);
@@ -145,9 +155,10 @@ public class myProfileFragment extends Fragment {
 //                                }
 //                            }
 //                        });
-                    }else{Exception exception = task.getException();
-                        String message = exception == null ? "" : exception.getMessage();
-                        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();}
+                    }
+//                    else{Exception exception = task.getException();
+//                        String message = exception == null ? "" : exception.getMessage();
+//                        Toast.makeText(activity, message, LENGTH_SHORT).show();}
                 }
             }
         });
@@ -161,7 +172,7 @@ public class myProfileFragment extends Fragment {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity);
 //// 使用setView()方法將佈局顯示到dialog
                 alertDialogBuilder.setView(nameView);
-                final EditText userInput = (EditText) nameView.findViewById(R.id.changename_edit);
+                final EditText userInput = nameView.findViewById(R.id.changename_edit);
 //                final TextView name = (TextView) findViewById(R.id.changename_textview);
 //// 設定Dialog按鈕
                 alertDialogBuilder
@@ -176,7 +187,7 @@ public class myProfileFragment extends Fragment {
                                         db.collection("users").document(id).set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
-                                                Toast.makeText(activity,"姓名變更完成",Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(activity,"姓名變更完成", LENGTH_SHORT).show();
                                             }
                                         });
 
@@ -198,7 +209,10 @@ public class myProfileFragment extends Fragment {
         tvEditPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(tvEditPhoto).navigate(R.id.action_myProfileFragment_to_editPhotoFragment);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("account",account);
+                Toast.makeText(activity,"555"+account,LENGTH_SHORT).show();
+                Navigation.findNavController(tvEditPhoto).navigate(R.id.action_myProfileFragment_to_editPhotoFragment,bundle);
             }
         });
 
@@ -213,7 +227,7 @@ public class myProfileFragment extends Fragment {
                         final String selectGender = genderArry[which];
                         btChangeGender.setText(selectGender+arror);
                         dialogInterface.dismiss();
-                        Toast.makeText(activity,"性別變更完成",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity,"性別變更完成", LENGTH_SHORT).show();
 //                        String mail=auth.getCurrentUser().getEmail();
 //                        Query query=db.collection("users").whereEqualTo("account",mail);
 //                        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -254,7 +268,7 @@ public class myProfileFragment extends Fragment {
                         btChangeBirthDay.setText(days+arror);
                         user.setBirthDay(days);
                         db.collection("users").document(id).set(user);
-                        Toast.makeText(activity,"出生日期更新成功"+days,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity,"出生日期更新成功"+days, LENGTH_SHORT).show();
 
 //                        db.collection("users").whereEqualTo("id",id).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 //                            @Override
@@ -276,6 +290,21 @@ public class myProfileFragment extends Fragment {
                 new DatePickerDialog(activity, onDateSetListener, mYear, mMonth, mDay).show();
             }
         });
+        btChangePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accountChangePassword=true;// 確認修改密碼後轉回本頁
+                Navigation.findNavController(view).navigate(R.id.action_myProfileFragment_to_forgetPW_1_Fragment);
+            }
+        });
+        btChangePhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("phone",phone);
+                Navigation.findNavController(view).navigate(R.id.action_myProfileFragment_to_changePhoneFragment,bundle);
+            }
+        });
     }
     private void showImage(final ImageView ivAccountPhoto, final String imagePath) {
         final int ONE_MEGABYTE = 1024 * 1024;
@@ -294,7 +323,7 @@ public class myProfileFragment extends Fragment {
                                     getString(R.string.textImageDownloadFail) + ": " + imagePath :
                                     task.getException().getMessage() + ": " + imagePath;
                             Log.e(TAG, message);
-                            Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity, message, LENGTH_SHORT).show();
                         }
                     }
                 });

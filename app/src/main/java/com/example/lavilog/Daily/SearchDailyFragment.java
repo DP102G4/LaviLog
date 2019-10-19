@@ -10,9 +10,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.appcompat.view.menu.MenuView;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -150,7 +147,7 @@ public class SearchDailyFragment extends Fragment {
                 super(itemview);
                 ivDaily = itemview.findViewById(R.id.ivDaily);
                 tvDate = itemview.findViewById(R.id.tvDate);
-                tvQuestion = itemview.findViewById(R.id.tvQuestion);
+                tvQuestion = itemview.findViewById(R.id.tvPhone);
                 tvAnswer = itemview.findViewById(R.id.tvAnswer);
             }
         }
