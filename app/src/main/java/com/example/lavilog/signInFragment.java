@@ -2,7 +2,6 @@ package com.example.lavilog;
 
 
 import android.app.Activity;
-import android.app.DownloadManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,14 +19,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.core.Query;
 
 public class signInFragment extends Fragment {
     Activity activity;
@@ -58,7 +54,7 @@ public class signInFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         etAccount = view.findViewById(R.id.etAccount);
         etPassword = view.findViewById(R.id.etPassword);
-        tvStatus = view.findViewById(R.id.tvStatus);
+        tvStatus = view.findViewById(R.id.tvAdmStatus);
         btSignIn = view.findViewById(R.id.btSignIn);
         btSignUp = view.findViewById(R.id.btSignUp);
         tvForgetPW=view.findViewById(R.id.tvForgetPW);
@@ -107,8 +103,8 @@ public class signInFragment extends Fragment {
                                     QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
                                     for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
                                         User userFB = documentSnapshot.toObject(User.class);
-                                        String accountStatus = userFB.getStatus();
-                                        switch (accountStatus) {
+                                        final String status = userFB.getStatus();
+                                        switch (status) {
                                             case "0":
                                                 Navigation.findNavController(etAccount).navigate(R.id.action_signInFragment_to_mainFragment);
                                                 Toast.makeText(activity,"登入成功",Toast.LENGTH_SHORT).show();
@@ -148,12 +144,62 @@ public class signInFragment extends Fragment {
         // 檢查user是否已經登入，是則FirebaseUser物件不為null
        try {
            String account = auth.getCurrentUser().getEmail();//避免只是手機註冊而已，信箱沒註冊
-           if(!account.equals("")){
-               Toast.makeText(activity,account,Toast.LENGTH_LONG).show();
-               Navigation.findNavController(etAccount).navigate(R.id.action_signInFragment_to_mainFragment);
-           }else{
-               auth.signOut();
-           }
+           db.collection("users").whereEqualTo("account",account).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+               @Override
+               public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                   QuerySnapshot querySnapshot = (task.isSuccessful())? task.getResult() : null;
+                   for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()){
+                       User user = documentSnapshot.toObject(User.class);
+                       String status = user.getStatus();
+                       switch (status){
+                           case "1":
+                               Toast.makeText(activity,"管理者直接進入",Toast.LENGTH_LONG).show();
+                               Navigation.findNavController(btSignIn).navigate(R.id.action_signInFragment_to_backStageFragment);
+                           break;
+                           case "0":
+                               Navigation.findNavController(etAccount).navigate(R.id.action_signInFragment_to_mainFragment);
+                               Toast.makeText(activity,"使用者直接進入",Toast.LENGTH_LONG).show();
+                               default:
+                                   Toast.makeText(activity,status,Toast.LENGTH_LONG).show();
+                       }
+                   }
+
+               }
+           });
+
+
+//           Toast.makeText(activity,account+"=="+status,Toast.LENGTH_LONG).show();
+//           if((!account.equals(""))&&(status.equals("1"))){
+//               Toast.makeText(activity,account,Toast.LENGTH_LONG).show();
+//               Navigation.findNavController(etAccount).navigate(R.id.action_signInFragment_to_backStageFragment);
+//           }else{
+//               Toast.makeText(activity,account,Toast.LENGTH_LONG).show();
+//               Navigation.findNavController(etAccount).navigate(R.id.action_signInFragment_to_mainFragment);
+//           }
+//           if (status.equals("1")){
+//               Navigation.findNavController(btSignIn).navigate(R.id.action_signInFragment_to_backStageFragment);
+//           }
+//
+//           db.collection("users").whereEqualTo("account",account).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//               @Override
+//               public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                   QuerySnapshot querySnapshot = (task.isSuccessful())? task.getResult() : null;
+//                   for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()){
+//                       User user = documentSnapshot.toObject(User.class);
+//                       status = user.getStatus();
+//                       if (status.equals("1")){
+//                           Navigation.findNavController(btSignIn).navigate(R.id.action_signInFragment_to_backStageFragment);
+//                       }
+//                   }
+//
+//               }
+//           });
+//
+
+//           else{
+//
+//               auth.signOut();
+//           }
        }catch (NullPointerException e){
 //          Toast.makeText(activity,e.toString(),Toast.LENGTH_LONG).show();
        }
