@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/signInFragment">
+    app:startDestination="@id/noticeFragment">
 
     <fragment
         android:id="@+id/mainFragment"
@@ -276,7 +276,7 @@
         tools:layout="@layout/fragment_news_list" />
     <fragment
         android:id="@+id/noticeFragment"
-        android:name="com.example.lavilog.NoticeFragment"
+        android:name="com.example.lavilog.NoticeFriend.NoticeFragment"
         android:label="fragment_notice"
         tools:layout="@layout/fragment_notice" />
 </navigation>
