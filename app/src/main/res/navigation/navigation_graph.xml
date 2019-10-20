@@ -276,6 +276,16 @@
         android:label="fragment_order_1_"
         tools:layout="@layout/fragment_order_1_" />
     <fragment
+        android:id="@+id/newsListFragment"
+        android:name="com.example.lavilog.News.NewsListFragment"
+        android:label="fragment_news_list"
+        tools:layout="@layout/fragment_news_list" />
+    <fragment
+        android:id="@+id/noticeFragment"
+        android:name="com.example.lavilog.NoticeFriend.NoticeFragment"
+        android:label="fragment_notice"
+        tools:layout="@layout/fragment_notice" />
+    <fragment
         android:id="@+id/admListFragment"
         android:name="com.example.lavilog.admListFragment"
         android:label="fragment_adm_list"
