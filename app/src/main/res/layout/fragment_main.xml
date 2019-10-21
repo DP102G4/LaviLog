@@ -1,38 +1,56 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".Daily.MainFragment">
 
-    <ImageButton
-        android:id="@+id/ibDaily"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="97dp"
-        android:layout_marginTop="135dp"
-        android:layout_marginEnd="98dp"
-        android:layout_marginBottom="214dp"
-        android:src="@drawable/dailybook"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/logBookRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btAdd"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        style="?android:buttonBarStyle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="296dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="59dp"
-        android:clickable="true"
-        android:src="@drawable/addbook"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ibDaily" />
+        android:layout_marginTop="12dp"
+        android:gravity="center">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!--點擊「First」按鈕會切換到第1個會員-->
+        <Button
+            android:id="@+id/btFirst"
+            style="?android:buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="第一本" />
+
+        <!--點擊「Last」按鈕會切換到最後一個會員-->
+        <Button
+            android:id="@+id/btLast"
+            style="?android:buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="第末本" />
+
+    </LinearLayout>
+
+</LinearLayout>
+
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/btAdd"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="296dp"-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        android:layout_marginEnd="59dp"-->
+<!--        android:clickable="true"-->
+<!--        android:src="@drawable/addbook"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/ibDaily" />-->
+
+<!--</androidx.constraintlayout.widget.ConstraintLayout>-->

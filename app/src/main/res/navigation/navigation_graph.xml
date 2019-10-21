@@ -46,7 +46,11 @@
         android:id="@+id/albumFragment"
         android:name="com.example.lavilog.Daily.AlbumFragment"
         android:label="fragment_album"
-        tools:layout="@layout/fragment_album" />
+        tools:layout="@layout/fragment_album" >
+        <action
+            android:id="@+id/action_albumFragment_to_daily_Album_ImageFragment"
+            app:destination="@id/daily_Album_ImageFragment" />
+    </fragment>
     <fragment
         android:id="@+id/friendHomeFragment"
         android:name="com.example.lavilog.FriendHomeFragment"
@@ -269,4 +273,9 @@
         android:name="com.example.lavilog.order_1_Fragment"
         android:label="fragment_order_1_"
         tools:layout="@layout/fragment_order_1_" />
+    <fragment
+        android:id="@+id/daily_Album_ImageFragment"
+        android:name="com.example.lavilog.Daily.Daily_Album_ImageFragment"
+        android:label="fragment_daily__album__image"
+        tools:layout="@layout/fragment_daily__album__image" />
 </navigation>

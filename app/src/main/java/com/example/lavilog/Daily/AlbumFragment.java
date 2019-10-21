@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -173,6 +174,15 @@ public class AlbumFragment extends Fragment {
                 showImage(holder.ivDailyPicture,answer.getImagePath());
             }
             holder.tvAlbumDate.setText(answer.getTextClock());
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("answer", answer);
+                    Navigation.findNavController(v)
+                            .navigate(R.id.action_albumFragment_to_daily_Album_ImageFragment, bundle);
+                }
+            });
         }
         private void showImage(final ImageView imageView,final String path){
             final int ONE_MEGABYTE = 1024*1024;
