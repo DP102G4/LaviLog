@@ -189,7 +189,7 @@
     </fragment>
     <fragment
         android:id="@+id/accountFragment"
-        android:name="com.example.lavilog.AccountFragment"
+        android:name="com.example.lavilog.Account.AccountFragment"
         android:label="fragment_account"
         tools:layout="@layout/fragment_account" >
         <action
@@ -284,11 +284,6 @@
         android:name="com.example.lavilog.Daily.Daily_Album_ImageFragment"
         android:label="fragment_daily__album__image"
         tools:layout="@layout/fragment_daily__album__image" />
-    <fragment
-        android:id="@+id/newsListFragment"
-        android:name="com.example.lavilog.News.NewsListFragment"
-        android:label="fragment_news_list"
-        tools:layout="@layout/fragment_news_list" />
     <fragment
         android:id="@+id/noticeFragment"
         android:name="com.example.lavilog.NoticeFriend.NoticeFragment"
