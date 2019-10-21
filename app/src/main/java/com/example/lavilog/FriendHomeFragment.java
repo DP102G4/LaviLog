@@ -43,6 +43,7 @@ public class FriendHomeFragment extends Fragment {
     private ImageView ivAccountPhoto;
     private TextView tvAccountName, tvAccount;
     private Button btSearchFriend, btSearchID, btQRcode;
+    private Button btNotice;
     // 宣告全域變數
     private FirebaseAuth auth;
     private FirebaseFirestore db;
@@ -79,6 +80,8 @@ public class FriendHomeFragment extends Fragment {
         btSearchFriend = view.findViewById(R.id.btAddFriend);
         btSearchID = view.findViewById(R.id.btSearchID);
         btQRcode = view.findViewById(R.id.btScanQR);
+
+        btNotice = view.findViewById(R.id.btNotice);
 
         // 取得firebase資料
         account=auth.getCurrentUser().getEmail();
@@ -132,6 +135,14 @@ public class FriendHomeFragment extends Fragment {
                         .navigate(R.id.action_friendHomeFragment_to_QRcodeFragment);
             }
         }); // 行動條碼掃描按鈕
+
+        btNotice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view)
+                        .navigate(R.id.action_friendHomeFragment_to_noticeFragment);
+            }
+        }); // 通知按鈕
     }
 
     /**

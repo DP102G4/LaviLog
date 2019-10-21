@@ -2,22 +2,29 @@ package com.example.lavilog.SearchUserId;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Picture;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,15 +35,19 @@ import com.example.lavilog.R;
 //import com.example.lavilog.SearchUserId.User;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 public class SearchUserIdResultFragment extends Fragment {
@@ -44,17 +55,23 @@ public class SearchUserIdResultFragment extends Fragment {
     private Activity activity;
     private ImageView ivUser;
     private TextView tvUserName, tvAccount;
+    private TextView tvUserMessage;
+    private TextClock textClock2;
     private Button btAddFriend;
 
     private User user;
 
     private FirebaseFirestore db;
     private FirebaseStorage storage;
+    private ListenerRegistration registration;
 
     private File file;
     private Uri contentUri;
     private Notice notice;
     String imagePath;
+    private boolean PictureTaken = false;
+
+    private static final int REQ_TAKE_PICTURE = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,18 +88,21 @@ public class SearchUserIdResultFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
         notice = new Notice();
-//        answer = new Answer();
-//        auth = FirebaseAuth.getInstance();
 
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         ivUser = view.findViewById(R.id.ivUser);
+//        String imagePath = ivUser.toString();
+
         tvUserName = view.findViewById(R.id.tvAdmName);
         tvAccount = view.findViewById(R.id.tvAccount);
         btAddFriend = view.findViewById(R.id.btAddFriend);
+
+        tvUserMessage = view.findViewById(R.id.tvUserMessage);
 
         if (getArguments() != null) {
             user = (User) getArguments().getSerializable("user");
@@ -97,6 +117,24 @@ public class SearchUserIdResultFragment extends Fragment {
                 }
             }
         }
+
+        textClock2 = view.findViewById(R.id.textClock2);
+        final String time = textClock2.getText().toString();
+
+        textClock2.setFormat12Hour("yyyy年MM月dd日");
+
+        db.collection("notices").whereEqualTo("time", time).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
+                for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                    DailyQuestion dailyQuestion = documentSnapshot.toObject(DailyQuestion.class);
+                    //question = dailyQuestion.getQuestion();
+                    //tvQuestion.setText(question);
+
+                }
+            }
+        });
 
         btAddFriend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,19 +152,60 @@ public class SearchUserIdResultFragment extends Fragment {
 
                 //tvUserName.setText(tvUserName + " 已和您成為朋友");
 
+                tvUserMessage.setText(" 已和您成為好友");
                 String noticeMessage = tvUserName.getText().toString().trim();
+                String noticeTime = textClock2.getText().toString();
+                String noticeMessage2 = tvUserMessage.getText().toString().trim();
 
-                //notice.setImagePath(imagePath);
+//                notice.setImagePath(imagePath);
                 notice.setNoticeMessage(noticeMessage);
+                notice.setNoticeTime(noticeTime);
+                notice.setNoticeMessage2(noticeMessage2);
 
 
-               // final String imagePath = getString(R.string.app_name) + "/images/" + notice.getId();//show檔案給使用者看,要怎麼知道需要哪個檔案,要提供ID去查
+                // Get the data from an ImageView as bytes
+                ivUser.setDrawingCacheEnabled(true);
+                ivUser.buildDrawingCache();
 
-
+                Bitmap bitmap = ((BitmapDrawable) ivUser.getDrawable()).getBitmap();
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                byte[] data = baos.toByteArray();
+                StorageReference stroageRef = storage.getReference();
+                StorageReference mountainsRef = stroageRef.child("picture.jpg");
+                UploadTask uploadTask = mountainsRef.putBytes(data);
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                        // ...
+                    }
+                });
                 addOrReplace(notice);
             }
         });
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+//        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+//        ivUser.setImageBitmap(bitmap);
+
+        Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
+        ivUser.setImageBitmap(bitmap);
+//            PictureTaken = true;
+//            return;
+//
+    }
+
+
 
     // 新增或修改Firestore上的景點
     private void addOrReplace(final Notice notice) {
@@ -137,15 +216,15 @@ public class SearchUserIdResultFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            String message = getString(R.string.textInserted)
-                                    + " with ID: " + notice.getId();
+                            String message = getString(R.string.textInserted2);
+//                                    + " with ID: " + notice.getId();
                             Log.d(TAG, message);
-                            Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
-                            // 新增完畢回上頁
-                            Navigation.findNavController(ivUser).popBackStack();
+//                            Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+//                            // 新增完畢回上頁
+//                            Navigation.findNavController(ivUser).popBackStack();
                         } else {
                             String message = task.getException() == null ?
-                                    getString(R.string.textInsertFail) :
+                                    getString(R.string.textInsertFail2) :
                                     task.getException().getMessage();
                             Log.e(TAG, message);
                             Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
@@ -154,7 +233,9 @@ public class SearchUserIdResultFragment extends Fragment {
                 });
     }
 
-    /** 下載Firebase storage的照片並顯示在ImageView上 */
+    /**
+     * 下載Firebase storage的照片並顯示在ImageView上
+     */
     private void showImage(final ImageView imageView, final String path) {
         final int ONE_MEGABYTE = 1024 * 1024;
         StorageReference imageRef = storage.getReference().child(path);//完整路徑

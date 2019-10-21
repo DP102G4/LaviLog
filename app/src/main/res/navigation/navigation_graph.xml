@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/signInFragment">
+    app:startDestination="@id/friendHomeFragment">
 
     <fragment
         android:id="@+id/mainFragment"
@@ -68,6 +68,9 @@
         <action
             android:id="@+id/action_friendHomeFragment_to_QRcodeFragment"
             app:destination="@id/QRcodeFragment" />
+        <action
+            android:id="@+id/action_friendHomeFragment_to_noticeFragment"
+            app:destination="@id/noticeFragment" />
     </fragment>
     <fragment
         android:id="@+id/friendSearchFragment"
