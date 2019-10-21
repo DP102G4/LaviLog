@@ -1,4 +1,4 @@
-package com.example.lavilog;
+package com.example.lavilog.Account;
 
 import java.io.Serializable;
 

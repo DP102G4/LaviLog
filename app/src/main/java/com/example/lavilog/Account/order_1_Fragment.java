@@ -1,4 +1,4 @@
-package com.example.lavilog;
+package com.example.lavilog.Account;
 
 
 import android.app.Activity;
@@ -21,7 +21,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.lavilog.Account.Order;
 import com.example.lavilog.Commodity.Commodity;
+import com.example.lavilog.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -74,9 +76,9 @@ public class order_1_Fragment extends Fragment {
                 for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
                     Order order = documentSnapshot.toObject(Order.class);
                     orders.add(order);
-                    rvOrder.setLayoutManager(new LinearLayoutManager(activity));
-                    rvOrder.setAdapter(new orderAdapter(activity, orders));
                 }
+                rvOrder.setLayoutManager(new LinearLayoutManager(activity));
+                rvOrder.setAdapter(new orderAdapter(activity, orders));
             }
         });
     }

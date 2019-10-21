@@ -213,7 +213,7 @@
     </fragment>
     <fragment
         android:id="@+id/myProfileFragment"
-        android:name="com.example.lavilog.myProfileFragment"
+        android:name="com.example.lavilog.Account.myProfileFragment"
         android:label="fragment_my_profile"
         tools:layout="@layout/fragment_my_profile" >
         <action
@@ -228,7 +228,7 @@
     </fragment>
     <fragment
         android:id="@+id/editPhotoFragment"
-        android:name="com.example.lavilog.editPhotoFragment"
+        android:name="com.example.lavilog.Account.editPhotoFragment"
         android:label="fragment_edit_photo"
         tools:layout="@layout/fragment_edit_photo" />
     <fragment
@@ -247,7 +247,7 @@
         tools:layout="@layout/fragment_commodity_detail" />
     <fragment
         android:id="@+id/changePhoneFragment"
-        android:name="com.example.lavilog.changePhoneFragment"
+        android:name="com.example.lavilog.Account.changePhoneFragment"
         android:label="fragment_change_phone"
         tools:layout="@layout/fragment_change_phone" >
         <action
@@ -256,12 +256,18 @@
     </fragment>
     <fragment
         android:id="@+id/backStageFragment"
-        android:name="com.example.lavilog.BackStageFragment"
+        android:name="com.example.lavilog.BakeStage.BackStageFragment"
         android:label="fragment_back_stage"
         tools:layout="@layout/fragment_back_stage" >
         <action
             android:id="@+id/action_backStageFragment_to_commodityInsertFragment"
             app:destination="@id/commodityInsertFragment" />
+        <action
+            android:id="@+id/action_backStageFragment_to_admListFragment"
+            app:destination="@id/admListFragment" />
+        <action
+            android:id="@+id/action_backStageFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
     </fragment>
     <fragment
         android:id="@+id/commodityInsertFragment"
@@ -270,7 +276,7 @@
         tools:layout="@layout/fragment_commodity_insert" />
     <fragment
         android:id="@+id/order_1_Fragment"
-        android:name="com.example.lavilog.order_1_Fragment"
+        android:name="com.example.lavilog.Account.order_1_Fragment"
         android:label="fragment_order_1_"
         tools:layout="@layout/fragment_order_1_" />
     <fragment
@@ -278,4 +284,23 @@
         android:name="com.example.lavilog.Daily.Daily_Album_ImageFragment"
         android:label="fragment_daily__album__image"
         tools:layout="@layout/fragment_daily__album__image" />
+    <fragment
+        android:id="@+id/newsListFragment"
+        android:name="com.example.lavilog.News.NewsListFragment"
+        android:label="fragment_news_list"
+        tools:layout="@layout/fragment_news_list" />
+    <fragment
+        android:id="@+id/noticeFragment"
+        android:name="com.example.lavilog.NoticeFriend.NoticeFragment"
+        android:label="fragment_notice"
+        tools:layout="@layout/fragment_notice" />
+    <fragment
+        android:id="@+id/admListFragment"
+        android:name="com.example.lavilog.admListFragment"
+        android:label="fragment_adm_list"
+        tools:layout="@layout/fragment_adm_list" >
+        <action
+            android:id="@+id/action_admListFragment_to_backStageFragment"
+            app:destination="@id/backStageFragment" />
+    </fragment>
 </navigation>
