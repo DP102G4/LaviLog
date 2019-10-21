@@ -41,7 +41,7 @@ public class DailyFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        activity.setTitle("每日日誌");
+        activity.setTitle("來寫日誌吧!!");
         super.onCreateView(inflater,container,savedInstanceState);
         return inflater.inflate(R.layout.fragment_daily, container, false);
     }

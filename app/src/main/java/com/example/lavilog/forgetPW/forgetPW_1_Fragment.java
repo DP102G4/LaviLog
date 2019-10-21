@@ -36,7 +36,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.concurrent.TimeUnit;
 
-import static com.example.lavilog.myProfileFragment.accountChangePassword;
+import static com.example.lavilog.Account.myProfileFragment.accountChangePassword;
 import static java.lang.String.valueOf;
 
 public class forgetPW_1_Fragment extends Fragment {
@@ -72,7 +72,7 @@ public class forgetPW_1_Fragment extends Fragment {
         btConfirm=view.findViewById(R.id.btConfirm);
         etPhone=view.findViewById(R.id.etPhone);
         etVerificationCode=view.findViewById(R.id.etVerificationCode);
-        tvStatus=view.findViewById(R.id.tvStatus);
+        tvStatus=view.findViewById(R.id.tvAdmStatus);
         tvPhone=view.findViewById(R.id.tvPhone);
         textView8=view.findViewById(R.id.textView8);
         tvVerificationCode=view.findViewById(R.id.tvVerificationCode);

@@ -255,7 +255,7 @@ public class SearchUserIdFragment extends Fragment {
             MyViewHolder(View itemView) {
                 super(itemView);
                 ivUser = itemView.findViewById(R.id.ivUser);
-                tvUserName = itemView.findViewById(R.id.tvUserName);
+                tvUserName = itemView.findViewById(R.id.tvAdmName);
             }
         }
 

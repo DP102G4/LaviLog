@@ -251,12 +251,5 @@ public class MainFragment extends Fragment {
         }
 
     }
-//        public  List<LogBook> getLogBookList(){
-//        List<LogBook> logBookList = new ArrayList<>();
-//        logBookList.add(new LogBook(R.drawable.notebook_green,"每日日誌"));
-//        logBookList.add(new LogBook(R.drawable.notebook_red,"情侶日誌"));
-//        return logBookList;
-//        }
+
 }
-
-

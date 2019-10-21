@@ -27,7 +27,7 @@
         android:layout_marginTop="32dp"
         android:text="@string/textSelectPicture"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etArticle" />
 
@@ -41,17 +41,28 @@
         app:layout_constraintStart_toStartOf="@+id/btPickPicture"
         app:layout_constraintTop_toBottomOf="@+id/btPickPicture" />
 
+    <Button
+        android:id="@+id/btCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/textCancel"
+        app:layout_constraintEnd_toEndOf="@+id/btTakePicture"
+        app:layout_constraintStart_toStartOf="@+id/btTakePicture"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
     <EditText
         android:id="@+id/etArticle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/textarticle"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/tvPhone"
-        app:layout_constraintStart_toStartOf="@+id/tvPhone"
-        app:layout_constraintTop_toBottomOf="@+id/tvPhone" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvQuestion" />
 
     <ImageView
         android:id="@+id/ivDailyPicture"
@@ -78,17 +89,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvPhone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="今日問題"
-        app:layout_constraintEnd_toEndOf="@+id/ivDailyPicture"
-        app:layout_constraintStart_toStartOf="@+id/ivDailyPicture"
-        app:layout_constraintTop_toBottomOf="@+id/ivDailyPicture"
-        tools:text="@string/textQuestion" />
-
-    <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -98,15 +98,15 @@
         app:layout_constraintStart_toStartOf="@+id/btTakePicture"
         app:layout_constraintTop_toBottomOf="@+id/btTakePicture" />
 
-    <Button
-        android:id="@+id/btCancel"
+    <TextView
+        android:id="@+id/tvQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/textCancel"
-        app:layout_constraintEnd_toEndOf="@+id/btTakePicture"
-        app:layout_constraintStart_toStartOf="@+id/btTakePicture"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="@+id/ivDailyPicture"
+        app:layout_constraintStart_toStartOf="@+id/ivDailyPicture"
+        app:layout_constraintTop_toBottomOf="@+id/ivDailyPicture"
+        tools:text="@string/textQuestion" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

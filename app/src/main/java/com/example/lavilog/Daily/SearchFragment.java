@@ -25,6 +25,7 @@ import com.example.lavilog.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -48,12 +49,14 @@ public class SearchFragment extends Fragment {
     private ListenerRegistration registration;
     private int Day,Month;
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = getActivity();
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
+
     }
 
     @Override
@@ -186,7 +189,7 @@ public class SearchFragment extends Fragment {
                 super(itemview);
                 ivDaily = itemview.findViewById(R.id.ivDaily);
                 tvDate = itemview.findViewById(R.id.tvDate);
-                tvQuestion = itemview.findViewById(R.id.tvPhone);
+                tvQuestion = itemview.findViewById(R.id.tvQuestion);
                 tvAnswer = itemview.findViewById(R.id.tvAnswer);
                 System.out.println("heloooooooooooooooooooooooooooooooooo");
             }

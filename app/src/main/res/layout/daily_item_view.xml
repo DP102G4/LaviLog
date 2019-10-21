@@ -37,7 +37,7 @@
             tools:text="@string/textDate" />
 
         <TextView
-            android:id="@+id/tvPhone"
+            android:id="@+id/tvQuestion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -54,9 +54,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="@+id/tvPhone"
-            app:layout_constraintStart_toStartOf="@+id/tvPhone"
-            app:layout_constraintTop_toBottomOf="@+id/tvPhone"
+            app:layout_constraintEnd_toEndOf="@+id/tvQuestion"
+            app:layout_constraintStart_toStartOf="@+id/tvQuestion"
+            app:layout_constraintTop_toBottomOf="@+id/tvQuestion"
             tools:text="@string/textItemAnswer" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

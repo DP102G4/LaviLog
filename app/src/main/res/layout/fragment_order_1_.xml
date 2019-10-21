@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E4E4E4"
-    tools:context=".order_1_Fragment" >
+    tools:context=".Account.order_1_Fragment" >
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvOrder"

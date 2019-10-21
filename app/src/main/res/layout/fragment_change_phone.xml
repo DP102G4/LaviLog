@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E4E4E4"
-    tools:context=".changePhoneFragment" >
+    tools:context=".Account.changePhoneFragment" >
 
     <TextView
         android:id="@+id/textView12"
@@ -35,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
     <TextView
-        android:id="@+id/tvStatus"
+        android:id="@+id/tvAdmStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
@@ -54,10 +54,10 @@
         android:text="確定"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvStatus" />
+        app:layout_constraintTop_toBottomOf="@+id/tvAdmStatus" />
 
     <TextView
-        android:id="@+id/tvPhone"
+        android:id="@+id/tvQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="190dp"
