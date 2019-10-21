@@ -190,7 +190,7 @@ public class MainFragment extends Fragment {
             this.context = context;
             this.logBookList = logBookList;
         }
-         class LogBookViewHolder extends RecyclerView.ViewHolder {
+        class LogBookViewHolder extends RecyclerView.ViewHolder {
             ImageView ivLogBook;
             TextView tvLogBookName;
 
@@ -229,34 +229,27 @@ public class MainFragment extends Fragment {
                 }
             });
 
-            }
-            private void showImage(final  ImageView ivLogBook,final String path){
-            final  int ONE_MEGABYTE = 1024 * 1024 ;
-                StorageReference imageRef = storage.getReference().child(path);
-                imageRef.getBytes((ONE_MEGABYTE)).addOnCompleteListener(new OnCompleteListener<byte[]>() {
-                    @Override
-                    public void onComplete(@NonNull Task<byte[]> task) {
-                        if(task.isSuccessful() && task.getResult() != null){
-                            byte[] bytes = task.getResult();
-                            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
-                            ivLogBook.setImageBitmap(bitmap);
-                        }else {
-                            String message = task.getException() == null?
-                                   getString(R.string.textImageDownloadFail)+":"+path:task.getException().getMessage()+":"+path;
-                            Log.e(TAG,message);
-                            Toast.makeText(activity,"找不到日誌",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            }
-
         }
-//        public  List<LogBook> getLogBookList(){
-//        List<LogBook> logBookList = new ArrayList<>();
-//        logBookList.add(new LogBook(R.drawable.notebook_green,"每日日誌"));
-//        logBookList.add(new LogBook(R.drawable.notebook_red,"情侶日誌"));
-//        return logBookList;
-//        }
+        private void showImage(final  ImageView ivLogBook,final String path){
+            final  int ONE_MEGABYTE = 1024 * 1024 ;
+            StorageReference imageRef = storage.getReference().child(path);
+            imageRef.getBytes((ONE_MEGABYTE)).addOnCompleteListener(new OnCompleteListener<byte[]>() {
+                @Override
+                public void onComplete(@NonNull Task<byte[]> task) {
+                    if(task.isSuccessful() && task.getResult() != null){
+                        byte[] bytes = task.getResult();
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                        ivLogBook.setImageBitmap(bitmap);
+                    }else {
+                        String message = task.getException() == null?
+                                getString(R.string.textImageDownloadFail)+":"+path:task.getException().getMessage()+":"+path;
+                        Log.e(TAG,message);
+                        Toast.makeText(activity,"找不到日誌",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+
     }
 
-
+}

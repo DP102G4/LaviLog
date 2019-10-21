@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Landing.LangindFragment1" >
+
+
+    <ImageView
+        android:id="@+id/imageView14"
+        android:layout_width="1080px"
+        android:layout_height="1920px"
+        android:src="@mipmap/landing"
+        tools:ignore="MissingConstraints" />
+    <ImageView
+        android:id="@+id/imageView15"
+        android:layout_width="435dp"
+        android:layout_height="58dp"
+        android:src="@drawable/mobilesteps"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btNext"
+        android:layout_width="107dp"
+        android:layout_height="66dp"
+        android:background="#00000000"
+        style="@style/BorderLessButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
