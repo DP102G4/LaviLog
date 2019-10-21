@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +62,7 @@ public class DailyFragment extends Fragment
             @Override
             public void onClick(View view) {
                 new DatePickerDialog(activity,DailyFragment.this,DailyFragment.year,DailyFragment.month,DailyFragment.day).show();
-                System.out.println(DailyFragment.year+""+DailyFragment.month+""+DailyFragment.day);
+                System.out.println("hello "+DailyFragment.year+""+DailyFragment.month+""+DailyFragment.day);
                 myview=view;
             }
         });
@@ -77,15 +78,16 @@ public class DailyFragment extends Fragment
     }
 
     @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+    public void onDateSet(DatePicker view, int year, int month, int day) {
         DailyFragment.year=year;
-        DailyFragment.month=month;
+        DailyFragment.month=(month+1);
         DailyFragment.day=day;
         System.out.println(year+" "+month+" "+day);
         Bundle bundle=new Bundle();
         bundle.putInt("year",year);
-        bundle.putInt("month",month);
+        bundle.putInt("month",month+1);
         bundle.putInt("day",day);
+        Log.i("harrison!!!!!",year+""+month+""+day);
         Navigation.findNavController(myview)
                 .navigate(R.id.action_dailyFragment_to_searchFragment,bundle);
 

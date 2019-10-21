@@ -124,8 +124,8 @@ public class signInFragment extends Fragment {
                                     }
                                 }
                             });
-//                            Navigation.findNavController(etAccount).navigate(R.id.action_signInFragment_to_mainFragment);
-//                            Toast.makeText(activity,"登入成功",Toast.LENGTH_SHORT).show();
+                            Navigation.findNavController(etAccount).navigate(R.id.action_signInFragment_to_mainFragment);
+                            Toast.makeText(activity,"登入成功",Toast.LENGTH_SHORT).show();
                         } else {
                             Exception exception = task.getException();
                             String message = (exception == null ? "登入失敗" : exception.getMessage());
