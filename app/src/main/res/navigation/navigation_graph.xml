@@ -26,9 +26,6 @@
             android:id="@+id/action_dailyFragment_to_testFragment"
             app:destination="@id/instertFragment" />
         <action
-            android:id="@+id/action_dailyFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
-        <action
             android:id="@+id/action_dailyFragment_to_albumFragment"
             app:destination="@id/albumFragment" />
     </fragment>
@@ -37,11 +34,6 @@
         android:name="com.example.lavilog.Daily.InsertFragment"
         android:label="fragment_insert"
         tools:layout="@layout/fragment_insert" />
-    <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.example.lavilog.Daily.SearchDailyFragment"
-        android:label="fragment_search"
-        tools:layout="@layout/fragment_search_daily" />
     <fragment
         android:id="@+id/albumFragment"
         android:name="com.example.lavilog.Daily.AlbumFragment"
@@ -284,6 +276,11 @@
         android:name="com.example.lavilog.Daily.Daily_Album_ImageFragment"
         android:label="fragment_daily__album__image"
         tools:layout="@layout/fragment_daily__album__image" />
+    <fragment
+        android:id="@+id/newsListFragment"
+        android:name="com.example.lavilog."
+        android:label="fragment_news_list"
+        tools:layout="@layout/fragment_news_list" />
     <fragment
         android:id="@+id/noticeFragment"
         android:name="com.example.lavilog.NoticeFriend.NoticeFragment"
