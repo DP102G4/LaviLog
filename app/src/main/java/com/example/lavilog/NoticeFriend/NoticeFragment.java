@@ -165,7 +165,7 @@ public class NoticeFragment extends Fragment {
 
             MyViewHolder(View itemView) {
                 super(itemView);
-                ivNotice = itemView.findViewById(R.id.ivNotice);
+                //ivNotice = itemView.findViewById(R.id.ivNotice);
                 tvMessage = itemView.findViewById(R.id.tvMessage);
                 tvTime = itemView.findViewById(R.id.tvTime);
                 tvMessage2 = itemView.findViewById(R.id.tvMessage2);
@@ -191,10 +191,11 @@ public class NoticeFragment extends Fragment {
             final Notice notice = notices.get(position);
             if (notice.getImagePath() == null) { // 因為有分文字資料跟圖檔,所以先確認圖檔路徑是不是空值
                 // 有值就要去抓圖,沒值就show沒檔的預設圖片
-                holder.ivNotice.setImageResource(R.drawable.no_image);
-            } else {
-                showImage(holder.ivNotice, notice.getImagePath());
+//                holder.ivNotice.setImageResource(R.drawable.no_image);
             }
+//            else {
+//                showImage(holder.ivNotice, notice.getImagePath());
+//            }
             holder.tvMessage.setText(notice.getNoticeMessage());
             holder.tvTime.setText(notice.getNoticeTime());
             holder.tvMessage2.setText(notice.getNoticeMessage2());
