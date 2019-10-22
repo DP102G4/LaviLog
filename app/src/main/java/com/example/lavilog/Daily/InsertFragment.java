@@ -215,7 +215,7 @@ public class InsertFragment extends Fragment {
                     answer.setImagePath(imagePath);
                     addOrReplace(answer);
                 } else {
-                    Toast.makeText(activity, "圖片上傳失敗", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "未選擇圖片", Toast.LENGTH_SHORT).show();
                     addOrReplace(answer);
 
                 }
