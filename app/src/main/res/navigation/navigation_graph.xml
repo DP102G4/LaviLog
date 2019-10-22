@@ -31,9 +31,7 @@
         <action
             android:id="@+id/action_dailyFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
-        <action
-            android:id="@+id/action_dailyFragment_to_albumFragment"
-            app:destination="@id/albumFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/instertFragment"
@@ -44,7 +42,7 @@
         android:id="@+id/searchFragment"
         android:name="com.example.lavilog.Daily.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search_daily" />
+        tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/albumFragment"
         android:name="com.example.lavilog.Daily.AlbumFragment"
