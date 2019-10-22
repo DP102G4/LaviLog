@@ -29,6 +29,7 @@ public class DailyFragment extends Fragment
     private Activity activity;
     private ImageView ivSearch;
     private ImageButton ibInsert,ibSearch,ibAlbum;
+    private ImageView ivBookBackGround;
     private static int year,month,day;
     private View myview;
 
@@ -49,7 +50,14 @@ public class DailyFragment extends Fragment
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        ivBookBackGround = view.findViewById(R.id.ivBookBackGround);
+
+
+
         ibAlbum = view.findViewById(R.id.ibAlbum);
+        ibAlbum.bringToFront();
+
         ibAlbum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +65,8 @@ public class DailyFragment extends Fragment
             }
         });
         ibSearch = view.findViewById(R.id.ibSearch);
+        ibSearch.bringToFront();
+
         showNow();
         ibSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +77,7 @@ public class DailyFragment extends Fragment
             }
         });
         ibInsert = view.findViewById(R.id.ibInsert);
+        ibInsert.bringToFront();
         ibInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
