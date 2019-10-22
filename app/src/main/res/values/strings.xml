@@ -44,4 +44,8 @@
     <string name="userManager">會員管理</string>
     <string name="CommodityManage">商品管理</string>
     <string name="ReportManage">檢舉管理</string>
+
+    <string name="textInserted2">好友已新增</string>
+    <string name="textInsertFail2">新增失敗</string>
+
 </resources>

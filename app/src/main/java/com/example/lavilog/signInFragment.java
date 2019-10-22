@@ -105,6 +105,9 @@ public class signInFragment extends Fragment {
                                         User userFB = documentSnapshot.toObject(User.class);
                                         final String status = userFB.getStatus();
                                         switch (status) {
+                                            case "2":
+                                                Toast.makeText(activity,"登入失敗，帳號權限封鎖中",Toast.LENGTH_SHORT).show();
+                                                break;
                                             case "0":
                                                 Navigation.findNavController(etAccount).navigate(R.id.action_signInFragment_to_mainFragment);
                                                 Toast.makeText(activity,"登入成功",Toast.LENGTH_SHORT).show();
@@ -113,15 +116,12 @@ public class signInFragment extends Fragment {
                                                 Navigation.findNavController(etAccount).navigate(R.id.action_signInFragment_to_backStageFragment);
                                                 Toast.makeText(activity,"管理員登入成功",Toast.LENGTH_SHORT).show();
                                                 break;
-                                            case "2":
-                                                Toast.makeText(activity,"登入失敗，帳號權限封鎖中",Toast.LENGTH_SHORT).show();
-                                                return;
+                                                default:
+                                                    Toast.makeText(activity,"發生故障",Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 }
                             });
-                            Navigation.findNavController(etAccount).navigate(R.id.action_signInFragment_to_mainFragment);
-                            Toast.makeText(activity,"登入成功",Toast.LENGTH_SHORT).show();
                         } else {
                             Exception exception = task.getException();
                             String message = (exception == null ? "登入失敗" : exception.getMessage());

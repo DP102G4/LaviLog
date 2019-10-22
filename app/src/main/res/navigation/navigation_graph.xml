@@ -39,7 +39,7 @@
         tools:layout="@layout/fragment_insert" />
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.lavilog.Daily.SearchDailyFragment"
+        android:name="com.example.lavilog.Daily.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
     <fragment
@@ -65,6 +65,11 @@
         <action
             android:id="@+id/action_friendHomeFragment_to_QRcodeFragment"
             app:destination="@id/QRcodeFragment" />
+
+        <action
+            android:id="@+id/action_friendHomeFragment_to_noticeFragment"
+            app:destination="@id/noticeFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/friendSearchFragment"
