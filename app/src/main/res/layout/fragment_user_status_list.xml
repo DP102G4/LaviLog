@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <SearchView
+        android:id="@+id/svUserStatus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/rvUserList"
+        app:layout_constraintStart_toStartOf="@+id/rvUserList"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvUserList"
+        android:layout_width="395dp"
+        android:layout_height="663dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spStatus">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <Spinner
+        android:id="@+id/spStatus"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        app:layout_constraintEnd_toEndOf="@+id/svUserStatus"
+        app:layout_constraintStart_toStartOf="@+id/svUserStatus"
+        app:layout_constraintTop_toBottomOf="@+id/svUserStatus" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

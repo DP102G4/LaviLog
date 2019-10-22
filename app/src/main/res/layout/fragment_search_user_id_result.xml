@@ -18,10 +18,10 @@
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAdmName" />
+        app:layout_constraintTop_toBottomOf="@+id/tvUserName" />
 
     <TextView
-        android:id="@+id/tvAdmName"
+        android:id="@+id/tvUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
@@ -54,6 +54,6 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAdmName" />
+        app:layout_constraintTop_toBottomOf="@+id/tvUserName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

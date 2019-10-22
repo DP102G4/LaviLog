@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +25,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 
@@ -124,7 +122,7 @@ public class admListFragment extends Fragment {
             admViewHolder(View itemView){
                 super(itemView);
                 tvAdmAccount = itemView.findViewById(R.id.tvAdmAccount);
-                tvAdmName = itemView.findViewById(R.id.tvAdmName);
+                tvAdmName = itemView.findViewById(R.id.tvUserName);
                 tvAdmStatus =itemView.findViewById(R.id.tvAdmStatus);
             }
         }

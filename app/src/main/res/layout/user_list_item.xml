@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--設定foreground="?selectableItemBackground"當選項被點擊時會改變背景色-->
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardViewUser"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:foreground="?selectableItemBackground"
+    android:orientation="vertical"
+    app:cardBackgroundColor="#DDDDDD"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="6dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/CLUser"
+        android:layout_width="match_parent"
+        android:layout_height="161dp"
+        android:background="#D5D5D5">
+
+        <Button
+            android:id="@+id/btBlockade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:background="#C2FCE3"
+            android:text="封鎖"
+            app:layout_constraintStart_toEndOf="@+id/tvUserStatus"
+            app:layout_constraintTop_toBottomOf="@+id/tvUserAccount" />
+
+        <Button
+            android:id="@+id/btBlockadeCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:background="#C2FCE3"
+            android:text="解除封鎖"
+            app:layout_constraintStart_toEndOf="@+id/tvUserStatus"
+            app:layout_constraintTop_toBottomOf="@+id/tvUserAccount" />
+
+        <ImageView
+            android:id="@+id/ivUserList"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="17dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars[0]" />
+
+        <TextView
+            android:id="@+id/tvUserAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="#0000FF"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/tvUserName"
+            app:layout_constraintTop_toBottomOf="@+id/tvUserName"
+            tools:text="帳號" />
+
+        <TextView
+            android:id="@+id/tvUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/ivUserList"
+            app:layout_constraintTop_toTopOf="@+id/ivUserList"
+            tools:text="使用者名字" />
+
+        <TextView
+            android:id="@+id/tvUserStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/tvUserAccount"
+            app:layout_constraintTop_toBottomOf="@+id/tvUserAccount"
+            tools:text="狀態" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

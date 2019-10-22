@@ -56,5 +56,11 @@ public class BackStageFragment extends Fragment {
                 Navigation.findNavController(btBackStage).navigate(R.id.action_backStageFragment_to_admListFragment);
             }
         });
+        btUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(btUser).navigate(R.id.action_backStageFragment_to_userStatusListFragment);
+            }
+        });
     }
 }

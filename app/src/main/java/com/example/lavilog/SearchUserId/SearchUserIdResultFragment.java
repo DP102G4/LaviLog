@@ -61,7 +61,7 @@ public class SearchUserIdResultFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ivUser = view.findViewById(R.id.ivUser);
-        tvUserName = view.findViewById(R.id.tvAdmName);
+        tvUserName = view.findViewById(R.id.tvUserName);
         tvAccount = view.findViewById(R.id.tvAccount);
         btAddFriend = view.findViewById(R.id.btAddFriend);
 
