@@ -15,7 +15,8 @@
         android:id="@+id/friendHomeFragment"/>
     <item
         android:icon="@drawable/shopicon"
-        android:title="購物" />
+        android:title="購物"
+        android:id="@+id/commodityHomeFragment"/>
     <item
         android:icon="@drawable/myicon"
         android:title="我的檔案"
