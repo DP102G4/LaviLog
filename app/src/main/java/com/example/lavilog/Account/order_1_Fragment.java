@@ -21,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.lavilog.Account.Order;
 import com.example.lavilog.Commodity.Commodity;
 import com.example.lavilog.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -140,8 +139,8 @@ public class order_1_Fragment extends Fragment {
             MyViewHolder(View itemView){
                 super(itemView);
                 ivOrderImage = itemView.findViewById(R.id.ivOrderImage);
-                tvProductName = itemView.findViewById(R.id.tvProductName);
-                tvProductPrice =itemView.findViewById(R.id.tvProductPrice);
+                tvProductName = itemView.findViewById(R.id.tvProductNameDel);
+                tvProductPrice =itemView.findViewById(R.id.tvProductPriceDel);
             }
         }
 

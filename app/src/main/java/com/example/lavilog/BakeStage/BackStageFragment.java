@@ -18,7 +18,7 @@ import com.example.lavilog.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class BackStageFragment extends Fragment {
-    Button btBackStage,btUser;
+    Button btBackStage,btUser, btComInsDel;
     TextView tvSignOut;
     FirebaseAuth auth;
 
@@ -41,6 +41,7 @@ public class BackStageFragment extends Fragment {
         btBackStage=view.findViewById(R.id.btBackStage);
         btUser=view.findViewById(R.id.btUser);
         tvSignOut=view.findViewById(R.id.tvSignOut);
+        btComInsDel = view.findViewById(R.id.btComInsDel);
 
         tvSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +55,13 @@ public class BackStageFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Navigation.findNavController(btBackStage).navigate(R.id.action_backStageFragment_to_admListFragment);
+            }
+        });
+
+        btComInsDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(btComInsDel).navigate(R.id.action_backStageFragment_to_commodityInsDelFragment);
             }
         });
     }

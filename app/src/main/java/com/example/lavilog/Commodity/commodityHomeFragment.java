@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.view.menu.MenuView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -149,9 +148,9 @@ public class commodityHomeFragment extends Fragment {
             CommodityViewHolder(View itemView){
                 super(itemView);
                 ivCommodity = itemView.findViewById(R.id.ivProduct);
-                tvName = itemView.findViewById(R.id.tvProductName);
-                tvPrice = itemView.findViewById(R.id.tvProductPrice);
-                tvInfo = itemView.findViewById(R.id.tvProductInfo);
+                tvName = itemView.findViewById(R.id.tvProductNameDel);
+                tvPrice = itemView.findViewById(R.id.tvProductPriceDel);
+                tvInfo = itemView.findViewById(R.id.tvProductInfoDel);
             }
         }
 

@@ -79,7 +79,7 @@ public class AccountFragment extends Fragment {
                 String account = auth.getCurrentUser().getEmail();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("account",account);
-                Navigation.findNavController(btPurchaseDetail).navigate(R.id.action_accountFragment_to_order_1_Fragment,bundle);
+//                Navigation.findNavController(btPurchaseDetail).navigate(R.id.action_accountFragment_to_order_1_Fragment,bundle);
             }
         });
     }

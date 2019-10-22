@@ -70,8 +70,8 @@ public class SearchUserIdFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerView = view.findViewById(R.id.recyclerView);
-        searchView = view.findViewById(R.id.searchView);
+        recyclerView = view.findViewById(R.id.rvCommodityDel);
+        searchView = view.findViewById(R.id.svCommodityDel);
     }
 
     @Override
