@@ -41,6 +41,7 @@ public class signInFragment extends Fragment {
         db=FirebaseFirestore.getInstance();
         MainActivity.bottomNavigationView.setVisibility(View.GONE);
     }
+    //
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
