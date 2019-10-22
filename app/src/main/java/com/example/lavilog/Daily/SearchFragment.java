@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.lavilog.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -30,8 +31,6 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -40,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SearchDailyFragment extends Fragment {
+public class SearchFragment extends Fragment {
 
     private  static  final String TAG = "TAG_Mainfragment";
     private Activity activity;
@@ -48,6 +47,7 @@ public class SearchDailyFragment extends Fragment {
     private FirebaseFirestore db;
     private FirebaseStorage storage;
     private ListenerRegistration registration;
+    private int Day,Month;
 
 
     @Override
@@ -63,7 +63,7 @@ public class SearchDailyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search_daily, container, false);
+        return inflater.inflate(R.layout.fragment_search, container, false);
     }
 
     @Override
@@ -71,13 +71,23 @@ public class SearchDailyFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rvAnswer = view.findViewById(R.id.rvAnswer);
         rvAnswer.setLayoutManager(new LinearLayoutManager(activity));
+        Bundle bundle = getArguments();
+        if(bundle!=null){
+             Day = bundle.getInt("day");
+             Month=bundle.getInt("month");
+
+            Log.i("day!!!!!",""+Day);
+            Log.i("month!!!!",""+Month);
+            SearchData(Day,Month);
+
+        }
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        showAll();
-        listenToDaily();
+        SearchData(Day,Month);
+        listenToDaily(Day,Month);
     }
 
     @Override
@@ -86,15 +96,42 @@ public class SearchDailyFragment extends Fragment {
         registration.remove();
         registration = null;
     }
+    private void SearchData (int Day,int Month)
+    {
 
+        db.collection("article").whereEqualTo("day",""+Day).whereEqualTo("month",""+Month).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                Log.i("Mike ans",""+queryDocumentSnapshots.size());
+                List<DocumentSnapshot> buffer =queryDocumentSnapshots.getDocuments();
+
+                List<Answer> answers = new ArrayList<>();
+                for (int i =0;i<buffer.size();i++)
+                {
+
+                    String ID = buffer.get(i).get("id").toString();
+
+                    Log.i("ahan ans",queryDocumentSnapshots.size()+""+ID);
+                    answers.add(buffer.get(i).toObject(Answer.class));
+
+                }
+                rvAnswer.setAdapter(new AnswerAdapter(activity,answers));
+
+                Log.i("ahan ans","--------------------------------------------------------------");
+                // ...
+            }
+        });
+    }
     private void showAll() {
-        db.collection("article").orderBy("textClock",Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+        /*db.collection("article").orderBy("month",Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful() && task.getResult() !=null){
                     List<Answer> answers = new ArrayList<>();
                     for (QueryDocumentSnapshot document : task.getResult()){
                         answers.add(document.toObject(Answer.class));
+                        //Log.i("Mike",document.get("id").toString());
                     }
                     rvAnswer.setAdapter(new AnswerAdapter(activity,answers));
                 }else {
@@ -106,11 +143,13 @@ public class SearchDailyFragment extends Fragment {
                 }
             }
         });
+        */
+
     }
 
-    private void listenToDaily() {
+    private void listenToDaily(int Day , int Month) {
         if (registration == null){
-            registration = db.collection("article").orderBy("textClock").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            registration = db.collection("article").whereEqualTo("day",""+Day).whereEqualTo("month",""+Month).addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
                     Log.d(TAG,"article change.");
@@ -152,6 +191,7 @@ public class SearchDailyFragment extends Fragment {
                 tvDate = itemview.findViewById(R.id.tvDate);
                 tvQuestion = itemview.findViewById(R.id.tvQuestion);
                 tvAnswer = itemview.findViewById(R.id.tvAnswer);
+                System.out.println("heloooooooooooooooooooooooooooooooooo");
             }
         }
 
@@ -175,6 +215,7 @@ public class SearchDailyFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull AnswerViewHolder holder, int position) {
             final Answer answer = answers.get(position);
+            System.out.println("HHHHHHHHHHHHHHHHHHHHH");
             if (answer.getImagePath() == null) {
                 holder.ivDaily.setImageResource(R.drawable.no_image);
             } else {

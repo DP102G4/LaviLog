@@ -41,7 +41,7 @@
         android:id="@+id/searchFragment"
         android:name="com.example.lavilog.Daily.SearchDailyFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search_daily" />
+        tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/albumFragment"
         android:name="com.example.lavilog.Daily.AlbumFragment"
@@ -271,6 +271,9 @@
         <action
             android:id="@+id/action_backStageFragment_to_userStatusListFragment"
             app:destination="@id/userStatusListFragment" />
+        <action
+            android:id="@+id/action_backStageFragment_to_commodityInsDelFragment"
+            app:destination="@id/commodityInsDelFragment" />
     </fragment>
     <fragment
         android:id="@+id/commodityInsertFragment"
@@ -300,6 +303,15 @@
         <action
             android:id="@+id/action_admListFragment_to_backStageFragment"
             app:destination="@id/backStageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/commodityInsDelFragment"
+        android:name="com.example.lavilog.BakeStage.commodityInsDelFragment"
+        android:label="fragment_commodity_ins_del"
+        tools:layout="@layout/fragment_commodity_ins_del" >
+        <action
+            android:id="@+id/action_commodityInsDelFragment_to_commodityInsertFragment"
+            app:destination="@id/commodityInsertFragment" />
     </fragment>
     <fragment
         android:id="@+id/userStatusListFragment"

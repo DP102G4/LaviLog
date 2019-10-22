@@ -210,12 +210,12 @@ public class InsertFragment extends Fragment {
                 answer.setAnswer(article);
                 //如果有拍照，上傳至Firebase storage
                 if (pictureTaken) {
-                    Toast.makeText(activity, "111", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "圖片上傳成功", Toast.LENGTH_SHORT).show();
 
                     answer.setImagePath(imagePath);
                     addOrReplace(answer);
                 } else {
-                    Toast.makeText(activity, "222", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "圖片上傳失敗", Toast.LENGTH_SHORT).show();
                     addOrReplace(answer);
 
                 }
@@ -310,14 +310,12 @@ public class InsertFragment extends Fragment {
                                                     SimpleDateFormat df = new SimpleDateFormat(nowTime);
                                                     String today = df.format(mCal.getTime());
 
-//                                                        final String imagePath = userAnswer.getImagePath();
                                                     showImage(ivDailyPicture, imagePath);
                                                     if (textClock.equals(today)) {
                                                         userAnswer.setImagePath(imagePath);
                                                         db.collection("article").document(userAnswer.getId()).set(userAnswer).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {
-//                                                            QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
                                                                 if (task.isSuccessful()) {
 
                                                                     // 下載剛上傳好的照片

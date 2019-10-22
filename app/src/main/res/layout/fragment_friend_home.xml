@@ -23,6 +23,7 @@
         android:id="@+id/btSearchID"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
         android:background="#FFFFFF"
         android:text="加入帳號"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,12 +35,25 @@
         android:id="@+id/btScanQR"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
         android:background="#FFFFFF"
         android:text="行動條碼掃描"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btSearchID" />
+
+    <Button
+        android:id="@+id/btNotice"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:background="#FFFFFF"
+        android:text="通知"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btScanQR" />
 
     <ImageView
         android:id="@+id/ivAccountPhoto"

@@ -25,7 +25,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:text="第一本" />
+            android:text="←"
+            android:textColor="#4D4D4D"
+            android:textSize="36sp" />
 
         <!--點擊「Last」按鈕會切換到最後一個會員-->
         <Button
@@ -34,7 +36,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:text="第末本" />
+            android:text="→"
+            android:textColor="#4D4D4D"
+            android:textSize="36sp" />
 
     </LinearLayout>
 

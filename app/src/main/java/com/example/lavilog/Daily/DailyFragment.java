@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ public class DailyFragment extends Fragment
     private Activity activity;
     private ImageView ivSearch;
     private ImageButton ibInsert,ibSearch,ibAlbum;
+    private ImageView ivBookBackGround;
     private static int year,month,day;
     private View myview;
 
@@ -48,7 +50,14 @@ public class DailyFragment extends Fragment
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        ivBookBackGround = view.findViewById(R.id.ivBookBackGround);
+
+
+
         ibAlbum = view.findViewById(R.id.ibAlbum);
+        ibAlbum.bringToFront();
+
         ibAlbum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,16 +65,19 @@ public class DailyFragment extends Fragment
             }
         });
         ibSearch = view.findViewById(R.id.ibSearch);
+        ibSearch.bringToFront();
+
         showNow();
         ibSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new DatePickerDialog(activity,DailyFragment.this,DailyFragment.year,DailyFragment.month,DailyFragment.day).show();
-                System.out.println(DailyFragment.year+""+DailyFragment.month+""+DailyFragment.day);
+                System.out.println("hello "+DailyFragment.year+""+DailyFragment.month+""+DailyFragment.day);
                 myview=view;
             }
         });
         ibInsert = view.findViewById(R.id.ibInsert);
+        ibInsert.bringToFront();
         ibInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,15 +89,16 @@ public class DailyFragment extends Fragment
     }
 
     @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+    public void onDateSet(DatePicker view, int year, int month, int day) {
         DailyFragment.year=year;
-        DailyFragment.month=month;
+        DailyFragment.month=(month+1);
         DailyFragment.day=day;
         System.out.println(year+" "+month+" "+day);
         Bundle bundle=new Bundle();
         bundle.putInt("year",year);
-        bundle.putInt("month",month);
+        bundle.putInt("month",month+1);
         bundle.putInt("day",day);
+        Log.i("harrison!!!!!",year+""+month+""+day);
         Navigation.findNavController(myview)
                 .navigate(R.id.action_dailyFragment_to_searchFragment,bundle);
 

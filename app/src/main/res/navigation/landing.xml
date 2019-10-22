@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/landing"
+    app:startDestination="@id/landingFragment">
+
+    <fragment
+        android:id="@+id/langindFragment1"
+        android:name="com.example.lavilog.Landing.LangindFragment1"
+        android:label="fragment_langind_fragment1"
+        tools:layout="@layout/fragment_landing_fragment1" >
+        <action
+            android:id="@+id/action_langindFragment1_to_langingFragment2"
+            app:destination="@id/langingFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/langingFragment2"
+        android:name="com.example.lavilog.Landing.LangingFragment2"
+        android:label="fragment_langing_fragment2"
+        tools:layout="@layout/fragment_landing_fragment2" >
+        <action
+            android:id="@+id/action_langingFragment2_to_langingFragment3"
+            app:destination="@id/langingFragment3" />
+    </fragment>
+    <fragment
+        android:id="@+id/langingFragment3"
+        android:name="com.example.lavilog.Landing.LangingFragment3"
+        android:label="fragment_landing_fragment3"
+        tools:layout="@layout/fragment_landing_fragment3" >
+        <action
+            android:id="@+id/action_langingFragment3_to_langingFragment4"
+            app:destination="@id/langingFragment4" />
+    </fragment>
+    <fragment
+        android:id="@+id/langingFragment4"
+        android:name="com.example.lavilog.Landing.LangingFragment4"
+        android:label="fragment_landing_fragment4"
+        tools:layout="@layout/fragment_landing_fragment4" />
+    <fragment
+        android:id="@+id/landingFragment"
+        android:name="com.example.lavilog.Landing.LandingFragment"
+        android:label="fragment_landing"
+        tools:layout="@layout/fragment_landing" >
+        <action
+            android:id="@+id/action_landingFragment_to_langindFragment1"
+            app:destination="@id/langindFragment1" />
+    </fragment>
+</navigation>

@@ -17,6 +17,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.example.lavilog.R;
 import com.example.lavilog.R;
 import com.example.lavilog.SearchUserId.User;
 import com.google.android.gms.tasks.OnCompleteListener;

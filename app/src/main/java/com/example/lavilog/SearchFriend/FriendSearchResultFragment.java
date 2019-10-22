@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -74,15 +75,15 @@ public class FriendSearchResultFragment extends Fragment {
         }
 
 
-        // 改成目的地頁面 進入好友日誌主題內
+         //改成目的地頁面 進入好友日誌主題內
 
-//        btFriendDiary.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Navigation.findNavController(view)
-//                        .navigate(R.id.改成目的地頁面 進入好友日誌主題內);
-//            }
-//        });
+        btFriendDiary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view)
+                        .navigate(R.id.searchFragment);
+            }
+        });
     }
 
     /**
