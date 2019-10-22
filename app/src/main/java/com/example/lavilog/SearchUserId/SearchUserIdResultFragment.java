@@ -149,7 +149,7 @@ public class SearchUserIdResultFragment extends Fragment {
 
 
                 // document為建立一筆資料,自動生成id,getId去取得id
-                notice.setId(id);//生成的spot物件,放入id  只是存圖檔的路徑（路徑字串）
+                notice.setId(id);//生成的notice物件,放入id  只是存圖檔的路徑（路徑字串）
 
                 //tvUserName.setText(tvUserName + " 已和您成為朋友");
 

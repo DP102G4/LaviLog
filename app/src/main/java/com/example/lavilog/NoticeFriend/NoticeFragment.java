@@ -32,6 +32,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -51,7 +52,7 @@ public class NoticeFragment extends Fragment {
 
     private ImageView ivNotice;
     private TextView tvMessage, tvTime, textView21;
-    private TextView tvMessage2;
+    private TextView tvMessage2, tvNoticeNotice;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,6 +75,8 @@ public class NoticeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rvNotice = view.findViewById(R.id.rvNotice);
         rvNotice.setLayoutManager(new LinearLayoutManager(activity));
+
+        tvNoticeNotice = view.findViewById(R.id.tvNoticeNotice);
     }
 
     @Override
@@ -95,7 +98,7 @@ public class NoticeFragment extends Fragment {
 
     /** 顯示所有通知資訊 */
     private void showAll() {
-        db.collection("notices").get() // 把裡面所有的每一筆資料都取出
+        db.collection("notices").orderBy("noticeTime", Query.Direction.DESCENDING).get() // 把裡面所有的每一筆資料都取出
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {       // snapshot 螢幕截圖,複製品,快照
@@ -200,6 +203,14 @@ public class NoticeFragment extends Fragment {
             holder.tvTime.setText(notice.getNoticeTime());
             holder.tvMessage2.setText(notice.getNoticeMessage2());
 
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    delete(notice);
+                    return false;
+                }
+            });
+
 //            holder.itemView.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
@@ -230,6 +241,34 @@ public class NoticeFragment extends Fragment {
                                     task.getException().getMessage() + ": " + path;
                             Log.e(TAG, message);
                             Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    private void delete(final Notice notice) {
+        // 刪除Firestore內的通知資料
+        db.collection("notices").document(notice.getId()).delete()//哪個notice就是哪個document
+                .addOnCompleteListener(new OnCompleteListener<Void>() {//監聽上面的圖檔有沒有被刪除了,若完成,執行下方的刪除路徑
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(activity, R.string.textDeletedNotice, Toast.LENGTH_SHORT).show();
+                            // 刪除該通知在Firebase storage對應的圖檔
+                            if (notice.getImagePath() != null) { // 上面是刪掉圖檔而已,這邊要來刪路徑
+                                storage.getReference().child(notice.getImagePath()).delete() // 刪除firestore完整路徑
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Log.d(TAG, getString(R.string.textImageDeleted));
+                                                }
+                                            }
+                                        });
+                            }
+                            showAll();
+                        } else {
+                            Toast.makeText(activity, R.string.textDeleteFail, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
