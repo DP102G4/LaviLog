@@ -73,7 +73,7 @@ public class SearchUserIdFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rvCommodityDel);
         searchView = view.findViewById(R.id.svCommodityDel);
     }
-
+//
     @Override
     public void onStart() {
         super.onStart();
