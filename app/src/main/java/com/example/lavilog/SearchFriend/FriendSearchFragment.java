@@ -71,12 +71,12 @@ public class FriendSearchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView = view.findViewById(R.id.rvCommodityDel);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         
         // recyclerView.setAdapter(new FriendAdapter(activity, friends));
 
-        searchView = view.findViewById(R.id.searchView);
+        searchView = view.findViewById(R.id.svCommodityDel);
    }
 
     @Override

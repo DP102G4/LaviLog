@@ -1,14 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Commodity.CommodityInsertFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <ImageView
+        android:id="@+id/ivProductImageInsert"
+        android:layout_width="99dp"
+        android:layout_height="82dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/no_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/tvProductNameInsert"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="64dp"
+        android:ems="10"
+        android:hint="@string/tvProductNameIn"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivProductImageInsert" />
+
+    <EditText
+        android:id="@+id/tvProductPriceInsert"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="@string/tvProductPriceIn"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/tvProductNameInsert"
+        app:layout_constraintStart_toStartOf="@+id/tvProductNameInsert"
+        app:layout_constraintTop_toBottomOf="@+id/tvProductNameInsert" />
+
+    <EditText
+        android:id="@+id/tvProductInfoInsert"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="@string/tvProductInfoIn"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/tvProductPriceInsert"
+        app:layout_constraintStart_toStartOf="@+id/tvProductPriceInsert"
+        app:layout_constraintTop_toBottomOf="@+id/tvProductPriceInsert" />
+
+    <Button
+        android:id="@+id/btProductInsert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="新增"
+        app:layout_constraintEnd_toEndOf="@+id/tvProductInfoInsert"
+        app:layout_constraintTop_toBottomOf="@+id/tvProductInfoInsert" />
+
+    <Button
+        android:id="@+id/btPickProdictPciture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="上傳照片"
+        app:layout_constraintStart_toStartOf="@+id/tvProductInfoInsert"
+        app:layout_constraintTop_toBottomOf="@+id/tvProductInfoInsert" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

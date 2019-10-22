@@ -1,4 +1,4 @@
-package com.example.lavilog.NoticeFriend;
+package com.example.lavilog.SearchUserId;
 
 import java.io.Serializable;
 
