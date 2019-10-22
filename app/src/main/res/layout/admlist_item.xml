@@ -31,23 +31,25 @@
             tools:text="帳號" />
 
         <TextView
-            android:id="@+id/tvAdmName"
+            android:id="@+id/tvUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="16dp"
             android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@+id/tvAdmAccount"
-            app:layout_constraintTop_toTopOf="@+id/tvAdmAccount"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="管理者名字" />
 
         <TextView
             android:id="@+id/tvAdmStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
+            android:layout_marginTop="16dp"
             android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@+id/tvAdmName"
-            app:layout_constraintTop_toTopOf="@+id/tvAdmName"
+            app:layout_constraintEnd_toEndOf="@+id/tvUserName"
+            app:layout_constraintStart_toStartOf="@+id/tvUserName"
+            app:layout_constraintTop_toBottomOf="@+id/tvUserName"
             tools:text="狀態" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

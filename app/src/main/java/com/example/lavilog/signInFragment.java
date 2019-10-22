@@ -159,6 +159,10 @@ public class signInFragment extends Fragment {
                            case "0":
                                Navigation.findNavController(etAccount).navigate(R.id.action_signInFragment_to_mainFragment);
                                Toast.makeText(activity,"使用者直接進入",Toast.LENGTH_LONG).show();
+                               break;
+                           case "2":
+                               Toast.makeText(activity,"您已被封鎖",Toast.LENGTH_LONG).show();
+                               break;
                                default:
                                    Toast.makeText(activity,status,Toast.LENGTH_LONG).show();
                        }

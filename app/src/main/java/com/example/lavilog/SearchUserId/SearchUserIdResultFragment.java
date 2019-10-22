@@ -99,6 +99,7 @@ public class SearchUserIdResultFragment extends Fragment {
 //        String imagePath = ivUser.toString();
 
         tvUserName = view.findViewById(R.id.tvAdmName);
+        tvUserName = view.findViewById(R.id.tvUserName);
         tvAccount = view.findViewById(R.id.tvAccount);
         btAddFriend = view.findViewById(R.id.btAddFriend);
 
