@@ -10,7 +10,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,8 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lavilog.R;
-import com.example.lavilog.SearchFriend.Friend;
-import com.example.lavilog.SearchFriend.FriendSearchFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -168,7 +165,7 @@ public class NoticeFragment extends Fragment {
 
             MyViewHolder(View itemView) {
                 super(itemView);
-                //ivNotice = itemView.findViewById(R.id.ivNotice);
+                ivNotice = itemView.findViewById(R.id.ivNotice);
                 tvMessage = itemView.findViewById(R.id.tvMessage);
                 tvTime = itemView.findViewById(R.id.tvTime);
                 tvMessage2 = itemView.findViewById(R.id.tvMessage2);
@@ -192,13 +189,13 @@ public class NoticeFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull NoticeFragment.NoticeAdapter.MyViewHolder holder, int position) {
             final Notice notice = notices.get(position);
-            if (notice.getImagePath() == null) { // 因為有分文字資料跟圖檔,所以先確認圖檔路徑是不是空值
-                // 有值就要去抓圖,沒值就show沒檔的預設圖片
-//                holder.ivNotice.setImageResource(R.drawable.no_image);
+            if (notice.getnImagePath() == null) { // 因為有分文字資料跟圖檔,所以先確認圖檔路徑是不是空值
+//                 有值就要去抓圖,沒值就show沒檔的預設圖片
+                holder.ivNotice.setImageResource(R.drawable.no_image);
             }
-//            else {
-//                showImage(holder.ivNotice, notice.getImagePath());
-//            }
+            else {
+                showImage(holder.ivNotice, notice.getnImagePath());
+            }
             holder.tvMessage.setText(notice.getNoticeMessage());
             holder.tvTime.setText(notice.getNoticeTime());
             holder.tvMessage2.setText(notice.getNoticeMessage2());
@@ -255,8 +252,8 @@ public class NoticeFragment extends Fragment {
                         if (task.isSuccessful()) {
                             Toast.makeText(activity, R.string.textDeletedNotice, Toast.LENGTH_SHORT).show();
                             // 刪除該通知在Firebase storage對應的圖檔
-                            if (notice.getImagePath() != null) { // 上面是刪掉圖檔而已,這邊要來刪路徑
-                                storage.getReference().child(notice.getImagePath()).delete() // 刪除firestore完整路徑
+                            if (notice.getnImagePath() != null) { // 上面是刪掉圖檔而已,這邊要來刪路徑
+                                storage.getReference().child(notice.getnImagePath()).delete() // 刪除firestore完整路徑
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {

@@ -25,7 +25,6 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.lavilog.NoticeFriend.Notice;
 import com.example.lavilog.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -283,25 +282,25 @@ public class FriendSearchFragment extends Fragment {
                 }
             });
 
-//            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-//                @Override
-//                public boolean onLongClick(View view) {
-//                    AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
-//                    builder1.setMessage("確定刪除好友 ?")
-//                            .setPositiveButton("確定", new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int id) {
-//                                    delete(friend);
-//                                    Toast.makeText(activity, "已刪除好友", Toast.LENGTH_SHORT).show();
-//                                }
-//                            })
-//                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int id) {
-//                                }
-//                            });
-//                    builder1.show();
-//                    return false;
-//                }
-//            });
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
+                    builder1.setMessage("確定刪除好友 ?")
+                            .setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    delete(friend);
+                                    Toast.makeText(activity, "已刪除好友", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                }
+                            });
+                    builder1.show();
+                    return false;
+                }
+            });
         }
     }
 

@@ -3,7 +3,7 @@ package com.example.lavilog.SearchUserId;
 import java.io.Serializable;
 
 public class Notice implements Serializable {
-    private String imagePath;
+    private String nImagePath;
     private String noticeMessage;
     private String noticeTime;
     private String id;
@@ -13,20 +13,20 @@ public class Notice implements Serializable {
 
     }
 
-    public Notice(String imagePath, String noticeMessage, String noticeTime, String id, String noticeMessage2) {
-        this.imagePath = imagePath;
+    public Notice(String nImagePath, String noticeMessage, String noticeTime, String id, String noticeMessage2) {
+        this.nImagePath = nImagePath;
         this.noticeMessage = noticeMessage;
         this.noticeTime = noticeTime;
         this.id = id;
         this.noticeMessage2 = noticeMessage2;
     }
 
-    public String getImagePath() {
-        return imagePath;
+    public String getnImagePath() {
+        return nImagePath;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public void setnImagePath(String nImagePath) {
+        this.nImagePath = nImagePath;
     }
 
     public String getNoticeMessage() {
