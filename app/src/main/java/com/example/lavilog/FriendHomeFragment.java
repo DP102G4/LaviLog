@@ -83,7 +83,7 @@ public class FriendHomeFragment extends Fragment {
 
         btNotice = view.findViewById(R.id.btNotice);
 
-        // 取得firebase資料
+        // 取得firebase user資料
         account=auth.getCurrentUser().getEmail();
         Query query=db.collection("users");
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
