@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="blockage_spinner">
+        <item>全部的使用者</item>
+        <item>未封鎖使用者</item>
+        <item>已封鎖使用者</item>
+    </array>
+</resources>

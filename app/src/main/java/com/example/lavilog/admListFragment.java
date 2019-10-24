@@ -3,11 +3,14 @@ package com.example.lavilog;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +25,7 @@ import com.example.lavilog.Account.order_1_Fragment;
 import com.example.lavilog.Commodity.Commodity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -38,6 +42,7 @@ public class admListFragment extends Fragment {
     FirebaseAuth auth;
     FirebaseStorage storage;
     String account;
+    FloatingActionButton fbtAdd;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,6 +63,7 @@ public class admListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rvAdmList = view.findViewById(R.id.rvAdmList);
+        fbtAdd = view.findViewById(R.id.fbtAdd);
         account = auth.getCurrentUser().getEmail();
         db.collection("users").whereEqualTo("status","1").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -75,6 +81,14 @@ public class admListFragment extends Fragment {
                 rvAdmList.setAdapter(new admAdapter(activity, adms));
             }
         });
+
+        fbtAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(fbtAdd).navigate(R.id.action_admListFragment_to_admAddFragment);
+            }
+        });
+
     }
     private class admAdapter extends RecyclerView.Adapter<admAdapter.admViewHolder>{
         Context context;
@@ -98,7 +112,7 @@ public class admListFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull final admViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull final admViewHolder holder, final int position) {
             final User adm = adms.get(position);
            holder.tvAdmAccount.setText(adm.getAccount());
            holder.tvAdmName.setText(adm.getName());
@@ -110,7 +124,26 @@ public class admListFragment extends Fragment {
           holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
               @Override
               public boolean onLongClick(View view) {
-                  Toast.makeText(activity,adm.getName(),Toast.LENGTH_SHORT).show();
+                  AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                  builder.setMessage("確定刪除管理者："+adm.getAccount())
+                          .setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                              public void onClick(DialogInterface dialog, int id) {
+                                  db.collection("users").document(adm.getId()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                      @Override
+                                      public void onComplete(@NonNull Task<Void> task) {
+                                          adms.remove(adm);
+                                        Toast.makeText(activity,"刪除成功",Toast.LENGTH_SHORT).show();
+                                        notifyDataSetChanged();
+                                      }
+                                  });
+                              }
+                          })
+                          .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                              public void onClick(DialogInterface dialog, int id) {
+// User cancelled the dialog
+                              }
+                          });
+                  builder.show();
                   return true;
               }
           });

@@ -54,9 +54,10 @@ public class LandingFragment extends Fragment {
             if(!account.equals("")){
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
-            }else{
-                Navigation.findNavController(view).navigate(R.id.action_landingFragment_to_langindFragment1);
             }
+//            else{
+//                Navigation.findNavController(view).navigate(R.id.action_landingFragment_to_langindFragment1);
+//            }
         }catch (NullPointerException e){
             Navigation.findNavController(view).navigate(R.id.action_landingFragment_to_langindFragment1);
         }

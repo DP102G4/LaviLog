@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/signInFragment">
+    app:startDestination="@id/mainFragment">
 
     <fragment
         android:id="@+id/mainFragment"
@@ -16,6 +16,12 @@
         <action
             android:id="@+id/action_mainFragment_to_accountFragment"
             app:destination="@id/accountFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_backStageFragment"
+            app:destination="@id/backStageFragment" />
     </fragment>
     <fragment
         android:id="@+id/dailyFragment"
@@ -94,9 +100,6 @@
         <action
             android:id="@+id/action_signInFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
-        <action
-            android:id="@+id/action_signInFragment_to_myProfileFragment"
-            app:destination="@id/myProfileFragment" />
         <action
             android:id="@+id/action_signInFragment_to_backStageFragment"
             app:destination="@id/backStageFragment" />
@@ -308,6 +311,9 @@
         <action
             android:id="@+id/action_admListFragment_to_backStageFragment"
             app:destination="@id/backStageFragment" />
+        <action
+            android:id="@+id/action_admListFragment_to_admAddFragment"
+            app:destination="@id/admAddFragment" />
     </fragment>
     <fragment
         android:id="@+id/commodityInsDelFragment"
@@ -323,4 +329,13 @@
         android:name="com.example.lavilog.userStatusListFragment"
         android:label="fragment_user_status_list"
         tools:layout="@layout/fragment_user_status_list" />
+    <fragment
+        android:id="@+id/admAddFragment"
+        android:name="com.example.lavilog.admAddFragment"
+        android:label="fragment_adm_add"
+        tools:layout="@layout/fragment_adm_add" >
+        <action
+            android:id="@+id/action_admAddFragment_to_admListFragment"
+            app:destination="@id/admListFragment" />
+    </fragment>
 </navigation>

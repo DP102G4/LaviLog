@@ -25,6 +25,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import static com.example.lavilog.forgetPW.forgetPW_2_Fragment.isforgetPw;
+
 public class signInFragment extends Fragment {
     Activity activity;
     EditText etAccount, etPassword;
@@ -32,6 +34,7 @@ public class signInFragment extends Fragment {
     Button btSignIn, btSignUp;
     private FirebaseAuth auth;
     private FirebaseFirestore db;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,9 +63,11 @@ public class signInFragment extends Fragment {
         btSignUp = view.findViewById(R.id.btSignUp);
         tvForgetPW=view.findViewById(R.id.tvForgetPW);
 
+
         btSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tvStatus.setText("");
                 String account = etAccount.getText().toString();
                 String password = etPassword.getText().toString();
                 if(!account.isEmpty()&&!password.isEmpty()){
@@ -70,7 +75,6 @@ public class signInFragment extends Fragment {
                 }else{
                     tvStatus.setText("帳號與密碼不得為空");
                 }
-
             }
         });
 
@@ -110,11 +114,11 @@ public class signInFragment extends Fragment {
                                                 Toast.makeText(activity,"登入失敗，帳號權限封鎖中",Toast.LENGTH_SHORT).show();
                                                 break;
                                             case "0":
-                                                Navigation.findNavController(etAccount).navigate(R.id.action_signInFragment_to_mainFragment);
+                                                Navigation.findNavController(etPassword).navigate(R.id.action_signInFragment_to_mainFragment);
                                                 Toast.makeText(activity,"登入成功",Toast.LENGTH_SHORT).show();
                                                 break;
                                             case "1":
-                                                Navigation.findNavController(etAccount).navigate(R.id.action_signInFragment_to_backStageFragment);
+                                                Navigation.findNavController(etPassword).navigate(R.id.action_signInFragment_to_backStageFragment);
                                                 Toast.makeText(activity,"管理員登入成功",Toast.LENGTH_SHORT).show();
                                                 break;
                                                 default:
@@ -142,6 +146,13 @@ public class signInFragment extends Fragment {
     }
     public void onStart() {
         super.onStart();
+
+        if (isforgetPw){
+            auth.signOut();
+            Toast.makeText(activity, "修改完成，請重新登入", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         // 檢查user是否已經登入，是則FirebaseUser物件不為null
        try {
            String account = auth.getCurrentUser().getEmail();//避免只是手機註冊而已，信箱沒註冊

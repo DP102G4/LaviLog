@@ -27,10 +27,9 @@
 
     <Spinner
         android:id="@+id/spStatus"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
+        android:layout_width="178dp"
+        android:layout_height="37dp"
         app:layout_constraintEnd_toEndOf="@+id/svUserStatus"
-        app:layout_constraintStart_toStartOf="@+id/svUserStatus"
         app:layout_constraintTop_toBottomOf="@+id/svUserStatus" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

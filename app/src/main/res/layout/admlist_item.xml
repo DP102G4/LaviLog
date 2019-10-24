@@ -34,10 +34,10 @@
             android:id="@+id/tvUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="40dp"
             android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@+id/tvAdmAccount"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="管理者名字" />
 
@@ -46,9 +46,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="40dp"
             android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="@+id/tvUserName"
-            app:layout_constraintStart_toStartOf="@+id/tvUserName"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvUserName"
             tools:text="狀態" />
 

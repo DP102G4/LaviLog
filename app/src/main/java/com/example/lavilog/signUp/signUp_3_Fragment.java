@@ -135,6 +135,7 @@ public class signUp_3_Fragment extends Fragment {
                             user.setVerificationId(verificationId);
                             user.setVerificationCode(verificationCode);
                             user.setStatus(status);
+                            user.setImagePath("/images_users/ no_image.jpg");
                             registered(user);
                         }else{
                             Query query = db.collection("users");

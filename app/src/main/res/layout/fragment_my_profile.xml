@@ -137,22 +137,20 @@
         android:id="@+id/textView22"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:text="名稱"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView6"
-        app:layout_constraintStart_toStartOf="@+id/imageView6"
+        app:layout_constraintStart_toStartOf="@+id/textView25"
         app:layout_constraintTop_toTopOf="@+id/imageView6" />
 
     <TextView
         android:id="@+id/textView24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:text="使用者帳號"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView7"
-        app:layout_constraintStart_toStartOf="@+id/imageView7"
+        app:layout_constraintStart_toStartOf="@+id/textView25"
         app:layout_constraintTop_toTopOf="@+id/imageView7" />
 
     <TextView
@@ -170,33 +168,30 @@
         android:id="@+id/textView26"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:text="生日"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView9"
-        app:layout_constraintStart_toStartOf="@+id/imageView9"
+        app:layout_constraintStart_toStartOf="@+id/textView25"
         app:layout_constraintTop_toTopOf="@+id/imageView9" />
 
     <TextView
         android:id="@+id/textView27"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:text="手機號碼"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView10"
-        app:layout_constraintStart_toStartOf="@+id/imageView10"
+        app:layout_constraintStart_toStartOf="@+id/textView26"
         app:layout_constraintTop_toTopOf="@+id/imageView10" />
 
     <TextView
         android:id="@+id/textView28"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:text="密碼變更"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView11"
-        app:layout_constraintStart_toStartOf="@+id/imageView11"
+        app:layout_constraintStart_toStartOf="@+id/textView27"
         app:layout_constraintTop_toTopOf="@+id/imageView11" />
 
     <TextView

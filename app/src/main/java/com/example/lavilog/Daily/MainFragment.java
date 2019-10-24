@@ -31,9 +31,11 @@ import android.widget.Toast;
 
 import com.example.lavilog.MainActivity;
 import com.example.lavilog.R;
+import com.example.lavilog.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -52,7 +54,7 @@ import java.util.List;
 public class MainFragment extends Fragment {
 
     private  static  final String TAG = "TAG_Mainfragment";
-    private Activity activity;
+    static public Activity activity;
     private ImageButton ibDaily;
     private RecyclerView logBookRecyclerView;
     private FloatingActionButton btAdd;
@@ -61,6 +63,7 @@ public class MainFragment extends Fragment {
     private FirebaseStorage storage;
     private FirebaseFirestore db;
     private ListenerRegistration registration;
+    private FirebaseAuth auth;
 
 
 
@@ -69,6 +72,7 @@ public class MainFragment extends Fragment {
         super.onCreate(savedInstanceState);
         activity = getActivity();
         db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
         MainActivity.bottomNavigationView.setVisibility(View.VISIBLE);
     }
@@ -126,6 +130,44 @@ public class MainFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        try {
+            final String account = auth.getCurrentUser().getEmail();//避免只是手機註冊而已，信箱沒註冊
+        }catch (NullPointerException e){
+            Navigation.findNavController(logBookRecyclerView).navigate(R.id.action_mainFragment_to_signInFragment);
+            return;
+        }
+//        上述為改寫進入後自動跳轉頁面所做,避免非登入的使用者可以直接進到頁面
+        try {
+            String account = auth.getCurrentUser().getEmail();//避免只是手機註冊而已，信箱沒註冊
+            db.collection("users").whereEqualTo("account",account).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    QuerySnapshot querySnapshot = (task.isSuccessful())? task.getResult() : null;
+                    for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()){
+                        User user = documentSnapshot.toObject(User.class);
+                        String status = user.getStatus();
+                        switch (status){
+                            case "1":
+                                Toast.makeText(activity,"管理者直接進入",Toast.LENGTH_LONG).show();
+                                Navigation.findNavController(logBookRecyclerView).navigate(R.id.action_mainFragment_to_backStageFragment);
+                                break;
+                            case "0":
+                                Toast.makeText(activity,"使用者直接進入",Toast.LENGTH_LONG).show();
+                                break;
+                            case "2":
+                                Toast.makeText(activity,"您已被封鎖",Toast.LENGTH_LONG).show();
+                                Navigation.findNavController(logBookRecyclerView).navigate(R.id.action_mainFragment_to_signInFragment);
+                                break;
+                            default:
+                                Toast.makeText(activity,status,Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                }
+            });
+        }catch (NullPointerException e){
+            Navigation.findNavController(logBookRecyclerView).navigate(R.id.action_mainFragment_to_signInFragment);
+        }
         showAll();
         listenToLogbook();
     }

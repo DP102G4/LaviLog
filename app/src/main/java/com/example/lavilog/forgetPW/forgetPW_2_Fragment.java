@@ -39,6 +39,7 @@ public class forgetPW_2_Fragment extends Fragment {
     TextView tvChangePW;
     private FirebaseAuth auth;
     private FirebaseFirestore db;
+    static public boolean isforgetPw;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -125,6 +126,7 @@ public class forgetPW_2_Fragment extends Fragment {
                                                             Toast.makeText(activity, "修改完成", Toast.LENGTH_SHORT).show();
                                                             Navigation.findNavController(btChangePW).navigate(R.id.action_forgetPW_2_Fragment_to_myProfileFragment);
                                                         }else{
+                                                            isforgetPw = true;
                                                             Toast.makeText(activity, "修改完成，請重新登入", Toast.LENGTH_SHORT).show();
                                                             Navigation.findNavController(btChangePW).navigate(R.id.action_forgetPW_2_Fragment_to_signInFragment);
                                                         }

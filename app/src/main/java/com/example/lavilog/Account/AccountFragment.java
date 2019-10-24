@@ -15,8 +15,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.lavilog.MainActivity;
 import com.example.lavilog.R;
 import com.google.firebase.auth.FirebaseAuth;
+
+import static com.example.lavilog.MainActivity.bottomNavigationView;
 
 public class AccountFragment extends Fragment {
     Activity activity;
@@ -29,6 +32,7 @@ public class AccountFragment extends Fragment {
         activity=getActivity();
         activity.setTitle("帳號管理");
         auth=FirebaseAuth.getInstance();
+        MainActivity.bottomNavigationView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -79,7 +83,7 @@ public class AccountFragment extends Fragment {
                 String account = auth.getCurrentUser().getEmail();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("account",account);
-//                Navigation.findNavController(btPurchaseDetail).navigate(R.id.action_accountFragment_to_order_1_Fragment,bundle);
+                Navigation.findNavController(btPurchaseDetail).navigate(R.id.action_accountFragment_to_order_1_Fragment,bundle);
             }
         });
     }
