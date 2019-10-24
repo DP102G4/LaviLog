@@ -22,8 +22,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lavilog.R;
+import com.example.lavilog.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -51,6 +53,10 @@ public class NoticeFragment extends Fragment {
     private TextView tvMessage, tvTime, textView21;
     private TextView tvMessage2, tvNoticeNotice;
 
+    private FirebaseAuth auth;
+    private String account, id;
+    private User user;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,6 +71,7 @@ public class NoticeFragment extends Fragment {
         activity = getActivity();
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
+        auth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -74,6 +81,23 @@ public class NoticeFragment extends Fragment {
         rvNotice.setLayoutManager(new LinearLayoutManager(activity));
 
         tvNoticeNotice = view.findViewById(R.id.tvNoticeNotice);
+
+        account = auth.getCurrentUser().getEmail();
+//        Query query=db.collection("notices");
+//        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
+//                for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+//                    final User FBUser = documentSnapshot.toObject(User.class);
+//                    String accountFB = FBUser.getAccount();
+//                    if (account.equals(accountFB)) {
+//                        user = FBUser;//將for-each內符合條件的帳號抓下來，就是該使用者的user物件
+//                        id = user.getId();//取得該會員存於資料庫內的id,方便後續更換資料使用
+//                    }
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -99,10 +123,13 @@ public class NoticeFragment extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {       // snapshot 螢幕截圖,複製品,快照
-                        if (task.isSuccessful() && task.getResult() != null) {        // 拿到資料 ,就去跑for each取得每一筆資料
+                        if (task.isSuccessful() && task.getResult() != null) {// 拿到資料 ,就去跑for each取得每一筆資料
                             List<Notice> notices = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) { // result內含QuerySnapshot
-                                notices.add(document.toObject(Notice.class)); // 類似gson.fromJson,原本是要給key取值,提供我們認為document的類別,spot.class
+                                Notice notice = document.toObject(Notice.class);
+                                if(notice.getAccount().equals(account)) {
+                                    notices.add(notice);
+                                }// 類似gson.fromJson,原本是要給key取值,提供我們認為document的類別,spot.class
                             }                                                         // 讓系統去依照finders的格式去解析document
                             rvNotice.setAdapter(new NoticeFragment.NoticeAdapter(activity, notices));
                         }  else {

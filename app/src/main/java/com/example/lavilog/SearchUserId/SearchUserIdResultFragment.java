@@ -29,13 +29,16 @@ import com.example.lavilog.R;
 //import com.example.lavilog.SearchFriend.Friend;
 //import com.example.lavilog.SearchUserId.User;
 
+import com.example.lavilog.SearchUserId.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -61,15 +64,13 @@ public class SearchUserIdResultFragment extends Fragment {
     private FirebaseStorage storage;
     private ListenerRegistration registration;
 
-    //private File file;
     private Uri filePath;
     private Notice notice;
 
     private Friend friend;
-    String imagePath;
-    private boolean PictureTaken = false;
+    private FirebaseAuth auth;
+    private String account, id;
 
-    private static final int REQ_TAKE_PICTURE = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,6 +88,7 @@ public class SearchUserIdResultFragment extends Fragment {
         storage = FirebaseStorage.getInstance();
         notice = new Notice();
         friend = new Friend();
+        auth=FirebaseAuth.getInstance();
     }
 
     @Override
@@ -103,6 +105,24 @@ public class SearchUserIdResultFragment extends Fragment {
         tvUserMessage = view.findViewById(R.id.tvUserMessage);
         tvUserImagrPath = view.findViewById(R.id.tvUserImagePath);
         tvUserImagrPath2 = view.findViewById(R.id.tvUserImagePath2);
+
+        account=auth.getCurrentUser().getEmail();
+        //db.collection("friends").document(friend.getId()).set(friend);
+//        Query query=db.collection("friends");
+//        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
+//                for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+//                    final com.example.lavilog.User FBUser = documentSnapshot.toObject(com.example.lavilog.User.class);
+//                    String accountFB = FBUser.getAccount();
+//                    if (account.equals(accountFB)) {
+//                        user = FBUser;//將for-each內符合條件的帳號抓下來，就是該使用者的user物件
+//                        id = user.getId();//取得該會員存於資料庫內的id,方便後續更換資料使用
+//                    }
+//                }
+//            }
+//        });
 
         if (getArguments() != null) {
             user = (User) getArguments().getSerializable("user");
@@ -156,10 +176,12 @@ public class SearchUserIdResultFragment extends Fragment {
                 String noticeMessage = tvUserName.getText().toString().trim();
                 String noticeTime = textClock2.getText().toString();
                 String noticeMessage2 = tvUserMessage.getText().toString().trim();
+                //String account = account.getText().toString();
 
                 notice.setNoticeMessage(noticeMessage);
                 notice.setNoticeTime(noticeTime);
                 notice.setNoticeMessage2(noticeMessage2);
+                notice.setAccount(account);
 
 
                 // Get the data from an ImageView as bytes
@@ -184,11 +206,13 @@ public class SearchUserIdResultFragment extends Fragment {
 
 //                String imagePath = imagePath2.getText().toString;
                 String name = tvUserName.getText().toString();
-                String account = tvAccount.getText().toString();
+                //String account = tvAccount.getText().toString();
+                String friend_account = tvAccount.getText().toString();
 
 //                friend.setImagePath(imagePath);
                 friend.setName(name);
                 friend.setAccount(account);
+                friend.setFriend_account(friend_account);
 
                 // Get the data from an ImageView as bytes
                 ivUser.setDrawingCacheEnabled(true);

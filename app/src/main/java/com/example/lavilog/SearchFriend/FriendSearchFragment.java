@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.example.lavilog.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -53,6 +54,9 @@ public class FriendSearchFragment extends Fragment {
     private FirebaseStorage storage;
     private ListenerRegistration registration;
 
+    private FirebaseAuth auth;
+    private String account;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -68,6 +72,7 @@ public class FriendSearchFragment extends Fragment {
 //        friends = getFriends();
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
+        auth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -79,6 +84,7 @@ public class FriendSearchFragment extends Fragment {
         // recyclerView.setAdapter(new FriendAdapter(activity, friends));
 
         searchView = view.findViewById(R.id.svCommodityDel);
+        account = auth.getCurrentUser().getEmail();
    }
 
     @Override
@@ -166,7 +172,12 @@ public class FriendSearchFragment extends Fragment {
                             List<Friend> friends = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 // result內含QuerySnapshot
-                                friends.add(document.toObject(Friend.class));
+
+                                Friend friend = document.toObject(Friend.class);
+                                if (friend.getAccount().equals(account)) {
+                                    friends.add(friend);
+                                }
+                                //friends.add(document.toObject(Friend.class));
                                 // 類似gson.fromJson,原本是要給key取值,提供我們認為document的類別,spot.class
                                 // 讓系統去依照finders的格式去解析document
 

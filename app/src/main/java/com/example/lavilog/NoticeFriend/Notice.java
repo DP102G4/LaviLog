@@ -8,17 +8,19 @@ public class Notice implements Serializable {
     private String noticeTime;
     private String id;
     private String noticeMessage2;
+    private String account;
 
     public Notice(){
 
     }
 
-    public Notice(String nImagePath, String noticeMessage, String noticeTime, String id, String noticeMessage2) {
+    public Notice(String nImagePath, String noticeMessage, String noticeTime, String id, String noticeMessage2, String account) {
         this.nImagePath = nImagePath;
         this.noticeMessage = noticeMessage;
         this.noticeTime = noticeTime;
         this.id = id;
         this.noticeMessage2 = noticeMessage2;
+        this.account = account;
     }
 
     public String getnImagePath() {
@@ -59,5 +61,13 @@ public class Notice implements Serializable {
 
     public void setNoticeMessage2(String noticeMessage2) {
         this.noticeMessage2 = noticeMessage2;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
     }
 }
