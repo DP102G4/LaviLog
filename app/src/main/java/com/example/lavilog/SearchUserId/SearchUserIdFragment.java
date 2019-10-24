@@ -51,6 +51,8 @@ public class SearchUserIdFragment extends Fragment {
     private FirebaseStorage storage;
     private ListenerRegistration registration;
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

@@ -3,12 +3,14 @@ package com.example.lavilog.SearchFriend;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,6 +28,7 @@ import android.widget.Toast;
 import com.example.lavilog.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -51,6 +54,9 @@ public class FriendSearchFragment extends Fragment {
     private FirebaseStorage storage;
     private ListenerRegistration registration;
 
+    private FirebaseAuth auth;
+    private String account;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,6 +72,7 @@ public class FriendSearchFragment extends Fragment {
 //        friends = getFriends();
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
+        auth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -77,6 +84,7 @@ public class FriendSearchFragment extends Fragment {
         // recyclerView.setAdapter(new FriendAdapter(activity, friends));
 
         searchView = view.findViewById(R.id.svCommodityDel);
+        account = auth.getCurrentUser().getEmail();
    }
 
     @Override
@@ -164,7 +172,12 @@ public class FriendSearchFragment extends Fragment {
                             List<Friend> friends = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 // result內含QuerySnapshot
-                                friends.add(document.toObject(Friend.class));
+
+                                Friend friend = document.toObject(Friend.class);
+                                if (friend.getAccount().equals(account)) {
+                                    friends.add(friend);
+                                }
+                                //friends.add(document.toObject(Friend.class));
                                 // 類似gson.fromJson,原本是要給key取值,提供我們認為document的類別,spot.class
                                 // 讓系統去依照finders的格式去解析document
 
@@ -279,6 +292,26 @@ public class FriendSearchFragment extends Fragment {
                             .navigate(R.id.action_friendSearchFragment_to_friendSearchResultFragment, bundle);
                 }
             });
+
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
+                    builder1.setMessage("確定刪除好友 ?")
+                            .setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    delete(friend);
+                                    Toast.makeText(activity, "已刪除好友", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                }
+                            });
+                    builder1.show();
+                    return false;
+                }
+            });
         }
     }
 
@@ -308,6 +341,34 @@ public class FriendSearchFragment extends Fragment {
                                     task.getException().getMessage() + ": " + path;
                             Log.e(TAG, message);
                             Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    private void delete(final Friend friend) {
+        // 刪除Firestore內的好友資料
+        db.collection("friends").document(friend.getId()).delete()//哪個friend就是哪個document
+                .addOnCompleteListener(new OnCompleteListener<Void>() {//監聽上面的圖檔有沒有被刪除了,若完成,執行下方的刪除路徑
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            //Toast.makeText(activity, "好友已刪除", Toast.LENGTH_SHORT).show();
+                            // 刪除該通知在Firebase storage對應的圖檔
+                            if (friend.getImagePath() != null) { // 上面是刪掉圖檔而已,這邊要來刪路徑
+                                storage.getReference().child(friend.getImagePath()).delete() // 刪除firestore完整路徑
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Log.d(TAG, getString(R.string.textImageDeleted));
+                                                }
+                                            }
+                                        });
+                            }
+                            showAll();
+                        } else {
+                            Toast.makeText(activity, R.string.textDeleteFail, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

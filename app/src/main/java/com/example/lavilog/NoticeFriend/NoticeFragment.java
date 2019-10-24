@@ -10,7 +10,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,15 +22,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lavilog.R;
-import com.example.lavilog.SearchFriend.Friend;
-import com.example.lavilog.SearchFriend.FriendSearchFragment;
+import com.example.lavilog.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -51,7 +51,11 @@ public class NoticeFragment extends Fragment {
 
     private ImageView ivNotice;
     private TextView tvMessage, tvTime, textView21;
-    private TextView tvMessage2;
+    private TextView tvMessage2, tvNoticeNotice;
+
+    private FirebaseAuth auth;
+    private String account, id;
+    private User user;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,6 +71,7 @@ public class NoticeFragment extends Fragment {
         activity = getActivity();
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
+        auth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -74,6 +79,25 @@ public class NoticeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rvNotice = view.findViewById(R.id.rvNotice);
         rvNotice.setLayoutManager(new LinearLayoutManager(activity));
+
+        tvNoticeNotice = view.findViewById(R.id.tvNoticeNotice);
+
+        account = auth.getCurrentUser().getEmail();
+//        Query query=db.collection("notices");
+//        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
+//                for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+//                    final User FBUser = documentSnapshot.toObject(User.class);
+//                    String accountFB = FBUser.getAccount();
+//                    if (account.equals(accountFB)) {
+//                        user = FBUser;//將for-each內符合條件的帳號抓下來，就是該使用者的user物件
+//                        id = user.getId();//取得該會員存於資料庫內的id,方便後續更換資料使用
+//                    }
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -95,14 +119,17 @@ public class NoticeFragment extends Fragment {
 
     /** 顯示所有通知資訊 */
     private void showAll() {
-        db.collection("notices").get() // 把裡面所有的每一筆資料都取出
+        db.collection("notices").orderBy("noticeTime", Query.Direction.DESCENDING).get() // 把裡面所有的每一筆資料都取出
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {       // snapshot 螢幕截圖,複製品,快照
-                        if (task.isSuccessful() && task.getResult() != null) {        // 拿到資料 ,就去跑for each取得每一筆資料
+                        if (task.isSuccessful() && task.getResult() != null) {// 拿到資料 ,就去跑for each取得每一筆資料
                             List<Notice> notices = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) { // result內含QuerySnapshot
-                                notices.add(document.toObject(Notice.class)); // 類似gson.fromJson,原本是要給key取值,提供我們認為document的類別,spot.class
+                                Notice notice = document.toObject(Notice.class);
+                                if(notice.getAccount().equals(account)) {
+                                    notices.add(notice);
+                                }// 類似gson.fromJson,原本是要給key取值,提供我們認為document的類別,spot.class
                             }                                                         // 讓系統去依照finders的格式去解析document
                             rvNotice.setAdapter(new NoticeFragment.NoticeAdapter(activity, notices));
                         }  else {
@@ -165,7 +192,7 @@ public class NoticeFragment extends Fragment {
 
             MyViewHolder(View itemView) {
                 super(itemView);
-                //ivNotice = itemView.findViewById(R.id.ivNotice);
+                ivNotice = itemView.findViewById(R.id.ivNotice);
                 tvMessage = itemView.findViewById(R.id.tvMessage);
                 tvTime = itemView.findViewById(R.id.tvTime);
                 tvMessage2 = itemView.findViewById(R.id.tvMessage2);
@@ -189,16 +216,24 @@ public class NoticeFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull NoticeFragment.NoticeAdapter.MyViewHolder holder, int position) {
             final Notice notice = notices.get(position);
-            if (notice.getImagePath() == null) { // 因為有分文字資料跟圖檔,所以先確認圖檔路徑是不是空值
-                // 有值就要去抓圖,沒值就show沒檔的預設圖片
-//                holder.ivNotice.setImageResource(R.drawable.no_image);
+            if (notice.getnImagePath() == null) { // 因為有分文字資料跟圖檔,所以先確認圖檔路徑是不是空值
+//                 有值就要去抓圖,沒值就show沒檔的預設圖片
+                holder.ivNotice.setImageResource(R.drawable.no_image);
             }
-//            else {
-//                showImage(holder.ivNotice, notice.getImagePath());
-//            }
+            else {
+                showImage(holder.ivNotice, notice.getnImagePath());
+            }
             holder.tvMessage.setText(notice.getNoticeMessage());
             holder.tvTime.setText(notice.getNoticeTime());
             holder.tvMessage2.setText(notice.getNoticeMessage2());
+
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    delete(notice);
+                    return false;
+                }
+            });
 
 //            holder.itemView.setOnClickListener(new View.OnClickListener() {
 //                @Override
@@ -230,6 +265,34 @@ public class NoticeFragment extends Fragment {
                                     task.getException().getMessage() + ": " + path;
                             Log.e(TAG, message);
                             Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    private void delete(final Notice notice) {
+        // 刪除Firestore內的通知資料
+        db.collection("notices").document(notice.getId()).delete()//哪個notice就是哪個document
+                .addOnCompleteListener(new OnCompleteListener<Void>() {//監聽上面的圖檔有沒有被刪除了,若完成,執行下方的刪除路徑
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(activity, R.string.textDeletedNotice, Toast.LENGTH_SHORT).show();
+                            // 刪除該通知在Firebase storage對應的圖檔
+                            if (notice.getnImagePath() != null) { // 上面是刪掉圖檔而已,這邊要來刪路徑
+                                storage.getReference().child(notice.getnImagePath()).delete() // 刪除firestore完整路徑
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Log.d(TAG, getString(R.string.textImageDeleted));
+                                                }
+                                            }
+                                        });
+                            }
+                            showAll();
+                        } else {
+                            Toast.makeText(activity, R.string.textDeleteFail, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

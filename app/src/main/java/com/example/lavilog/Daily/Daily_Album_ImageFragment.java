@@ -23,7 +23,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.lavilog.R;
 import com.example.lavilog.R;
-import com.example.lavilog.SearchUserId.User;
+import com.example.lavilog.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
