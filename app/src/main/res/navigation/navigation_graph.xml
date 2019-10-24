@@ -132,7 +132,11 @@
         android:id="@+id/friendSearchResultFragment"
         android:name="com.example.lavilog.SearchFriend.FriendSearchResultFragment"
         android:label="fragment_friend_search_result"
-        tools:layout="@layout/fragment_friend_search_result" />
+        tools:layout="@layout/fragment_friend_search_result" >
+        <action
+            android:id="@+id/action_friendSearchResultFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
     <fragment
         android:id="@+id/QRcodeFragment"
         android:name="com.example.lavilog.QRcode.QRcodeFragment"
