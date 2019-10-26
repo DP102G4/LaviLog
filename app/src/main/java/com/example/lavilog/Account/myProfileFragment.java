@@ -43,6 +43,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 
 import static android.widget.Toast.LENGTH_SHORT;
+import static com.example.lavilog.MainActivity.bottomNavigationView;
 
 
 public class myProfileFragment extends Fragment {
@@ -66,6 +67,7 @@ public class myProfileFragment extends Fragment {
         auth=FirebaseAuth.getInstance();
         storage=FirebaseStorage.getInstance();
         db=FirebaseFirestore.getInstance();
+        bottomNavigationView.setVisibility(View.VISIBLE);
     }
 
     @Override

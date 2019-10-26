@@ -178,7 +178,7 @@ public class FriendSearchFragment extends Fragment {
                                     friends.add(friend);
                                 }
                                 //friends.add(document.toObject(Friend.class));
-                                // 類似gson.fromJson,原本是要給key取值,提供我們認為document的類別,spot.class
+                                // 類似gson.fromJson,原本是要給key取值,提供我們認為document的類別,friend.class
                                 // 讓系統去依照finders的格式去解析document
 
 //                                測試

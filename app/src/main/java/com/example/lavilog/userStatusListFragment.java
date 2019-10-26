@@ -58,18 +58,19 @@ public class userStatusListFragment extends Fragment {
     ArrayList<User> usersNoBlock = new ArrayList<>();
     ArrayList<User> usersBlock = new ArrayList<>();
     List<User> searchUsers = new ArrayList<>();
-    String searchViewText="";
-//    userAdapter userAdapter;
+    String searchViewText = "";
+    //    userAdapter userAdapter;
     int position = 0;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity=getActivity();
+        activity = getActivity();
         activity.setTitle("使用者列表");
-        db=FirebaseFirestore.getInstance();
-        storage=FirebaseStorage.getInstance();
+        db = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
         context = getContext();
+
     }
 
     @Override
@@ -86,7 +87,7 @@ public class userStatusListFragment extends Fragment {
         svUserStatus = view.findViewById(R.id.svUserStatus);
         spStatus = view.findViewById(R.id.spStatus);
         ArrayAdapter<CharSequence> nAdapter = ArrayAdapter.createFromResource(
-                context, R.array.blockage_spinner, android.R.layout.simple_spinner_dropdown_item );
+                context, R.array.blockage_spinner, android.R.layout.simple_spinner_dropdown_item);
 //        nAdapter.setDropDownViewResource(
 //                android.R.layout.simple_spinner_dropdown_item);
         spStatus.setAdapter(nAdapter);
@@ -95,7 +96,7 @@ public class userStatusListFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
-                for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()){
+                for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
                     User user = documentSnapshot.toObject(User.class);
                     if (!user.getStatus().equals("1")) {
                         users.add(user);
@@ -110,111 +111,148 @@ public class userStatusListFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 //                Toast.makeText(activity,"i="+i,Toast.LENGTH_SHORT).show();
-            switch (i){
-                case 0://下拉選單選擇全部使用者
-                    if (position != 0){
-                        if (searchViewText.isEmpty()){
-                            rvUserList.setLayoutManager(new LinearLayoutManager(activity));
-                            rvUserList.setAdapter(new userAdapter(activity, users));
-                        }else{
-                            rvUserList.setLayoutManager(new LinearLayoutManager(activity));
-                            rvUserList.setAdapter(new userAdapter(activity, searchUsers));
-                        }
-                        position = i ;
-                    }
-                    break;
-                case 1://下拉選單選擇未封鎖使用者
-                    if (position != 1){
-                        if (searchViewText.isEmpty()){
-                            db.collection("users").whereEqualTo("status","0").
-                                    get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
-                                    usersNoBlock = new ArrayList<>();
-                                    userAdapter adapter = (userAdapter) rvUserList.getAdapter();
-                                    for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()){
-                                        User userNoBlock = documentSnapshot.toObject(User.class);
-                                        usersNoBlock.add(userNoBlock);
-                                    }
-                                    adapter.setUsers(usersNoBlock);
-                                    rvUserList.setLayoutManager(new LinearLayoutManager(activity));
-                                    rvUserList.setAdapter(new userAdapter(activity, usersNoBlock));
-                                }
-                            });
-                        }else{
-                            db.collection("users").whereEqualTo("status","0").
-                                    get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
-                                    usersNoBlock = new ArrayList<>();
-                                    userAdapter adapter = (userAdapter) rvUserList.getAdapter();
-                                    for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()){
-                                        User userNoBlock = documentSnapshot.toObject(User.class);
-                                        for (User user:searchUsers){
-                                            if(user.getAccount().equals(userNoBlock.getAccount())){
-                                                usersNoBlock.add(userNoBlock);
+                switch (i) {
+                    case 0://下拉選單選擇全部使用者
+                        if (position != 0 ) {
+                            users = new ArrayList<>();
+                            if (searchViewText.isEmpty()) {
+
+                                db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
+                                        for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                                            User user = documentSnapshot.toObject(User.class);
+                                            if (!user.getStatus().equals("1")) {
+                                                users.add(user);
                                             }
                                         }
+                                        rvUserList.setLayoutManager(new LinearLayoutManager(activity));
+                                        rvUserList.setAdapter(new userAdapter(activity, users));
                                     }
-                                    adapter.setUsers(usersNoBlock);
-                                    rvUserList.setLayoutManager(new LinearLayoutManager(activity));
-                                    rvUserList.setAdapter(new userAdapter(activity, usersNoBlock));
-                                }
-                            });
-                        }
-                        position = i;
-                    }
-                    break;
-                case 2://下拉選單選擇封鎖使用者
-                    if (position != 2){
-                        if (searchViewText.isEmpty()){
-                            db.collection("users").whereEqualTo("status","2").get()
-                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                            usersBlock = new ArrayList<>();
-                                            userAdapter adapter = (userAdapter) rvUserList.getAdapter();
-                                            QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
-                                            for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()){
-                                                User userBlock = documentSnapshot.toObject(User.class);
-                                                usersBlock.add(userBlock);
-                                            }
-                                            adapter.setUsers(usersBlock);
-                                            rvUserList.setLayoutManager(new LinearLayoutManager(activity));
-                                            rvUserList.setAdapter(new userAdapter(activity, usersBlock));
-                                        }
-                                    });
-                        }else{
-                            db.collection("users").whereEqualTo("status","2").
-                                    get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
-                                    usersBlock = new ArrayList<>();
-                                    userAdapter adapter = (userAdapter) rvUserList.getAdapter();
-                                    for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()){
-                                        User userBlock = documentSnapshot.toObject(User.class);
-                                        for (User user:searchUsers){
-                                            if(user.getAccount().equals(userBlock.getAccount())){
-                                                usersBlock.add(userBlock);
+                                });
+//                                rvUserList.setLayoutManager(new LinearLayoutManager(activity));
+//                                rvUserList.setAdapter(new userAdapter(activity, users));
+                            } else {
+
+                                db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        users = new ArrayList<>();
+                                        QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
+                                        for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                                            User user = documentSnapshot.toObject(User.class);
+                                            if (!user.getStatus().equals("1")) {
+                                                for (User sruser : searchUsers) {
+                                                    if(user.getAccount().equals(sruser.getAccount())){
+                                                        users.add(sruser);
+                                                    }
+                                                }
                                             }
                                         }
+                                        rvUserList.setLayoutManager(new LinearLayoutManager(activity));
+                                        rvUserList.setAdapter(new userAdapter(activity, users));
                                     }
-                                    adapter.setUsers(usersBlock);
-                                    rvUserList.setLayoutManager(new LinearLayoutManager(activity));
-                                    rvUserList.setAdapter(new userAdapter(activity, usersBlock));
-                                }
-                            });
+                                });
+//                                rvUserList.setLayoutManager(new LinearLayoutManager(activity));
+//                                rvUserList.setAdapter(new userAdapter(activity, searchUsers));
+                            }
+                            position = i;
                         }
-                        position = i;
-                    }
-                    break;
+                        break;
+                    case 1://下拉選單選擇未封鎖使用者
+                        if (position != 1) {
+                            if (searchViewText.isEmpty()) {
+                                db.collection("users").whereEqualTo("status", "0").
+                                        get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
+                                        usersNoBlock = new ArrayList<>();
+                                        userAdapter adapter = (userAdapter) rvUserList.getAdapter();
+                                        for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                                            User userNoBlock = documentSnapshot.toObject(User.class);
+                                            usersNoBlock.add(userNoBlock);
+                                        }
+                                        adapter.setUsers(usersNoBlock);
+                                        rvUserList.setLayoutManager(new LinearLayoutManager(activity));
+                                        rvUserList.setAdapter(new userAdapter(activity, usersNoBlock));
+                                    }
+                                });
+                            } else {
+                                db.collection("users").whereEqualTo("status", "0").
+                                        get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
+                                        usersNoBlock = new ArrayList<>();
+                                        userAdapter adapter = (userAdapter) rvUserList.getAdapter();
+                                        for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                                            User userNoBlock = documentSnapshot.toObject(User.class);
+                                            for (User user : searchUsers) {
+                                                if (user.getAccount().equals(userNoBlock.getAccount())) {
+                                                    usersNoBlock.add(userNoBlock);
+                                                }
+                                            }
+                                        }
+                                        adapter.setUsers(usersNoBlock);
+                                        rvUserList.setLayoutManager(new LinearLayoutManager(activity));
+                                        rvUserList.setAdapter(new userAdapter(activity, usersNoBlock));
+                                    }
+                                });
+                            }
+                            position = i;
+                        }
+                        break;
+                    case 2://下拉選單選擇封鎖使用者
+                        if (position != 2) {
+                            if (searchViewText.isEmpty()) {
+                                db.collection("users").whereEqualTo("status", "2").get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                usersBlock = new ArrayList<>();
+                                                userAdapter adapter = (userAdapter) rvUserList.getAdapter();
+                                                QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
+                                                for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                                                    User userBlock = documentSnapshot.toObject(User.class);
+                                                    usersBlock.add(userBlock);
+                                                }
+                                                adapter.setUsers(usersBlock);
+                                                rvUserList.setLayoutManager(new LinearLayoutManager(activity));
+                                                rvUserList.setAdapter(new userAdapter(activity, usersBlock));
+                                            }
+                                        });
+                            } else {
+                                db.collection("users").whereEqualTo("status", "2").
+                                        get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
+                                        usersBlock = new ArrayList<>();
+                                        userAdapter adapter = (userAdapter) rvUserList.getAdapter();
+                                        for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                                            User userBlock = documentSnapshot.toObject(User.class);
+                                            for (User user : searchUsers) {
+                                                if (user.getAccount().equals(userBlock.getAccount())) {
+                                                    usersBlock.add(userBlock);
+                                                }
+                                            }
+                                        }
+                                        adapter.setUsers(usersBlock);
+                                        rvUserList.setLayoutManager(new LinearLayoutManager(activity));
+                                        rvUserList.setAdapter(new userAdapter(activity, usersBlock));
+                                    }
+                                });
+                            }
+                            position = i;
+                        }
+                        break;
                     default:
-                        Toast.makeText(activity,"資料庫設錯status了,快檢查",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity, "資料庫設錯status了,快檢查", Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
@@ -228,40 +266,40 @@ public class userStatusListFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String newText) { // 打完才搜尋
                 // 當user輸入東西,searchＶiew會傳回內容（newText)
-                rvUserList.setLayoutManager(new LinearLayoutManager(activity));
-                rvUserList.setAdapter(new userAdapter(activity, users));
-                userAdapter userAdapter = (userAdapter) rvUserList.getAdapter();
-                // 要做SearchView時,須先做好SearchView的內容,本文為recyclerView
-                List<User> searchUsers = new ArrayList<>();
-                // 為了搜集依照使用者提供的關鍵字,須設定一個新的List
-                // 將符合條件的data匯入
-                // 搜尋原始資料內有無包含關鍵字(不區別大小寫)
-                if (userAdapter != null) {                  // 如果適配器 不等於 空值
-                    // 如果搜尋條件為空字串，就顯示原始資料(User原始為空白)；否則就顯示搜尋後結果
-                    if (newText.isEmpty()) {            // 如果搜尋條件為空字串
-                        if(users!=null) {               // 如果user資料 不等於 空值
-                            userAdapter.setUsers(users);
-                        }
-                    } else {
-                        // users = getUsers();
-                        // users= getusers();
-                        // 搜尋原始資料 equals
-                        for (User user : users) {
-                            // 搜尋名字
-//                            if (user.getName().toUpperCase().equals(newText.toUpperCase())) {
+//                rvUserList.setLayoutManager(new LinearLayoutManager(activity));
+//                rvUserList.setAdapter(new userAdapter(activity, users));
+//                userAdapter userAdapter = (userAdapter) rvUserList.getAdapter();
+//                // 要做SearchView時,須先做好SearchView的內容,本文為recyclerView
+//                List<User> searchUsers = new ArrayList<>();
+//                // 為了搜集依照使用者提供的關鍵字,須設定一個新的List
+//                // 將符合條件的data匯入
+//                // 搜尋原始資料內有無包含關鍵字(不區別大小寫)
+//                if (userAdapter != null) {                  // 如果適配器 不等於 空值
+//                    // 如果搜尋條件為空字串，就顯示原始資料(User原始為空白)；否則就顯示搜尋後結果
+//                    if (newText.isEmpty()) {            // 如果搜尋條件為空字串
+//                        if (users != null) {               // 如果user資料 不等於 空值
+//                            userAdapter.setUsers(users);
+//                        }
+//                    } else {
+//                        // users = getUsers();
+//                        // users= getusers();
+//                        // 搜尋原始資料 equals
+//                        for (User user : users) {
+//                            // 搜尋名字
+////                            if (user.getName().toUpperCase().equals(newText.toUpperCase())) {
+////                                // contain為比對內容的動作,是否包含關鍵字
+////                                searchUserIds.add(user);
+////                            }
+//
+//                            // 搜尋帳號
+//                            if (user.getAccount().toUpperCase().contains(newText.toUpperCase())) {
 //                                // contain為比對內容的動作,是否包含關鍵字
-//                                searchUserIds.add(user);
+//                                searchUsers.add(user);
 //                            }
-
-                            // 搜尋帳號
-                            if (user.getAccount().toUpperCase().contains(newText.toUpperCase())) {
-                                // contain為比對內容的動作,是否包含關鍵字
-                                searchUsers.add(user);
-                            }
-                        }
-                        userAdapter.setUsers(searchUsers);
-                    }
-                }
+//                        }
+//                        userAdapter.setUsers(searchUsers);
+//                    }
+//                }
                 return false;
                 // return false代表事件沒有被處理到,需要往下走,不要終止
                 // webView的onKeyDown同理,返回上一頁是該返回網頁還是widget
@@ -278,26 +316,71 @@ public class userStatusListFragment extends Fragment {
                 if (adapter != null) {                  // 如果適配器 不等於 空值
                     // 如果搜尋條件為空字串，就顯示原始資料(User原始為空白)；否則就顯示搜尋後結果
                     if (newText.isEmpty()) {            // 如果搜尋條件為空字串
-                        if(users!=null) {               // 如果user資料 不等於 空值
-                            switch (position){
+                        if (users != null) {               // 如果user資料 不等於 空值
+                            switch (position) {
                                 case 0:
-                                    adapter.setUsers(users);
+                                    db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            users = new ArrayList<>();
+                                            QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
+                                            for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                                                User user = documentSnapshot.toObject(User.class);
+                                                if (!user.getStatus().equals("1")) {
+                                                    users.add(user);
+                                                }
+                                            }
+                                            rvUserList.setLayoutManager(new LinearLayoutManager(activity));
+                                            rvUserList.setAdapter(new userAdapter(activity, users));
+                                        }
+                                    });
+//                                    adapter.setUsers(users);
                                     break;
                                 case 1:
-                                    adapter.setUsers(usersNoBlock);
+                                    db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            users = new ArrayList<>();
+                                            QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
+                                            for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                                                User user = documentSnapshot.toObject(User.class);
+                                                if ((!user.getStatus().equals("1") && (!user.getStatus().equals("2")))){
+                                                    users.add(user);
+                                                }
+                                            }
+                                            rvUserList.setLayoutManager(new LinearLayoutManager(activity));
+                                            rvUserList.setAdapter(new userAdapter(activity, users));
+                                        }
+                                    });
+//                                    adapter.setUsers(usersNoBlock);
                                     break;
                                 case 2:
-                                    adapter.setUsers(usersBlock);
+                                    db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            users = new ArrayList<>();
+                                            QuerySnapshot querySnapshot = (task.isSuccessful()) ? task.getResult() : null;
+                                            for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                                                User user = documentSnapshot.toObject(User.class);
+                                                if ((!user.getStatus().equals("1") && (!user.getStatus().equals("0")))){
+                                                    users.add(user);
+                                                }
+                                            }
+                                            rvUserList.setLayoutManager(new LinearLayoutManager(activity));
+                                            rvUserList.setAdapter(new userAdapter(activity, users));
+                                        }
+                                    });
+//                                    adapter.setUsers(usersBlock);
                                     break;
-                                    default:
-                                        Toast.makeText(activity,"資料庫設錯了,快檢查",Toast.LENGTH_SHORT).show();
+                                default:
+                                    Toast.makeText(activity, "資料庫設錯了,快檢查", Toast.LENGTH_SHORT).show();
                             }
                         }
                     } else {
                         // users = getUsers();
                         // users= getusers();
                         // 搜尋原始資料 equals
-                        switch (position){
+                        switch (position) {
                             case 0:
                                 for (User user : users) {
                                     // 搜尋帳號
@@ -307,7 +390,7 @@ public class userStatusListFragment extends Fragment {
                                     }
                                 }
                                 adapter.setUsers(searchUsers);
-                            break;
+                                break;
                             case 1:
                                 for (User user : usersNoBlock) {
                                     // 搜尋帳號
@@ -328,8 +411,8 @@ public class userStatusListFragment extends Fragment {
                                 }
                                 adapter.setUsers(searchUsers);
                                 break;
-                                default:
-                                    Toast.makeText(activity,"資料庫設錯了,快檢查",Toast.LENGTH_SHORT).show();
+                            default:
+                                Toast.makeText(activity, "資料庫設錯了,快檢查", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -339,13 +422,14 @@ public class userStatusListFragment extends Fragment {
             }
         });
     }
-    private class userAdapter extends RecyclerView.Adapter<userAdapter.userViewHolder>{
+
+    private class userAdapter extends RecyclerView.Adapter<userAdapter.userViewHolder> {
         Context context;
         List<User> users;
 
-        userAdapter(Context context,List<User> users){
-            this.context=context;
-            this.users=users;
+        userAdapter(Context context, List<User> users) {
+            this.context = context;
+            this.users = users;
         }
 
         public void setUsers(List<User> users) {
@@ -369,15 +453,15 @@ public class userStatusListFragment extends Fragment {
         public void onBindViewHolder(@NonNull final userAdapter.userViewHolder holder, final int position) {
             final User user = users.get(position);
             String imagePath = user.getImagePath();
-            showImage(holder.ivUserList,imagePath);
+            showImage(holder.ivUserList, imagePath);
             holder.tvUserName.setText(user.getName());
             holder.tvUserAccount.setText(user.getAccount());
-            if (user.getStatus().equals("0")){
+            if (user.getStatus().equals("0")) {
                 holder.tvUserStatus.setText("狀態 : 正常");
                 holder.btBlockadeCancel.setVisibility(View.GONE);
                 holder.btBlockade.setVisibility(View.VISIBLE);
                 holder.CLUser.setBackgroundColor(Color.rgb(213, 213, 213));
-            }else{
+            } else {
                 holder.tvUserStatus.setText("狀態 : 封鎖");
                 holder.CLUser.setBackgroundColor(RED);
                 holder.btBlockade.setVisibility(View.GONE);
@@ -389,13 +473,14 @@ public class userStatusListFragment extends Fragment {
                 public void onClick(View view) {
                     String account = holder.tvUserAccount.getText().toString();
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
-                    builder1.setMessage("確定封鎖使用者"+account)
+                    builder1.setMessage("確定封鎖使用者" + account)
                             .setPositiveButton("確定", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     User userBlock = users.get(position);
                                     userBlock.setStatus("2");
                                     db.collection("users").document(userBlock.getId()).set(userBlock);
                                     notifyDataSetChanged();
+
                                 }
                             })
                             .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -413,7 +498,7 @@ public class userStatusListFragment extends Fragment {
                 public void onClick(View view) {
                     String account = holder.tvUserAccount.getText().toString();
                     AlertDialog.Builder builder2 = new AlertDialog.Builder(activity);
-                    builder2.setMessage("確定解除封鎖使用者"+account)
+                    builder2.setMessage("確定解除封鎖使用者" + account)
                             .setPositiveButton("確定", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     User userBlockCancel = users.get(position);
@@ -434,14 +519,14 @@ public class userStatusListFragment extends Fragment {
 
         }
 
-        class userViewHolder extends RecyclerView.ViewHolder{
+        class userViewHolder extends RecyclerView.ViewHolder {
             ImageView ivUserList;
-            TextView tvUserName,tvUserAccount,tvUserStatus;
-            Button btBlockadeCancel,btBlockade;
+            TextView tvUserName, tvUserAccount, tvUserStatus;
+            Button btBlockadeCancel, btBlockade;
             CardView cardViewUser;
             ConstraintLayout CLUser;
 
-            userViewHolder(View itemView){
+            userViewHolder(View itemView) {
                 super(itemView);
                 ivUserList = itemView.findViewById(R.id.ivUserList);
                 tvUserName = itemView.findViewById(R.id.tvUserName);
@@ -454,6 +539,7 @@ public class userStatusListFragment extends Fragment {
             }
         }
     }
+
     private void showImage(final ImageView imageView, final String imagePath) {
         final int ONE_MEGABYTE = 1024 * 1024;
         StorageReference imageRef = storage.getReference().child(imagePath);

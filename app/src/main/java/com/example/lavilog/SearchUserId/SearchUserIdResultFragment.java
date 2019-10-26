@@ -228,7 +228,7 @@ public class SearchUserIdResultFragment extends Fragment {
 //                StorageReference mountainsRef = storageRef.child(account+"jpg");
 //
 //              // Create a reference to 'images/mountains.jpg'
-                final String imagePath2 = "/images_friends/" + account + ".png";
+                final String imagePath2 = "/images_friends/" + friend_account + ".png";
                 StorageReference friendImagesRef = storageRef.child(imagePath2);
                 tvUserImagrPath.setText(imagePath2);
 

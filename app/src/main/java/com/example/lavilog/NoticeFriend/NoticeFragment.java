@@ -277,7 +277,7 @@ public class NoticeFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(activity, R.string.textDeletedNotice, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity, R.string.textDeletedNotice2, Toast.LENGTH_SHORT).show();
                             // 刪除該通知在Firebase storage對應的圖檔
                             if (notice.getnImagePath() != null) { // 上面是刪掉圖檔而已,這邊要來刪路徑
                                 storage.getReference().child(notice.getnImagePath()).delete() // 刪除firestore完整路徑

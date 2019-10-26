@@ -47,7 +47,7 @@
 
     <string name="textInserted2">好友已新增</string>
     <string name="textInsertFail2">新增失敗</string>
-    <string name="textDeletedNotice">通知已刪除</string>
+    <string name="textDeletedNotice2">通知已刪除</string>
 
 
 </resources>
